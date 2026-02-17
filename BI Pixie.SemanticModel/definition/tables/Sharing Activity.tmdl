@@ -1,0 +1,123 @@
+table 'Sharing Activity'
+	lineageTag: 621c5a13-3940-4dd8-853e-e0145b8e89d8
+
+	column 'Shared With'
+		dataType: string
+		lineageTag: 4d9042e0-0e15-4e93-a295-520e5643bd77
+		summarizeBy: none
+		sourceColumn: Shared With
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sharing Action'
+		dataType: string
+		lineageTag: 9c7c5656-90cb-4374-9cb5-5fa08884cbcb
+		summarizeBy: none
+		sourceColumn: Sharing Action
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sharing Scope'
+		dataType: string
+		lineageTag: aa5f3696-f2c0-4e79-8f0e-ae6a21d8cf39
+		summarizeBy: none
+		sourceColumn: Sharing Scope
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: fea9b872-2384-41f9-bfd1-36a185459158
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: 60f637c1-a1df-4204-a3a1-5499e6b47098
+		summarizeBy: none
+		sourceColumn: Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Reshare Permission'
+		dataType: string
+		lineageTag: 2cef7e4d-287b-421b-b12e-768215362ec1
+		summarizeBy: none
+		sourceColumn: Reshare Permission
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: 02926f77-8bfe-4c81-8e16-2d3467a8cb1e
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Name'
+		dataType: string
+		lineageTag: 6ac39a54-3603-447f-a2bb-bad387e9e903
+		summarizeBy: none
+		sourceColumn: Activity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Item Key'
+		dataType: string
+		isHidden
+		lineageTag: e5402c62-4cf2-43ba-af21-0b4c1636b81d
+		summarizeBy: none
+		sourceColumn: Item Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Sharing Activity' = m
+		mode: import
+		queryGroup: 'Power BI Activities'
+		source = ```
+				let
+				    Source = #"Consumers Activity - Base",
+				    #"Filtered Rows" = Table.SelectRows(Source, each [Operation] = "ShareReport"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"ConsumptionMethod", "DistributionMethod", "ExportedArtifactInfo", "ArtifactKind", "ShareLinkId"}),
+				    #"Expanded SharingInformation1" = Table.ExpandListColumn(#"Removed Columns", "SharingInformation"),
+				    #"Expanded SharingInformation" = Table.ExpandRecordColumn(#"Expanded SharingInformation1", "SharingInformation", {"RecipientEmail", "ResharePermission", "UserPrincipalName"}, {"RecipientEmail", "ResharePermission", "UserPrincipalName"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Expanded SharingInformation",{"Operation", "Workload", "User Agent", "Client IP"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns1",{{"RecipientEmail", "Recipient Email"}, {"ResharePermission", "Reshare Permission"}}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Renamed Columns",{"Recipient Email"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns2",{{"SharingScope", "Sharing Scope"}}),
+				    RemoveCols = Table.RemoveColumns(#"Renamed Columns1",{"ExportedArtifactDownloadInfo.ExportType", "ExportedArtifactDownloadInfo.ArtifactObjectId", "ExportedArtifactDownloadInfo.ArtifactName", "ExportedArtifactDownloadInfo.ExportCreationTime", "ExportedArtifactDownloadInfo.PageCount", "User Id"}),
+				    LastNonDemo = Table.RenameColumns(RemoveCols,{{"UserPrincipalName", "Shared With"}, {"SharingAction", "Sharing Action"}}),
+				    
+				    #"Replaced Value" = Table.ReplaceValue(LastNonDemo,"gilra@datachant.com","dorothy@acme.com",Replacer.ReplaceText,{"User Key"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","gil@bipixie.com","nick@acme.com",Replacer.ReplaceText,{"Shared With"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","gk@bipixie.com","bob@acme.com",Replacer.ReplaceText,{"Shared With"}),
+				    LastDemo = Table.ReplaceValue(#"Replaced Value2","gilra@datachant.com","arthur@acme.com",Replacer.ReplaceText,{"Shared With"}),
+				    Final = if not #"Is Demo" then LastNonDemo else LastDemo
+				in
+				    Final
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

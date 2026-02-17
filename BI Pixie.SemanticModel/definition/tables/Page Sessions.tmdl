@@ -1,0 +1,331 @@
+table 'Page Sessions'
+	lineageTag: 957f68f0-b395-4673-abb7-18a2b6c91681
+
+	measure 'Avg Duration in Page (Sec)' = AVERAGE('Page Sessions'[Duration (Sec)])
+		formatString: #,0
+		lineageTag: 1c98c958-b8fa-416e-b2c1-deaf2291deaf
+
+	measure 'Interactive Pages' =
+			
+			VAR _res =
+			COUNTROWS(FILTER(VALUES('Pages'[Report Page Key]), [Total Interactions Within Page] > 0))
+			RETURN
+			IF ( ISBLANK ( _res ), 0, _res )
+		formatString: #,0
+		lineageTag: d787d22e-b16b-42a3-9819-81f17b1b066f
+
+	measure 'Passive Pages' =
+			
+			VAR _res =
+			COUNTROWS(FILTER(VALUES('Pages'[Report Page Key]), [Total Interactions Within Page] = 0))
+			RETURN
+			IF ( ISBLANK ( _res ), 0, _res )
+		lineageTag: 0f1e2187-1a1d-41e6-afb9-554ebca4aad7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Opened Pages' =
+			
+			VAR _res =
+			DISTINCTCOUNT ( 'Page Sessions'[Report Page Key] )
+			RETURN
+			IF ( ISBLANK ( _res ), 0, _res )
+		formatString: #,0
+		lineageTag: b0863aeb-0859-4abb-a006-eca3ba2bd3d5
+
+	measure 'Unused Pages' = [Tracked Pages] - [Opened Pages]
+		formatString: #,0
+		lineageTag: 05d1f72a-92d3-4ba5-8dda-dd70a77c04f5
+
+	measure '% Interactive Pages' = DIVIDE([Interactive Pages], [Tracked Pages])
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: 40692c2a-adf4-4a62-a7e5-7684b0e332d1
+
+	measure '% Passive Pages' = DIVIDE([Passive Pages], [Tracked Pages])
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: 45c8c703-fc42-4daf-b99e-87a4414b944d
+
+	measure '% Unused Pages' = DIVIDE([Unused Pages], [Tracked Pages])
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: 1fa07f11-0e81-4d8d-a4e1-b01b92e2ef35
+
+	measure 'Page Sessions' = ```
+			
+			COUNTROWS('Page Sessions')
+			    
+			```
+		formatString: #,0
+		lineageTag: 1432770e-2e78-4ac5-80b9-86bf12cfa622
+
+	measure 'Total Interactions Within Page' = SUM('Page Sessions'[Session Interactions])
+		formatString: #,0
+		lineageTag: 78c340b3-8f7f-431b-8efe-59f9103cc8ec
+
+	measure 'Avg Interactions per Session' = AVERAGE('Page Sessions'[Session Interactions])
+		formatString: #,0.0
+		lineageTag: aa8a7659-f330-4660-9b37-49f8f27193ad
+
+	measure '% Interactive Page Sessions' = DIVIDE ( [Interactive Page Sessions], [Page Sessions] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 436dc9f0-1b87-49de-988d-75b35a8143d2
+
+	measure 'Interactive Page Sessions' = CALCULATE([Page Sessions], KEEPFILTERS('Page Sessions'[Session Interactions] > 0))
+		formatString: #,0
+		lineageTag: 361f0de8-4b54-45c8-8029-b8fc8c8d0abb
+
+	measure 'Passive Page Sessions' = [Page Sessions] - [Interactive Page Sessions]
+		formatString: #,0
+		lineageTag: ecc2c392-48e6-4071-8143-615426da7df1
+
+	measure 'Slicer Clicks' = SUM('Page Sessions'[Slicing Count])
+		formatString: #,0
+		lineageTag: 3ebdca32-90f0-421c-8f8b-6a795a101fba
+
+	measure 'Visual Interactions' = SUM('Page Sessions'[Recalculations])
+		formatString: #,0
+		lineageTag: caa0b96b-b5da-44c7-af46-f8c66b6b517a
+
+	measure 'Avg Page Index' = AVERAGE('Page Sessions'[Page Index])
+		lineageTag: 4c2939cd-8c76-474c-9612-dc54b7505824
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Tooltip Opens' = SUM('Page Sessions'[Tooltip Views])
+		formatString: #,0
+		lineageTag: 9d3b62aa-b738-4df9-822a-4e5c12d4ecaf
+
+	measure 'Page Clicks' = SUM('Report Sessions'[Page Click Count])
+		formatString: #,0
+		lineageTag: c1b35d3d-2595-4e58-a221-a4b4d24a8ac0
+
+	measure 'Last Activity' =
+			
+			CALCULATE (
+			    LASTDATE('Page Sessions'[Session Start Date]),
+			    ALL('Calendar')
+			)
+		formatString: dd-MMM-yy
+		lineageTag: 2c16067a-8b8b-4ce1-be79-2501f088f546
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure 'Last Activity in Period' =
+			
+			MAX('Page Sessions'[Session Start Date])
+		lineageTag: 3babd848-1c84-46ea-ac3e-538dd698a090
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Report Page Key'
+		dataType: string
+		isHidden
+		lineageTag: f3261205-f058-43d3-9552-4a4adcdc2a53
+		summarizeBy: none
+		sourceColumn: Report Page Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Duration (Sec)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 49f5dee0-8a3f-48fa-90da-3f4be48c3916
+		summarizeBy: none
+		sourceColumn: Duration (Sec)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Other Actions'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d30150e5-0852-4093-9e3e-9dfc42c55c3a
+		summarizeBy: sum
+		sourceColumn: Other Actions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Recalculations
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5f4bd996-b130-4e53-bab6-dee6f5675eac
+		summarizeBy: sum
+		sourceColumn: Recalculations
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Start Date'
+		dataType: dateTime
+		isHidden
+		formatString: dd-mmm-yy
+		lineageTag: 9ea3e19b-1df2-4976-9509-491100a18843
+		summarizeBy: none
+		sourceColumn: Session Start Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Session Start Time'
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: df4258ae-cda1-4e62-b33f-8b6cf444eb2b
+		summarizeBy: none
+		sourceColumn: Session Start Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Session Start'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a2dfb4b4-00e0-4b4c-994b-f65ae39c762a
+		summarizeBy: none
+		sourceColumn: Session Start
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session End'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b01124bb-602f-4ce0-b965-4461bb5eeee3
+		summarizeBy: none
+		sourceColumn: Session End
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Interactions'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 769dbc38-6e71-41b0-8a2c-b9cd86003e76
+		summarizeBy: none
+		sourceColumn: Session Interactions
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page Index'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: bfbac930-e3f3-467d-954c-344aae9c4772
+		summarizeBy: none
+		sourceColumn: Page Index
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tooltip Views'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 03b4be19-303a-409f-aa1b-61e8ba706512
+		summarizeBy: sum
+		sourceColumn: Tooltip Views
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Slicing Count'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 857c4fef-b6a4-4f02-a350-69b24379395a
+		summarizeBy: sum
+		sourceColumn: Slicing Count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Platform
+		dataType: string
+		isHidden
+		lineageTag: 714e5388-b6bd-4702-85ee-d3d71cacbf78
+		summarizeBy: none
+		sourceColumn: Platform
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page Session Index'
+		dataType: string
+		lineageTag: b637ce2f-280b-43fc-8f06-dd6dfe5785a0
+		summarizeBy: none
+		sourceColumn: Page Session Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: 4c72f76e-ce1f-4524-ab1f-fa2cf2a7aad5
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Page Sessions' = m
+		mode: import
+		source = ```
+				let
+				    Source = #"Events - Datalake Hierarchy - Base",
+				    Custom1 = Table.AddColumn(Source, "Data", each FnLoadPageSessionFromDataLakeFile([Content], [Report Key], [User Key])),
+				    #"Removed Columns1" = Table.RemoveColumns(Custom1,{"Content"}),
+				    #"Expanded Data" = if #"Is Demo" then  
+				        Table.ExpandTableColumn(#"Removed Columns1", "Data", {"User Key", "User sessions index", "FnGetSessions"}, {"User Key.1", "User sessions index", "FnGetSessions"})
+				    else
+				        Table.ExpandTableColumn(#"Removed Columns1", "Data", {"Project", "Report", "User Key", "User sessions index", "FnGetSessions"}, {"Project.1", "Report.1", "User Key.1", "User sessions index", "FnGetSessions"}),
+				    
+				    WithDemo = #"Expanded Data",
+				    #"Added Custom" = Table.AddColumn(WithDemo, "Report Key.1", each Text.Lower([Project.1]) & "---" & Text.Lower([Report.1])),
+				    #"Removed Columns0" = Table.RemoveColumns(#"Added Custom",{"Project", "Report", "Report Key"}),
+				    #"Renamed Columns0" = Table.RenameColumns(#"Removed Columns0",{{"Project.1", "Project"}, {"Report.1", "Report"}, {"Report Key.1", "Report Key"}}),
+				    WithoutDemo = #"Renamed Columns0",
+				    
+				    NextStep = if #"Is Demo" then WithDemo else WithoutDemo,
+				
+				    #"Removed Columns2" = Table.RemoveColumns(NextStep,{"User Key"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns2",{{"User Key.1", "User Key"}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Renamed Columns1", each ([User Key] <> null)),
+				    #"Expanded FnGetSessions" = Table.ExpandTableColumn(#"Filtered Rows", "FnGetSessions", {"Page", "Page Session Index", "Page Index", "Recalculations", "Slicing Count", "Other Actions", "Tooltip Views", "Session Start", "Session End", "Platform", "Duration (Sec)", "Session Interactions"}, {"Page", "Page Session Index", "Page Index", "Recalculations", "Slicing Count", "Other Actions", "Tooltip Views", "Session Start", "Session End", "Platform", "Duration (Sec)", "Session Interactions"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded FnGetSessions",{{"Session Interactions", Int64.Type}, {"Slicing Count", Int64.Type}, {"Session Start", type datetime}, {"Session End", type datetime}, {"Duration (Sec)", Int64.Type}, {"Recalculations", Int64.Type}, {"Other Actions", Int64.Type}, {"Tooltip Views", Int64.Type}}),
+				    #"Inserted Date" = Table.AddColumn(#"Changed Type", "Date", each DateTime.Date([Session Start]), type date),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Date",{{"Date", "Session Start Date"}}),
+				    #"Inserted Time" = Table.AddColumn(#"Renamed Columns", "Session Start Time", each DateTime.Time([Session Start]), type time),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Inserted Time", "Report Page Key", each Text.Combine({[Report Key], Text.Lower(Text.Trim([Page]))}, "---"), type text),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Inserted Merged Column",{"Page", "Report", "Report Page Key", "Page Index", "User Key", "Platform", "Duration (Sec)", "Session Interactions", "Other Actions", "Slicing Count", "Recalculations", "Tooltip Views", "Session Start Date", "Session Start Time", "Session Start", "Session End"}),
+				    #"Merged Columns" = Table.CombineColumns(Table.TransformColumnTypes(#"Reordered Columns", {{"User sessions index", type text}, {"Page Session Index", type text}}, "en-US"),{"User sessions index", "Page Session Index"},Combiner.CombineTextByDelimiter("-", QuoteStyle.None),"Page Session Index"),
+				    #"Removed Columns" = Table.RemoveColumns(#"Merged Columns",{"Report Key", "Report", "Page", "Project"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"Page Index", Int64.Type}})
+				in
+				    #"Changed Type1"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

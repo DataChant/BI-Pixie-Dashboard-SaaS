@@ -1,0 +1,405 @@
+table 'RLS Events'
+	lineageTag: 3406839d-d9f9-46b4-b079-cba3df590329
+
+	measure 'RLS Page Views' =
+			
+			COUNTROWS (
+			    SUMMARIZE('RLS Events', 'RLS Events'[Report Page Key], 'RLS Events'[User Key], 'RLS Events'[Session Index])
+			)
+		formatString: #,0
+		lineageTag: 0752e889-9c42-4e55-9ece-699fa9beb15d
+
+	measure 'RLS Views Single Role Applied' = ```
+			
+			    [RLS Page Views] - [RLS Views with Unmatched Roles]
+			```
+		formatString: 0
+		lineageTag: b6bce2ea-cc4d-4b18-b9fc-0b1e83bcf523
+
+	measure 'RLS Views with Unmatched Roles' =
+			
+			COUNTROWS(
+			    FILTER (
+			        SUMMARIZE (
+			            'RLS Events',
+			            'RLS Events'[Report Page Key],
+			            'RLS Events'[User Key],
+			            'RLS Events'[Session Index],
+			            'RLS Events'[Date]
+			        ),
+			        CALCULATE ( MIN ( 'RLS Events'[Mismatch] ) > 0 )
+			    )
+			)
+		formatString: 0
+		lineageTag: dbd4f029-fae0-4bf1-a4d9-b42b22a3b5b8
+
+	measure 'RLS Users Unmatched Roles' =
+			
+			COUNTX (
+			    DISTINCT ( 'RLS Events'[User Key] ),
+			    [RLS Views with Unmatched Roles]
+			)
+		formatString: 0
+		lineageTag: 0e066b31-0d4b-4fab-84ae-605c40df6658
+
+	measure 'RLS Users' =
+			
+			COUNTX (
+			    Users,
+			    [RLS Page Views]
+			)
+		formatString: 0
+		lineageTag: 25497784-7b54-437b-bd2a-c9d6b249266d
+
+	measure 'RLS Users Single Role Applied' =
+			
+			COUNTX (
+			    Users,
+			    [RLS Views Single Role Applied]
+			)
+		formatString: 0
+		lineageTag: 20181186-35c4-4afa-b7c9-f6b4c0c64d8c
+
+	measure 'RLS Changes in Allowed Values' =
+			
+			SUMX (
+			    SUMMARIZE (
+			        FILTER (
+			            'RLS Events',
+			            'RLS Events'[Mismatch] = 0
+			        ),
+			        'RLS Events'[User Key],
+			        'RLS Events'[Report Key],
+			        'RLS Events'[RLS Role],
+			        'RLS Events'[Filtered Table],
+			        'RLS Events'[Filtered Column]
+			    ),
+			    CALCULATE(
+			        VAR _distinct_values = DISTINCTCOUNT ( 'RLS Events'[Filtered Values] )
+			        RETURN
+			        IF ( ISBLANK ( _distinct_values ), BLANK(), _distinct_values - 1 )
+			    )
+			)
+		formatString: 0
+		lineageTag: 8172c47f-4e00-46b0-a527-68df2cc6ce8e
+
+	measure 'RLS Views with Over-Blocking' =
+			
+			CALCULATE (
+			    [RLS Page Views],
+			    KEEPFILTERS('RLS Events'[Mismatch] = 0 && 'RLS Events'[RLS Actual Rows] = 0)
+			)
+		formatString: 0
+		lineageTag: f65e26d0-d543-4b79-80c7-85ebd7b37c8c
+
+	measure 'RLS Changes in Actual Rows' =
+			
+			SUMX (
+			    SUMMARIZE (
+			        FILTER (
+			            'RLS Events',
+			            'RLS Events'[Mismatch] = 0
+			        ),
+			        'RLS Events'[User Key],
+			        'RLS Events'[Report Key],
+			        'RLS Events'[RLS Role],
+			        'RLS Events'[Filtered Table]
+			    ),
+			    CALCULATE(
+			        VAR _distinct_values = DISTINCTCOUNT ( 'RLS Events'[RLS Actual Rows] )
+			        RETURN
+			        IF ( ISBLANK ( _distinct_values ), BLANK(), _distinct_values - 1 )
+			    )
+			)
+		formatString: 0
+		lineageTag: a22a8490-f9b8-49fa-9026-ee342c4cbff0
+
+	measure 'RLS Events' = COUNTROWS ( 'RLS Events' )
+		lineageTag: d45a94c1-a2e2-495c-8a0e-ebbd13b93db2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'RLS Changes' =
+			
+			VAR _results = [RLS Changes in Actual Rows] + [RLS Changes in Allowed Values]
+			RETURN
+			IF (_results = 0, BLANK(), _results)
+		formatString: 0
+		lineageTag: 819dcfdc-418f-4cf5-b0d8-fb75b4da1be9
+
+	measure 'RLS Users Suspicious Changes' =
+			
+			COUNTX (
+			    Users,
+			    [RLS Changes]
+			)
+		formatString: 0
+		lineageTag: 8458df18-9358-450b-8190-fec7db7cb1d0
+
+	measure 'RLS Users Overblocked' =
+			
+			COUNTX (
+			    Users,
+			    [RLS Views with Over-Blocking]
+			)
+		formatString: 0
+		lineageTag: fe64f8a0-a21e-4153-9339-77f998002848
+
+	measure 'RLS Max Distinct Count' = MAX('RLS Events'[Filtered Distinct Count])
+		formatString: #,0
+		lineageTag: 115de1bf-4b79-43c8-b4ad-1e3a49248d78
+
+	measure 'RLS Loaded Rows' =
+			
+			SUMX (
+			    SUMMARIZE (
+			        FILTER (
+			            'RLS Events',
+			            'RLS Events'[Mismatch] > 0
+			        ),
+			        'RLS Events'[Report Page Key],
+			        'RLS Events'[User Key],
+			        'RLS Events'[RLS Role],
+			        'RLS Events'[Filtered Table]
+			    ),
+			    CALCULATE (
+			        AVERAGE( 'RLS Events'[RLS Actual Rows] )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 48795961-8ce2-4a37-9a74-37359e1c51a0
+
+	measure 'Expected Filtered Rows' =
+			
+			SUMX (
+			    SUMMARIZE (
+			        FILTER (
+			            'RLS Events',
+			            'RLS Events'[Mismatch] > 0
+			        ),
+			        'RLS Events'[Report Page Key],
+			        'RLS Events'[User Key],
+			        'RLS Events'[RLS Role],
+			        'RLS Events'[Filtered Table]
+			    ),
+			    CALCULATE (
+			        AVERAGE( 'RLS Events'[RLS Expected Rows] )
+			    )
+			)
+		formatString: #,0
+		lineageTag: dc6d2d4a-58d4-4f9d-94d1-d1f6eca9db7a
+
+	measure 'Suspected Overexposed Rows' = [RLS Loaded Rows] - [Expected Filtered Rows]
+		formatString: #,0
+		lineageTag: 3e4010c1-0781-4353-8a88-bf46f8e4f32f
+
+	measure 'RLS Last Date' = LASTDATE( 'RLS Events'[Date] )
+		lineageTag: 144e55b4-b732-4334-bafe-05b99d6c995b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'RLS Loaded Rows (Average)' =
+			
+			AVERAGEX(
+			    SUMMARIZE (
+			        'RLS Events',
+			        'RLS Events'[Report Page Key],
+			        'RLS Events'[User Key],
+			        'RLS Events'[RLS Role],
+			        'RLS Events'[Filtered Table]
+			    ),
+			    CALCULATE (
+			        AVERAGE( 'RLS Events'[RLS Actual Rows] )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 15ce79c5-e294-4b09-894e-5d00a46174b2
+
+	column 'Filtered Table'
+		dataType: string
+		lineageTag: 4548040d-a03f-461c-a497-b6a2509f395c
+		summarizeBy: none
+		sourceColumn: Filtered Table
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Filtered Column'
+		dataType: string
+		lineageTag: 125760bd-fac7-4e2e-a315-8a4540fd2045
+		summarizeBy: none
+		sourceColumn: Filtered Column
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Filtered Values'
+		dataType: string
+		lineageTag: a1258a95-1da3-4f89-a0e9-03aaf15ed4ec
+		summarizeBy: none
+		sourceColumn: Filtered Values
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Filtered Distinct Count'
+		dataType: int64
+		formatString: 0
+		lineageTag: 1880058e-a854-4ee0-9968-93a8b7a79f87
+		summarizeBy: sum
+		sourceColumn: Filtered Distinct Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: b2f00123-b8fc-4940-bd1e-a1f1cc2208b4
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Page Key'
+		dataType: string
+		isHidden
+		lineageTag: 822ff920-80f4-4cfa-9560-d61cb6a2b3f9
+		summarizeBy: none
+		sourceColumn: Report Page Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 223fbfc1-549b-40b1-a1c6-6edee153318d
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Time
+		dataType: dateTime
+		isHidden
+		formatString: hh:nn:ss
+		lineageTag: 82c49919-243a-4b99-a0af-c7bbd6a07baf
+		summarizeBy: none
+		sourceColumn: Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'RLS Expected Rows'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 58f36c58-d8c2-49d8-a6fc-994d01446e10
+		summarizeBy: sum
+		sourceColumn: RLS Expected Rows
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RLS Actual Rows'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eb7fa03c-4c87-4d05-addf-c91ccc2f1028
+		summarizeBy: sum
+		sourceColumn: RLS Actual Rows
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RLS Role'
+		dataType: string
+		lineageTag: b2668c92-58c6-444f-9ebf-7d8a2eb8a4c6
+		summarizeBy: none
+		sourceColumn: RLS Role
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Index'
+		dataType: string
+		lineageTag: 2c4eaef1-b065-4a86-99e9-fd1c42f8a870
+		summarizeBy: none
+		sourceColumn: Session Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column Mismatch =
+			
+			VAR _user = 'RLS Events'[User Key]
+			VAR _report_page = 'RLS Events'[Report Page Key]
+			VAR _session = 'RLS Events'[Session Index]
+			VAR _min_mismatch =
+			MINX(
+			    FILTER(
+			        'RLS Events',
+			        'RLS Events'[User Key] = _user &&
+			        'RLS Events'[Report Page Key] = _report_page &&
+			        'RLS Events'[Session Index] = _session
+			    ),
+			    'RLS Events'[RLS Actual Rows] - 'RLS Events'[RLS Expected Rows]
+			)
+			RETURN
+			IF ( _min_mismatch = 0, 0, 'RLS Events'[RLS Actual Rows] - 'RLS Events'[RLS Expected Rows] )
+		isHidden
+		formatString: 0
+		lineageTag: c96c2b7e-b16d-439d-a9ad-1e1e7bd149ad
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Key'
+		dataType: string
+		isHidden
+		lineageTag: 445d90ea-72d0-434c-8469-1adbd3d1aadb
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'RLS Events' = m
+		mode: import
+		queryGroup: RLS
+		source =
+				let
+				    Source = #"Data Selections - Base",
+				    #"Replaced Value" = Table.ReplaceValue(Source,null,0,Replacer.ReplaceValue,{"RLS Expected Rows"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Replaced Value", each ([Event Type] = "RLS")),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Filtered Rows",null,0,Replacer.ReplaceValue,{"RLS Actual Rows"}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Replaced Value1", "Timestamp", each Text.Combine({Text.From([Date], "en-US"), Text.From([Time], "en-US")}, " "), type text),
+				    #"Removed Columns" = Table.RemoveColumns(#"Inserted Merged Column",{"Timestamp"}),
+				    #"Grouped Rows" = Table.Group(#"Removed Columns", {"User Key", "Report Page Key"}, {{"data", each _, type table [Created On=nullable datetime, Event Type=text, Filtered Table=text, Filtered Column=text, Filtered Values=nullable text, Filtered Distinct Count=nullable number, User Key=text, Report Page Key=text, Date=date, Time=time, RLS Expected Rows=nullable number, RLS Actual Rows=nullable number, RLS Role=text]}}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Grouped Rows", "FnSessionizeRLSEvents", each FnSessionizeRLSEvents([data])),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Invoked Custom Function",{"data"}),
+				    #"Expanded FnSessionizeRLSEvents" = Table.ExpandTableColumn(#"Removed Columns1", "FnSessionizeRLSEvents", {"Report Key", "Filtered Table", "Filtered Column", "Filtered Values", "Filtered Distinct Count", "Date", "Time", "RLS Expected Rows", "RLS Actual Rows", "RLS Role", "Session Index"}, {"Report Key", "Filtered Table", "Filtered Column", "Filtered Values", "Filtered Distinct Count", "Date", "Time", "RLS Expected Rows", "RLS Actual Rows", "RLS Role", "Session Index"}),
+				    LastData = Table.TransformColumnTypes(#"Expanded FnSessionizeRLSEvents",{{"User Key", type text}, {"Filtered Distinct Count", Int64.Type}, {"Date", type date}, {"Time", type time}, {"RLS Expected Rows", Int64.Type}, {"RLS Actual Rows", Int64.Type}, {"Session Index", type text}}),
+				    DemoData = if #"Is Demo" then #"RLS Events Demo" else LastData
+				in
+				    DemoData
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

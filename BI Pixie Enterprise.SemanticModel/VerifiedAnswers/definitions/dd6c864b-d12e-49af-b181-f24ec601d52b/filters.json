@@ -1,0 +1,325 @@
+{
+  "filters": [
+    {
+      "name": "825805904718fc336b0b",
+      "ordinal": 3,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Pages"
+            }
+          },
+          "Property": "Report Page Key"
+        }
+      },
+      "type": "TopN",
+      "filter": {
+        "Version": 2,
+        "From": [
+          {
+            "Name": "subquery",
+            "Type": 2,
+            "Expression": {
+              "Subquery": {
+                "Query": {
+                  "Version": 2,
+                  "From": [
+                    {
+                      "Name": "p",
+                      "Entity": "Pages"
+                    },
+                    {
+                      "Name": "c",
+                      "Entity": "Clicks by Visual"
+                    }
+                  ],
+                  "Where": [],
+                  "OrderBy": [
+                    {
+                      "Expression": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "c"
+                            }
+                          },
+                          "Property": "Clicks in Visual"
+                        }
+                      },
+                      "Direction": 2
+                    }
+                  ],
+                  "Select": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "p"
+                          }
+                        },
+                        "Property": "Report Page Key"
+                      },
+                      "Name": "field"
+                    }
+                  ],
+                  "GroupBy": [],
+                  "Top": 1
+                }
+              }
+            }
+          },
+          {
+            "Name": "p",
+            "Entity": "Pages"
+          }
+        ],
+        "Where": [
+          {
+            "Condition": {
+              "In": {
+                "Expressions": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Source": "p"
+                        }
+                      },
+                      "Property": "Report Page Key"
+                    }
+                  }
+                ],
+                "Table": {
+                  "SourceRef": {
+                    "Source": "subquery"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "1622a9478ac6b0d8b040",
+      "displayName": "Capacity",
+      "ordinal": 0,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Capacities"
+            }
+          },
+          "Property": "SKU and Capacity Name"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "8e390b7c74c098910933",
+      "displayName": "Workspace",
+      "ordinal": 2,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Workspaces"
+            }
+          },
+          "Property": "Workspace Name"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "1d52a907111a8e4944de",
+      "displayName": "Project",
+      "ordinal": 3,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Reports"
+            }
+          },
+          "Property": "Project"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "c2b42ebb39d4018bef5a",
+      "displayName": "Report",
+      "ordinal": 4,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Reports"
+            }
+          },
+          "Property": "Report Name"
+        }
+      },
+      "type": "Advanced",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": false
+    },
+    {
+      "name": "Filterf9a3bede192242768260",
+      "displayName": "Page",
+      "ordinal": 5,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Pages"
+            }
+          },
+          "Property": "Page Name"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": false
+    },
+    {
+      "name": "Filterbf437d1b6a753b866db7",
+      "displayName": "Platform",
+      "ordinal": 6,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Platforms"
+            }
+          },
+          "Property": "Platform"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "Filter71e32a804e2de1b428fa",
+      "displayName": "User",
+      "ordinal": 8,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Users"
+            }
+          },
+          "Property": "User Key"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": false
+    },
+    {
+      "name": "6c9398e08c3bcb309591",
+      "displayName": "Date",
+      "ordinal": 9,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Calendar"
+            }
+          },
+          "Property": "Date"
+        }
+      },
+      "type": "RelativeDate",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "d949cc5469a2ec76ccb0",
+      "displayName": "Visual ID",
+      "ordinal": 11,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "Visuals"
+            }
+          },
+          "Property": "Visual ID"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    },
+    {
+      "name": "Filter2cc793d5b6cab97a40af",
+      "displayName": "Username",
+      "ordinal": 12,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "User and IP Addresses"
+            }
+          },
+          "Property": "Username"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true,
+      "objects": {
+        "general": [
+          {
+            "properties": {}
+          }
+        ]
+      }
+    },
+    {
+      "name": "Filter80b1aef7906dd7e0d326",
+      "displayName": "Client IP",
+      "ordinal": 13,
+      "field": {
+        "Column": {
+          "Expression": {
+            "SourceRef": {
+              "Entity": "User and IP Addresses"
+            }
+          },
+          "Property": "Client IP"
+        }
+      },
+      "type": "Categorical",
+      "howCreated": "User",
+      "isHiddenInViewMode": false,
+      "isLockedInViewMode": true
+    }
+  ],
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/filterConfiguration/1.2.0/schema.json"
+}

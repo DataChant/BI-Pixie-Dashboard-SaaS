@@ -1,0 +1,362 @@
+table 'Report Sessions'
+	lineageTag: 97bea52d-11c6-4ff7-88ae-d7b3bc42ba86
+
+	measure 'Report Sessions' = COUNTROWS('Report Sessions')
+		formatString: #,0
+		lineageTag: 2e970dda-4407-4c35-a522-5dbcbe619e8a
+
+	measure 'Total Hours' = SUM('Report Sessions'[Duration (Sec)]) / 3600
+		formatString: #,0.00
+		lineageTag: 917373f4-bb80-44e7-b1e7-299908fde177
+
+	measure 'Avg Session Duration (sec)' = AVERAGE('Report Sessions'[Duration (Sec)])
+		formatString: #,0.0
+		lineageTag: f7910b5d-506f-4d8a-94e8-c17b08b9c9f7
+
+	measure '% Interactive Reports' = DIVIDE([Interactive Reports], [Scanned Reports])
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: 17d45ff6-2690-4ef9-9683-69bd6e59195c
+
+	measure '% Passive Reports' = DIVIDE([Passive Reports], [All Reports])
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: 9ebb1b05-0c20-4f78-b223-2ce4ca24bd5d
+
+	measure '% Unused Reports' = DIVIDE([Unused Reports], [All Reports])
+		formatString: #,0.0%;-#,0.0%;#,0.0%
+		lineageTag: 12fe8d25-f79d-44aa-ae93-8e81e3d2269f
+
+	measure 'Report Interactions' = SUM('Report Sessions'[Pages Interaction Count])
+		formatString: #,0
+		lineageTag: 9c036bdf-f424-4fbf-af79-34778926638a
+
+	measure 'Avg Interactions' = AVERAGE('Report Sessions'[Pages Interaction Count])
+		formatString: #,0.0
+		lineageTag: c6486480-976e-4d97-a5bd-b19f88fcf033
+
+	measure 'Avg Duration Interactive Sessions' =
+			
+			CALCULATE([Avg Session Duration (sec)], KEEPFILTERS('Report Sessions'[Pages Interaction Count] > 0))
+		lineageTag: f8e44fba-8ef4-494e-8fc9-abd657ec07f5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Avg Duration Passive Sessions' = CALCULATE([Avg Session Duration (sec)], KEEPFILTERS('Report Sessions'[Pages Interaction Count] = 0))
+		lineageTag: 4757dcaa-fe86-4ead-8cba-4f850e521a57
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Interactive Sessions' =
+			
+			IF (
+			    ISFILTERED ( 'Pages' ),
+			    [Interactive Page Sessions],
+			    CALCULATE(DISTINCTCOUNT('Report Sessions'[Session Index]), KEEPFILTERS('Report Sessions'[Pages Interaction Count] > 0))
+			)
+		formatString: #,0
+		lineageTag: 98e02b6a-c599-47b3-9d53-bf7aa851352d
+
+	measure 'Passive Sessions' =
+			
+			VAR _sessions =
+			IF (
+			    ISFILTERED ( 'Pages' ),
+			    [Page Sessions],
+			    [Report Sessions]
+			)
+			RETURN
+			_sessions - [Interactive Sessions]
+		formatString: #,0
+		lineageTag: 4e6f43fc-e0da-4045-a7be-ffb8fb79fe41
+
+	measure '% Interactive Sessions' = DIVIDE ( [Interactive Sessions], [Report Sessions] )
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 60cbbde3-56bf-4500-96dd-985cf6173300
+
+	measure 'Opened Reports' = ```
+			
+			COUNTX (
+			    VALUES (  'Reports'[Report Key] ),
+			    [Report Sessions] + [View Report PBI Activity Logs]
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: ca44364e-b57c-4d1e-8d50-af3bbab7af88
+
+	measure 'Unused Reports' = [All Reports] - [Opened Reports]
+		formatString: #,0
+		lineageTag: d35c801a-b42d-4835-8b90-72a44858d01f
+
+	measure 'Passive Reports' =
+			
+			[Opened Reports] - [Interactive Reports]
+		formatString: #,0
+		lineageTag: 86fae837-bb51-4b1a-8d27-2c5efad680c9
+
+	measure 'Interactive Reports' = ```
+			
+			VAR _res = COUNTX (
+			    VALUES ( 'Reports'[Report Key] ),
+			    [Report Interactions] + [Active Usage in PBI Activity Logs]
+			)
+			RETURN IF( ISBLANK ( _res ), 0, _res) 
+			```
+		formatString: #,0
+		lineageTag: 4fcbb08d-0cca-42f2-b180-57f86dea5c9b
+
+	measure 'Distribution of Duration by Session' = ```
+			
+			VAR _min_set_x = MIN ( 'Durations X'[Duration Set] )
+			
+			VAR _min_x = CALCULATE (
+			    MIN ( 'Durations X'[Duration (Sec)] ),
+			    FILTER (
+			        ALL ( 'Durations X'[Duration Set] ),
+			        'Durations X'[Duration Set] = _min_set_x
+			    )
+			)
+			
+			VAR _all_sessions =
+			CALCULATE (
+			    IF (
+			        ISFILTERED ( 'Pages' ),    
+			        COUNTROWS ('Page Sessions'),
+			        COUNTROWS ('Report Sessions' )
+			    ),
+			    ALL ( 'Durations X' )
+			)
+			
+			VAR _current_sessions =
+			IF (
+			    ISFILTERED ( 'Pages' ),    
+			    COUNTROWS ('Page Sessions'),
+			    COUNTROWS ('Report Sessions' )
+			)
+			
+			RETURN
+			IF (
+			    ISBLANK ( _min_x ),
+			    BLANK (),
+			    DIVIDE (_current_sessions, _all_sessions)
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 23fb2860-0986-4d25-968e-40e8bdfb2a26
+
+	measure '% Passive Sessions' =
+			
+			VAR _pct = [% Interactive Sessions]
+			RETURN
+			IF(ISBLANK(_pct), BLANK(), 1 - _pct)
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 6dd4a904-790d-4266-b926-5d803500357a
+
+	measure 'Reports with Unknown Use' = [All Reports] - [Scanned Reports]
+		lineageTag: 6015d4e2-409c-4857-b40b-db0fa6805358
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Distribution of Interaction by Session' = ```
+			
+			VAR _min_x = MIN ( 'Interactions X'[Interactions] )
+			
+			VAR _all_sessions =
+			CALCULATE (
+			    IF (
+			        ISFILTERED ( 'Pages' ),    
+			        COUNTROWS ('Page Sessions'),
+			        CALCULATE (
+			            COUNTROWS ('Report Sessions' ),
+			            TREATAS (
+			                VALUES ( 'Interactions X'[Interactions] ),
+			                'Report Sessions'[Pages Interaction Count]
+			            )
+			        )
+			    ),
+			    ALL ( 'Interactions X' )
+			)
+			
+			VAR _current_sessions =
+			IF (
+			    ISFILTERED ( 'Pages' ),    
+			    COUNTROWS ('Page Sessions'),
+			    CALCULATE (
+			        COUNTROWS ('Report Sessions' ),
+			        TREATAS (
+			            VALUES ( 'Interactions X'[Interactions] ),
+			            'Report Sessions'[Pages Interaction Count]
+			        )
+			    )
+			)
+			
+			RETURN
+			IF (
+			    ISBLANK ( _min_x ),
+			    BLANK (),
+			    DIVIDE (_current_sessions, _all_sessions)
+			)
+			```
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: f612ca85-7295-4850-bc92-1e8247c9c4b1
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: b49004cb-ca57-4bcb-9cd0-9c3491d12747
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Start'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: a0b9e0a4-a8a4-4812-9f1f-647c05add818
+		summarizeBy: none
+		sourceColumn: Session Start
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Session End'
+		dataType: dateTime
+		formatString: yyyy-mm-dd hh:nn:ss
+		lineageTag: d2473047-6cae-4f23-88ca-374b29e790af
+		summarizeBy: none
+		sourceColumn: Session End
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Duration (Sec)'
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c687788-4d8c-4989-85a3-a7c0048b2571
+		summarizeBy: none
+		sourceColumn: Duration (Sec)
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Start Time'
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: 5b78d5f7-9e73-4347-9480-ff855a2337a2
+		summarizeBy: none
+		sourceColumn: Session Start Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column Platform
+		dataType: string
+		isHidden
+		lineageTag: d233c3a6-c95a-46b8-be15-c61b88934c64
+		summarizeBy: none
+		sourceColumn: Platform
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Unique Pages Viewed'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c98e26f7-7844-4356-97e7-0b988f88c900
+		summarizeBy: sum
+		sourceColumn: Unique Pages Viewed
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Index'
+		dataType: string
+		isHidden
+		lineageTag: f65847a5-335c-4be5-bb8d-aa6c408799c5
+		summarizeBy: none
+		sourceColumn: Session Index
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pages Interaction Count' =
+			VAR _session_id = 'Report Sessions'[Session Index]
+			RETURN
+			CALCULATE (
+			    SUM ( 'Page Sessions'[Session Interactions] ),
+			    FILTER ( 'Session Indices', 'Session Indices'[Session Index] = _session_id )
+			)
+		isHidden
+		formatString: 0
+		lineageTag: b227f108-c62e-4977-80d4-8e728cb5b4de
+		summarizeBy: sum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page Click Count'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: da15d170-a257-4a82-9afa-af3a73ab64a3
+		summarizeBy: sum
+		sourceColumn: Page Click Count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Session Start Date'
+		dataType: dateTime
+		isHidden
+		formatString: yyyy-mm-dd
+		lineageTag: 66f94e95-4522-4a87-976e-17df55ae5354
+		summarizeBy: none
+		sourceColumn: Session Start Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Report Key'
+		dataType: string
+		isHidden
+		lineageTag: 68f4e4bd-4a04-4a2f-9053-478a087ae33f
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Report Sessions' = m
+		mode: import
+		source =
+				let
+				
+				    Source = #"Report Sessions - Base",
+				    #"Removed Columns1" = Table.RemoveColumns(Source,{"Project", "Report"})
+				in
+				    #"Removed Columns1"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

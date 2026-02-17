@@ -1,0 +1,115 @@
+table 'Internal Users'
+	lineageTag: 569975e2-bb98-4876-944b-1b185a8ed5a7
+
+	column 'Region Name'
+		dataType: string
+		lineageTag: bb4a3eeb-486e-43ef-a6ab-16f4eee2850d
+		summarizeBy: none
+		sourceColumn: Region Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department
+		dataType: string
+		lineageTag: ddbd3397-ca66-4d69-8e9c-eff6a4ad7fc7
+		summarizeBy: none
+		sourceColumn: Department
+
+		annotation SummarizationSetBy = Automatic
+
+	column Division
+		dataType: string
+		lineageTag: d51ccba6-558f-4c37-987c-5f834ebcad1d
+		summarizeBy: none
+		sourceColumn: Division
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Person Name'
+		dataType: string
+		lineageTag: c08490e5-cc3d-424f-a8f7-cfe0ee1ac4cd
+		summarizeBy: none
+		sourceColumn: Person Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Person First Name'
+		dataType: string
+		lineageTag: f2bd3643-2841-4373-8afb-bfda468347c5
+		summarizeBy: none
+		sourceColumn: Person First Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Person Middle Name'
+		dataType: string
+		lineageTag: 14dc92ad-0f05-4059-b086-c9c64bf22171
+		summarizeBy: none
+		sourceColumn: Person Middle Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Person Last Name'
+		dataType: string
+		lineageTag: 70436bb6-4701-4f99-bcf7-07dbd30090f0
+		summarizeBy: none
+		sourceColumn: Person Last Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Job Title'
+		dataType: string
+		lineageTag: cbf00987-5f9d-491e-844b-8c54c289bee4
+		summarizeBy: none
+		sourceColumn: Job Title
+
+		annotation SummarizationSetBy = Automatic
+
+	column Email
+		dataType: string
+		lineageTag: 4651ab09-c0c1-43c2-aaeb-1c9874c759cd
+		summarizeBy: none
+		sourceColumn: Email
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Manager ID'
+		dataType: string
+		isHidden
+		lineageTag: 85b6655c-6eb4-4ae0-9e74-04c180f756c0
+		summarizeBy: none
+		sourceColumn: Manager ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Country
+		dataType: string
+		lineageTag: 0f6b61f6-422f-4701-b14c-ec874a2cf8ef
+		summarizeBy: none
+		sourceColumn: Country
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Employee ID'
+		dataType: string
+		lineageTag: 8fdf5de1-ecb5-4e28-a793-53c78da27afd
+		summarizeBy: none
+		sourceColumn: Employee ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Internal Users' = m
+		mode: import
+		queryGroup: Users
+		source =
+				let
+				    Source = #"Internal Users - Base"
+				in
+				    Source
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

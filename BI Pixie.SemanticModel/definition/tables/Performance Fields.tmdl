@@ -1,0 +1,105 @@
+table 'Performance Fields'
+	lineageTag: 43a569c2-7c66-4776-a8ac-a5d2a56a0e66
+
+	measure References = COUNTROWS('Performance Fields')
+		lineageTag: 19d38eb5-250a-4295-97f7-efd62a6ccf99
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Is Column' = SUM('Performance Fields'[Detected Column])
+		lineageTag: ee764a93-474b-452b-a4c9-d6c5bed948f0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 2f53a9ef-940d-4839-b0f1-437a141525d0
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Table
+		dataType: string
+		lineageTag: ed475dea-417f-439e-ad79-ecd0f45eac60
+		summarizeBy: none
+		sourceColumn: Table
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure / Column'
+		dataType: string
+		lineageTag: 887b89cb-5519-4ad2-838c-ed9db3e24da4
+		summarizeBy: none
+		sourceColumn: Measure / Column
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Performance Key'
+		dataType: string
+		isHidden
+		lineageTag: a2165e7a-1c9e-4442-a1c8-493f65885abc
+		summarizeBy: none
+		sourceColumn: Performance Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Detected Column'
+		dataType: int64
+		formatString: 0
+		lineageTag: 961059f6-4bcd-4f5c-b4af-4f84a129f3a4
+		summarizeBy: sum
+		sourceColumn: Detected Column
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Performance Fields' = m
+		mode: import
+		queryGroup: Performance
+		source =
+				let
+				    Source = #"Performance Queries - Base",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Date", "DAX Query", "Performance Key"}),
+				    Custom1 = Table.ExpandListColumn(Table.TransformColumns(#"Removed Other Columns", {{"DAX Query", Splitter.SplitTextByAnyDelimiter({"   ", "(", ")", ","}, QuoteStyle.Csv), let itemType = (type nullable text) meta [Serialized.Text = true] in type {itemType}}}), "DAX Query"),
+				    #"Trimmed Text" = Table.TransformColumns(Custom1,{{"DAX Query", Text.Trim, type text}}),
+				    #"Filtered Rows" = Table.SelectRows(#"Trimmed Text", each ([DAX Query] <> null and [DAX Query] <> "")),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Filtered Rows", "DAX Query", Splitter.SplitTextByAnyDelimiter({"'", "'"}, QuoteStyle.Csv, false), {"DAX Query.1", "Table", "MeasureOrColumn"}),
+				    #"Trimmed Text1" = Table.TransformColumns(#"Split Column by Delimiter",{{"DAX Query.1", Text.Trim, type text}}),
+				    #"Trimmed Text2" = Table.TransformColumns(#"Trimmed Text1",{{"DAX Query.1", each try if Number.From(_) <> null then null else null otherwise Text.Trim(_), type text}}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Trimmed Text2","",null,Replacer.ReplaceValue,{"DAX Query.1"}),
+				    #"Filled Down" = Table.FillDown(#"Replaced Value",{"DAX Query.1"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filled Down", each ([Table] <> null)),
+				    #"Split Column by Delimiter1" = Table.SplitColumn(#"Filtered Rows1", "MeasureOrColumn", Splitter.SplitTextByEachDelimiter({"["}, QuoteStyle.Csv, false), {"MeasureOrColumn.1", "MeasureOrColumn.2"}),
+				    #"Split Column by Delimiter2" = Table.SplitColumn(#"Split Column by Delimiter1", "MeasureOrColumn.2", Splitter.SplitTextByEachDelimiter({"]"}, QuoteStyle.Csv, false), {"Measure / Column", "MeasureOrColumn.2.2"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter2",{{"DAX Query.1", type text}, {"Table", type text}, {"MeasureOrColumn.1", type text}, {"Measure / Column", type text}, {"MeasureOrColumn.2.2", type text}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type", "Detected Column",
+				        each if [DAX Query.1] = [#"Measure / Column"] then 0
+				        else if [MeasureOrColumn.2.2] <> "" then 1
+				        else if [DAX Query.1] = "VALUES" then 1
+				        else if [DAX Query.1] = "AND" then 1
+				        else if [DAX Query.1] = "MAX" then 1
+				        else if [DAX Query.1] = "MIN" then 1
+				        else if [DAX Query.1] = "ORDER BY" then 1
+				        else if [DAX Query.1] = "SUMMARIZECOLUMNS" then 1
+				        else if Text.StartsWith([DAX Query.1], "__DS0") then 1
+				        else if [DAX Query.1] = Text.Replace([#"Measure / Column"], " ", "_") then 0
+				        else if Text.StartsWith([DAX Query.1], "[") then 1
+				        else if Text.StartsWith([DAX Query.1], "{") then 1
+				        else 0),
+				    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column",{"DAX Query.1", "MeasureOrColumn.1", "MeasureOrColumn.2.2"}),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Removed Columns",{{"Detected Column", Int64.Type}})
+				in
+				    #"Changed Type1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

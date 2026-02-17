@@ -1,0 +1,290 @@
+table License
+	lineageTag: 6422a6ad-62cf-4fd7-9325-ae3090539c4c
+
+	measure 'Performance License' =
+			
+			IF (
+			    AND (
+			        SUM ( License[Capability Performance] ) > 0,
+			        SUM ( License[Capability Heatmaps] ) > 0
+			    ),
+			    "",
+			    "Not supported in current subscription"
+			)
+		lineageTag: a72a983c-58d0-4d2e-8ab0-8ab7781b8af6
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	measure 'Security License' =
+			
+			IF (
+			    SUM ( License[Capability Security] ) > 0,
+			    "",
+			    "Not supported in current subscription"
+			)
+		lineageTag: bcce2aa8-e113-40ce-a819-c83c066eab86
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	measure 'User Satisfaction License' =
+			
+			IF (
+			    SUM ( License[Capability User Satisfaction] ) > 0,
+			    "",
+			    "Not supported in current subscription"
+			)
+		lineageTag: fef01265-ac47-4224-90b5-d03033a79232
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	measure 'Heatmaps License' =
+			
+			IF (
+			    SUM ( License[Capability Heatmaps] ) > 0,
+			    "",
+			    "Not supported in current subscription"
+			)
+		lineageTag: 58bf7218-7566-4143-b818-3ada256cf563
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	measure 'Filtered Values License' =
+			
+			IF (
+			    SUM ( License[Capability Filtered Values] ) > 0,
+			    "",
+			    "Not supported in current subscription"
+			)
+		lineageTag: e9ae74d3-b18c-44bb-8d43-fb1c6433eb3c
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column Key
+		dataType: string
+		lineageTag: fa66f065-bbc3-447b-ac14-c4697c1efb35
+		summarizeBy: none
+		sourceColumn: Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status
+		dataType: string
+		lineageTag: b89b7559-1a7a-46a4-a193-f3eca43d0fad
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subscription End Date'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 76a346f0-6f08-4016-98c7-e98c8d803acf
+		summarizeBy: none
+		sourceColumn: Subscription End Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Reason'
+		dataType: string
+		lineageTag: 431d3593-881a-41e2-9615-94601276dfb9
+		summarizeBy: none
+		sourceColumn: Status Reason
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Status Detail'
+		dataType: string
+		lineageTag: 925c5b4a-eabd-47b4-a273-54180b31aac8
+		summarizeBy: none
+		sourceColumn: Status Detail
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Allowed Users'
+		dataType: int64
+		formatString: 0
+		lineageTag: 08336700-3bf1-44d7-ac28-6b5e8065c470
+		summarizeBy: sum
+		sourceColumn: Max Allowed Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Allowed Reports'
+		dataType: int64
+		formatString: 0
+		lineageTag: e0eb2042-5682-46f0-8ebd-a4467c26f648
+		summarizeBy: sum
+		sourceColumn: Max Allowed Reports
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Allowed Monthly Scans'
+		dataType: int64
+		formatString: 0
+		lineageTag: c98f6c78-5c5f-43d2-ab62-5cd865cc022e
+		summarizeBy: sum
+		sourceColumn: Max Allowed Monthly Scans
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Users'
+		dataType: int64
+		formatString: 0
+		lineageTag: ffbda162-e325-4658-9d3e-2f1fb1f50936
+		summarizeBy: sum
+		sourceColumn: Total Users
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Reports Used'
+		dataType: int64
+		formatString: 0
+		lineageTag: 916b441c-6143-4024-9795-f1c5cf3662bf
+		summarizeBy: sum
+		sourceColumn: Total Reports Used
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Reports Scanned'
+		dataType: int64
+		formatString: 0
+		lineageTag: 97fce55b-5e89-4c1d-81ee-c0c51ae197ad
+		summarizeBy: sum
+		sourceColumn: Total Reports Scanned
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Total Scans'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aaf599d-f6ec-47de-a9f2-f64b871ab0c8
+		summarizeBy: sum
+		sourceColumn: Total Scans
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capability Custom Data'
+		dataType: int64
+		formatString: 0
+		lineageTag: f56ad358-883d-4b71-911b-fbfba651d2a1
+		summarizeBy: sum
+		sourceColumn: Capability Custom Data
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capability Heatmaps'
+		dataType: int64
+		formatString: 0
+		lineageTag: d51ccaf7-2edb-4cb5-a557-68d1e8b502d9
+		summarizeBy: sum
+		sourceColumn: Capability Heatmaps
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capability Filtered Values'
+		dataType: int64
+		formatString: 0
+		lineageTag: bd9078c7-d39b-43fc-8de9-b5a43fbc4059
+		summarizeBy: sum
+		sourceColumn: Capability Filtered Values
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capability Security'
+		dataType: int64
+		formatString: 0
+		lineageTag: cffe8278-ae28-4100-ae24-1f8dc0aefdd6
+		summarizeBy: sum
+		sourceColumn: Capability Security
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capability Performance'
+		dataType: int64
+		formatString: 0
+		lineageTag: 79701608-9efb-4d9d-b998-cd841d18a271
+		summarizeBy: sum
+		sourceColumn: Capability Performance
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capability User Satisfaction'
+		dataType: int64
+		formatString: 0
+		lineageTag: f84a223c-0c47-4886-ae97-b4eb0448d3a9
+		summarizeBy: sum
+		sourceColumn: Capability User Satisfaction
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tier
+		dataType: string
+		lineageTag: a33be93c-4d86-4721-9f56-d3f274f2f9de
+		summarizeBy: none
+		sourceColumn: Tier
+
+		annotation SummarizationSetBy = Automatic
+
+	partition License = m
+		mode: import
+		source = ```
+				let
+				    URL = "https://db1e5e5304aaed148ffa083150a247.13.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/df00f746a51540d2af36df8bf6a9f99e/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=Q8_bRq56zFZSAgf_DXjmFsMjnEO473GkVeDP32u6T8Q",
+				    Query = [
+				        dse = #"Subscription Email",
+				        lk = #"License Key",
+				        rt =  "refresh",
+				        tr = reports,
+				        tu = users
+				    ],
+				    
+				    LicenseResponse = Json.Document(
+				        Web.Contents(URL,
+				            [
+				                Query = Query,
+				                Headers = [
+				                    #"Content-Type" = "application/json"
+				                ]
+				            ]
+				        )
+				    ),
+				    #"Converted to Table" = Table.FromRecords({LicenseResponse}),
+				    LicenseTable = Table.TransformColumnTypes(#"Converted to Table",{{"Subscription End Date", type datetimezone}, {"Max Allowed Users", Int64.Type}, {"Max Allowed Reports", Int64.Type}, {"Max Allowed Monthly Scans", Int64.Type}, {"Total Users", Int64.Type}, {"Total Reports Used", Int64.Type}, {"Total Reports Scanned", Int64.Type}, {"Total Scans", Int64.Type}, {"Capability Custom Data", Int64.Type}, {"Capability Heatmaps", Int64.Type}, {"Capability Filtered Values", Int64.Type}, {"Capability Security", Int64.Type}, {"Capability Performance", Int64.Type}, {"Capability User Satisfaction", Int64.Type}}),
+				    
+				    Source = AzureStorage.DataLake(#"Data Lake URL",[HierarchicalNavigation=true]),
+				    #"Filtered Rows" = Table.SelectRows(Source, each [Name] = #"License Key"),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Content"}),
+				    #"Expanded Content2" = Table.ExpandTableColumn(#"Removed Other Columns", "Content", {"Content", "Name"}, {"Content", "Name"}),
+				    #"Filtered Rows3" = Table.SelectRows(#"Expanded Content2", each ([Name] = "events")),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Filtered Rows3",{"Name"}),
+				    #"Expanded Content" = Table.ExpandTableColumn(#"Removed Columns1", "Content", {"Content", "Name"}, {"Content.1", "Project"}),
+				    Reports = Table.ExpandTableColumn(#"Expanded Content", "Content.1", {"Content", "Name"}, {"Content", "Report"}),
+				    #"Expanded Content3" = Table.ExpandTableColumn(Reports, "Content", {"Name"}, {"User"}),
+				    Users = Table.Distinct(#"Expanded Content3", {"User"}),
+				    #"Merged Columns" = Table.CombineColumns(Users,{"Project", "Report"},Combiner.CombineTextByDelimiter("/", QuoteStyle.None),"Report"),
+				    #"Removed Duplicates" = Table.Distinct(#"Merged Columns"),
+				
+				    
+				    events_buffer = Table.Buffer(#"Removed Duplicates"),
+				    users = Text.From(Table.RowCount(Users)),
+				    reports = Text.From(Table.RowCount(Reports)),
+				    
+				    capabilities = LicenseResponse[Capability Custom Data] +
+				        LicenseResponse[Capability Heatmaps] +
+				        LicenseResponse[Capability Filtered Values] + 
+				        LicenseResponse[Capability Security] +
+				        LicenseResponse[Capability Performance] + 
+				        LicenseResponse[Capability User Satisfaction], 
+				    res =
+				        if (LicenseResponse[Status] = "active" or LicenseResponse[Status] = "trial") then
+				            LicenseTable
+				        else
+				            error Error.Record("Reason: " & LicenseResponse[#"Status Reason"] , "Message: Failed to refresh BI Pixie."  & LicenseResponse[#"Status Detail"] & "., Detail: " & LicenseResponse[#"Status Detail"])    
+				in
+				    res
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,61 @@
+table 'User Adoption Metrics'
+	lineageTag: 938f2d4e-bff8-4369-856f-bcf049c5a3c4
+
+	column 'User adoption metrics'
+		lineageTag: a3f8d0fd-e944-4cba-94ee-d1a2fd5e4d0b
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'User Adoption Metrics Order'
+
+		relatedColumnDetails
+			groupByColumn: 'User adoption metrics fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User adoption metrics fields'
+		isHidden
+		lineageTag: 7de88736-2a08-436e-96b5-df8f71e70796
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'User Adoption Metrics Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "kind": 2,
+				  "version": 3
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Adoption Metrics Order'
+		isHidden
+		formatString: 0
+		lineageTag: 9fa7db5b-8d79-425d-96a8-77e52abc6cd9
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'User Adoption Metrics' = calculated
+		mode: import
+		source =
+				{
+				    ("Total Users", NAMEOF('Users'[Users]), 0),
+				    ("Engaged Users", NAMEOF('Users'[Engaged Users]), 1),
+				    ("Passive Users", NAMEOF('Users'[Passive Users]), 2),
+				    ("% Active Users", NAMEOF('Users'[% Active Users]), 3),
+				    ("% Passive Users", NAMEOF('Users'[% Passive Users]), 4),
+				    ("DAU", NAMEOF('Users'[DAU]), 5),
+				    ("MAU", NAMEOF('Users'[MAU]), 6),
+				    ("DAU / MAU", NAMEOF('Users'[DAU / MAU]), 7),
+				    ("DAU (Excluding Passive)", NAMEOF('Users'[DAU (Excluding Passive)]), 8),
+				    ("MAU (Excluding Passive)", NAMEOF('Users'[MAU (Excluding Passive)]), 9),
+				    ("DAU / MAU (Excluding Passive)", NAMEOF('Users'[DAU / MAU (Excluding Passive)]), 10),
+				    ("WAU", NAMEOF('Users'[WAU]), 11),
+				    ("WAU (Excluding Passive)", NAMEOF('Users'[WAU (Excluding Passive)]), 12),
+				    ("WAU / MAU", NAMEOF('Users'[WAU / MAU]), 13),
+				    ("WAU / MAU (Excluding Passive)", NAMEOF('Users'[WAU / MAU (Excluding Passive)]), 14)
+				}
+
+	annotation PBI_Id = 1e3631cd9dc34cbcba450cf89e1c9796
+

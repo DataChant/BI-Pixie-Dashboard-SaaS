@@ -1,0 +1,48 @@
+table 'CSAT type'
+	lineageTag: 0fa1561f-4f16-4a93-91a1-ff2dc543f248
+
+	column 'CSAT count'
+		lineageTag: 0aefabe4-3eef-4a19-afa4-3c680a9a60e6
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'CSAT count Order'
+
+		relatedColumnDetails
+			groupByColumn: 'CSAT count Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CSAT count Fields'
+		isHidden
+		lineageTag: e7516791-9660-4a48-973f-410969b3164f
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'CSAT count Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'CSAT count Order'
+		isHidden
+		formatString: 0
+		lineageTag: 083f5a8a-d27a-43fe-bbd3-bf42762fc1e1
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'CSAT type' = calculated
+		mode: import
+		source =
+				{
+				    ("CSAT (All Responses)", NAMEOF('Feedback'[CSAT (Multiple Responses)]), 0),
+				    ("CSAT (Latest Responses)", NAMEOF('Feedback'[CSAT (Last Response)]), 1)
+				}
+
+	annotation PBI_Id = 42358fb5fdd442dbb46dc5ef86aaaedf
+

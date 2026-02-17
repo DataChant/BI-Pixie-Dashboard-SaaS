@@ -1,0 +1,144 @@
+table 'PBI Reports'
+	lineageTag: 8acd27c1-a3be-4534-bcfc-72303f26059e
+
+	measure 'Scanned Reports' = COUNTROWS('PBI Reports')
+		formatString: #,0
+		lineageTag: b22aca8e-ec39-46bb-8ae5-84abe2b0cd41
+
+	measure '% Instumented Reports' = DIVIDE([Instrumented Reports], [All Reports])
+		lineageTag: e3f23c31-e5d2-4ed7-aba1-7a5a549909a2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Reports per Semantic Model' = DIVIDE ( [Scanned Reports], [PBI Scanned Semantic Models] )
+		formatString: 0.00
+		lineageTag: 47f060bb-95f6-4f05-be04-d6cd1d0c74ed
+
+	column 'Workspace ID'
+		dataType: string
+		lineageTag: 23681f70-f3f1-436b-9a7c-a2532202f42b
+		summarizeBy: none
+		sourceColumn: Workspace ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workspace Name'
+		dataType: string
+		isHidden
+		lineageTag: c6fdd2cd-f97b-4a7c-ba18-455ac6d9dbfb
+		summarizeBy: none
+		sourceColumn: Workspace Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created DateTime'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 59b87b13-bf74-4645-84d9-be7085ab580b
+		summarizeBy: none
+		sourceColumn: Created DateTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modified DateTime'
+		dataType: string
+		lineageTag: 7a07a293-925a-4ea3-80de-50f8103b14a9
+		summarizeBy: none
+		sourceColumn: Modified DateTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modified By'
+		dataType: string
+		lineageTag: 2cbcf54e-fd69-458e-80c9-6b94683577b9
+		summarizeBy: none
+		sourceColumn: Modified By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created By'
+		dataType: string
+		lineageTag: ca717f86-d158-4634-a054-f9dd3f1b6a6b
+		summarizeBy: none
+		sourceColumn: Created By
+
+		annotation SummarizationSetBy = Automatic
+
+	column Endorsement
+		dataType: string
+		isHidden
+		lineageTag: 1a1565d7-2816-40f1-bc52-dae4149199cc
+		summarizeBy: none
+		sourceColumn: Endorsement
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dataset ID'
+		dataType: string
+		isHidden
+		lineageTag: f1d10479-c37c-4e73-9f5f-08af6d105868
+		summarizeBy: none
+		sourceColumn: Dataset ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Type'
+		dataType: string
+		isHidden
+		lineageTag: 458b9697-2019-4701-8331-ed26aa67d22e
+		summarizeBy: none
+		sourceColumn: Report Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Key'
+		dataType: string
+		isHidden
+		lineageTag: 8427c46a-546c-4461-9d13-0e55fd3074b7
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report ID'
+		dataType: string
+		lineageTag: 50b8a96a-0193-4123-87f8-f254b094b441
+		summarizeBy: none
+		sourceColumn: Report ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Name'
+		dataType: string
+		lineageTag: 92e35f0f-345d-4328-a7bc-b80a5e6eb165
+		summarizeBy: none
+		sourceColumn: Report Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI Reports' = m
+		mode: import
+		queryGroup: 'Power BI Scan'
+		source =
+				let
+				    Source = #"PBI Reports - Base",
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([App ID] = null) and ([Original Report Object ID] = null)),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Filtered Rows",{"Original Report Object ID", "App ID"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns1",null,"None",Replacer.ReplaceValue,{"Endorsement"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

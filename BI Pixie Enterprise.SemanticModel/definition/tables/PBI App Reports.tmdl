@@ -1,0 +1,136 @@
+table 'PBI App Reports'
+	lineageTag: 40920361-1430-47fd-8a51-94359b17d9b0
+
+	column 'Workspace ID'
+		dataType: string
+		lineageTag: fcb9135b-7944-473c-ae81-68028ea1101b
+		summarizeBy: none
+		sourceColumn: Workspace ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workspace Name'
+		dataType: string
+		isHidden
+		lineageTag: 49951894-3fb9-4f8b-90b8-83bffdee346b
+		summarizeBy: none
+		sourceColumn: Workspace Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report ID'
+		dataType: string
+		lineageTag: d25bdc4a-b32e-4bb9-a42b-5810d65d738e
+		summarizeBy: none
+		sourceColumn: Report ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dataset ID'
+		dataType: string
+		lineageTag: 61799430-bd86-4918-a967-c5b728b5b55b
+		summarizeBy: none
+		sourceColumn: Dataset ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created DateTime'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7e0bedf1-cc15-4b72-9d74-3b003b09b342
+		summarizeBy: none
+		sourceColumn: Created DateTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modified DateTime'
+		dataType: string
+		lineageTag: 303c2b4a-3ab4-4238-819f-0f906ca5ef38
+		summarizeBy: none
+		sourceColumn: Modified DateTime
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Original Report Object ID'
+		dataType: string
+		lineageTag: b2eb060c-ad02-4eb7-9916-ff4d606ecb21
+		summarizeBy: none
+		sourceColumn: Original Report Object ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Modified By'
+		dataType: string
+		lineageTag: 0500f6e8-94a3-4457-a8fb-c6c26c3b6eee
+		summarizeBy: none
+		sourceColumn: Modified By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created By'
+		dataType: string
+		lineageTag: 92f341cb-5309-4686-85ca-d48553309bbe
+		summarizeBy: none
+		sourceColumn: Created By
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'App ID'
+		dataType: string
+		lineageTag: 7cc44434-caa2-46b4-bac0-f3b7dc12056f
+		summarizeBy: none
+		sourceColumn: App ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Type'
+		dataType: string
+		isHidden
+		lineageTag: 246a09b8-3acd-43d1-bc36-783c44f9d41f
+		summarizeBy: none
+		sourceColumn: Report Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Name'
+		dataType: string
+		isHidden
+		lineageTag: 750f5108-62d3-429d-b272-98a8da8cba7e
+		summarizeBy: none
+		sourceColumn: Report Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Key'
+		dataType: string
+		isHidden
+		lineageTag: 99bf6cc9-fcc9-4eb2-b8f7-c7f0a4df242f
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI App Reports' = m
+		mode: import
+		queryGroup: 'Power BI Scan'
+		source =
+				let
+				    Source = #"PBI Reports - Base",
+				    #"Filtered Rows" = Table.SelectRows(Source, each not (([App ID] = null) and ([Original Report Object ID] = null))),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([App ID] <> null)),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows1",{"Endorsement"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

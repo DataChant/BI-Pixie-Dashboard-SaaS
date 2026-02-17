@@ -1,0 +1,121 @@
+table 'PBI Measures'
+	lineageTag: cd0c1e4a-75ff-4b69-a217-b6dcb6abb115
+
+	measure 'Count of Measures' =
+			
+			IF (
+			    ISCROSSFILTERED ( Reports ),
+			    SUMX (
+			        Reports,
+			        CALCULATE (
+			            COUNTROWS('PBI Measures'),
+			            RELATEDTABLE('PBI Measures')
+			        )
+			    ),
+			    COUNTROWS('PBI Measures')
+			)
+		lineageTag: b19f0383-816c-4e06-9baf-2f6ef7417130
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Measure Expression Length' = ```
+			
+			IF (
+			    ISCROSSFILTERED ( Reports ),
+			    SUMX (
+			        Reports,
+			        CALCULATE (
+			            SUM('PBI Measures'[Measure Length]),
+			            RELATEDTABLE('PBI Measures')
+			        )
+			    ),
+			    SUM('PBI Measures'[Measure Length])
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: 3ced326a-66ed-4406-bb0b-8a1902f70fbd
+
+	measure 'Measure Expression Len Norm' =
+			
+			VAR _min = MINX(ALL(Reports), [Measure Expression Length])
+			VAR _max = MAXX(ALL(Reports), [Measure Expression Length])
+			VAR _current = [Measure Expression Length]
+			RETURN
+			IF (
+			    ISBLANK(_current) || _current = _min || _max = _min,
+			    1,
+			    DIVIDE ( _current - _min, _max - _min )
+			)
+		lineageTag: a28cc980-a55c-482c-956c-6babb3e592d5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Measure Name'
+		dataType: string
+		lineageTag: b0fe0bc5-4895-4090-95c8-fb6443fe5f14
+		summarizeBy: none
+		sourceColumn: Measure Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Expression'
+		dataType: string
+		lineageTag: 1dd7a33e-ab81-41c1-b9bc-e33916b7d1ee
+		summarizeBy: none
+		sourceColumn: Measure Expression
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Hidden'
+		dataType: string
+		lineageTag: 918da52c-dd6c-41a2-819a-3a61250b3038
+		summarizeBy: none
+		sourceColumn: Is Hidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Dataset Table Key'
+		dataType: string
+		isHidden
+		lineageTag: 738a3a70-537b-447f-ba99-c3b54f72c029
+		summarizeBy: none
+		sourceColumn: Dataset Table Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Measure Length'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: eca89418-7ced-45c1-ab61-a1a01d5866f0
+		summarizeBy: sum
+		sourceColumn: Measure Length
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI Measures' = m
+		mode: import
+		queryGroup: 'Power BI Scan'
+		source =
+				let
+				    Source = #"PBI Datasets Tables - Base",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"measures", "Dataset Table Key"}),
+				    #"Expanded measures" = Table.ExpandListColumn(#"Removed Other Columns", "measures"),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded measures", each [measures] <> null),
+				    #"Expanded measures1" = Table.ExpandRecordColumn(#"Filtered Rows", "measures", {"name", "expression", "isHidden"}, {"measures.name", "measures.expression", "measures.isHidden"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded measures1",{{"measures.name", "Measure Name"}, {"measures.expression", "Measure Expression"}, {"measures.isHidden", "Is Hidden"}}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Renamed Columns", each not Text.StartsWith([Measure Name], "Pixie")),
+				    #"Inserted Text Length" = Table.AddColumn(#"Filtered Rows1", "Length", each Text.Length([Measure Expression]), Int64.Type),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Inserted Text Length",{{"Length", "Measure Length"}})
+				in
+				    #"Renamed Columns1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

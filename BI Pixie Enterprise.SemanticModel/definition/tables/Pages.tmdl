@@ -1,0 +1,251 @@
+table Pages
+	lineageTag: 3334664c-7819-481b-babc-14328838fb9e
+
+	measure 'Tracked Pages' =
+			
+			COUNTROWS('Pages')
+		lineageTag: 732dc953-ce16-49d6-b1eb-01b4574be143
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Page Link' = MAX('Pages'[Page URL])
+		lineageTag: c3856446-2d5b-437a-b6bf-bea6eeefe34c
+		dataCategory: WebUrl
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Page Name'
+		dataType: string
+		lineageTag: 59cc2d6d-6298-41d6-b848-18d693bb1744
+		summarizeBy: none
+		sourceColumn: Page Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Page Key'
+		dataType: string
+		lineageTag: 5c917e31-78c6-49bd-bc25-73a73c6715ad
+		summarizeBy: none
+		sourceColumn: Report Page Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page Index'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3ead9bf3-11be-4fa4-94a5-3cb18bd5fd3b
+		summarizeBy: sum
+		sourceColumn: Page Index
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page ID'
+		dataType: string
+		lineageTag: 0897c3b5-4d64-4d34-bdee-699a68950bc7
+		summarizeBy: none
+		sourceColumn: Page ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page URL'
+		dataType: string
+		lineageTag: 6c08971a-12c3-4a71-a65a-595e1c1a86f9
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: Page URL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Since
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d4751fdf-4ec0-49aa-a7fb-699a64832124
+		summarizeBy: none
+		sourceColumn: Since
+
+		annotation SummarizationSetBy = Automatic
+
+	column Height
+		dataType: double
+		isHidden
+		lineageTag: cb7f95cf-96c5-4a3b-9428-094f11a0c87c
+		summarizeBy: sum
+		sourceColumn: Height
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Width
+		dataType: double
+		isHidden
+		lineageTag: 0cfcc329-423b-4027-8846-8040aed278fe
+		summarizeBy: sum
+		sourceColumn: Width
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Visuals Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5aae1bcd-a970-4c5a-b7ee-3fc0ac8fbb8e
+		summarizeBy: sum
+		sourceColumn: Visuals Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Slicers Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 17d017b0-2d64-413e-975c-ecd2702aeb45
+		summarizeBy: sum
+		sourceColumn: Slicers Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tables Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7675c445-8058-4b9d-bd88-0a65ffb2ffa3
+		summarizeBy: sum
+		sourceColumn: Tables Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Columns in Tables Count Col'
+		dataType: int64
+		formatString: 0
+		lineageTag: ffcc3c70-3d94-4702-af89-c33c2237b775
+		summarizeBy: sum
+		sourceColumn: Columns in Tables Count Col
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Interactions Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4430d992-063f-4483-acc2-f9fe140d9fed
+		summarizeBy: sum
+		sourceColumn: Interactions Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Tooltip Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cd2712d0-bc49-48d6-9b58-20de42c989a8
+		summarizeBy: sum
+		sourceColumn: Is Tooltip Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Drillthrough Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9a4ff079-926c-4ad1-aea7-b8dbb3d4c97b
+		summarizeBy: sum
+		sourceColumn: Is Drillthrough Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Non-Analytic Objects Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6c966401-2d76-400b-8116-74e92be4058c
+		summarizeBy: sum
+		sourceColumn: Non-Analytic Objects Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Until
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6c89e2e0-f400-45b9-a691-d4c25af4a583
+		summarizeBy: none
+		sourceColumn: Until
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Since'
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 3181cf3b-b7d0-4531-b0ab-115ec5758e7a
+		summarizeBy: none
+		sourceColumn: Date Since
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'Date Until'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2f8da9c1-dc08-489b-ab46-ea889db42dcd
+		summarizeBy: none
+		sourceColumn: Date Until
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Report Key'
+		dataType: string
+		lineageTag: 604bf97a-2fd0-41df-a834-7c658fa316f4
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pages = m
+		mode: import
+		source =
+				let
+				    Source = #"Inventory Scans",
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(Source,{{"Since", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Report Page Key"}),
+				    #"Added Custom" = Table.AddColumn(#"Removed Duplicates", "Page URL", each if [Workspace ID] = "Unknown" or [Report ID] = "Unknown" or [Page ID] = "Unknown" then null else "https://app.powerbi.com/groups/" & [Workspace ID] & "/reports/" & [Report ID] & "/" & [Page ID]),
+				    #"Renamed Columns" = Table.RenameColumns(#"Added Custom",{{"Page", "Page Name"}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Renamed Columns",{"Workspace ID", "Report ID"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Exception
+
+	annotation PBI_NavigationStepName = Navigation
+

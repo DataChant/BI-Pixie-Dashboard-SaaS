@@ -1,0 +1,78 @@
+table Workspaces
+	lineageTag: 63e50a49-abee-44ca-9413-f3cf50454ba7
+
+	measure 'Workspace Link' = MAX(Workspaces[Workspace URL])
+		lineageTag: bc1ecb37-7e8a-43df-bd29-d89b02b52ade
+		dataCategory: WebUrl
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Workspace ID'
+		dataType: string
+		lineageTag: 335e1992-a042-4846-96a8-9b6e39e1df6b
+		summarizeBy: none
+		sourceColumn: Workspace ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Last Capacity ID'
+		dataType: string
+		isHidden
+		lineageTag: 3ac994c5-2339-4c0d-a860-d0f5041d6aac
+		summarizeBy: none
+		sourceColumn: Last Capacity ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Since
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 28e0f4d8-d1aa-4df7-ab5b-a15520ee0405
+		summarizeBy: none
+		sourceColumn: Since
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workspace URL'
+		dataType: string
+		isHidden
+		lineageTag: 9abdf89c-c620-46fa-baa2-5adc6be7001e
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: Workspace URL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workspace Name'
+		dataType: string
+		lineageTag: b7209f1f-957d-4507-bc72-0770dde9cec3
+		summarizeBy: none
+		sourceColumn: Workspace Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Workspaces = m
+		mode: import
+		source =
+				let
+				    Source = #"Workspaces - Base",
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Project"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"Workspace", "Workspace Name"}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Renamed Columns1",{{"Since", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Workspace ID"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Duplicates", each [Workspace ID] <> null and [Workspace ID] <> ""),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"Capacity ID", "Last Capacity ID"}}),
+				    Custom1 = Table.AddColumn(#"Renamed Columns", "Workspace URL", each if [Workspace ID] = "Unknown" then null else "https://app.powerbi.com/groups/" & [Workspace ID]),
+				    #"Filtered Rows1" = Table.SelectRows(Custom1, each ([Workspace ID] <> "Unknown")),
+				    #"Appended Query" = Table.Combine({#"Filtered Rows1", #"Workspace-Unknown"})
+				in
+				    #"Appended Query"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

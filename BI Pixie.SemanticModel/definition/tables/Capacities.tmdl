@@ -1,0 +1,81 @@
+table Capacities
+	lineageTag: d795d253-1d4c-462e-9a6d-1a8b93c495bc
+
+	column 'Capacity ID'
+		dataType: string
+		lineageTag: 65a7edae-217e-4557-b437-6e6507678220
+		summarizeBy: none
+		sourceColumn: Capacity ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SKU
+		dataType: string
+		lineageTag: b8a5073f-1105-49d3-ab72-616c824cab50
+		summarizeBy: none
+		sourceColumn: SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: c142d6b5-2914-4012-952f-544ba720fcb6
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 2c9c2096-f483-46ac-b2d3-6536c7d5c4e4
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capacity Name'
+		dataType: string
+		lineageTag: 30e07012-e8bc-4505-902f-c78d8b6fb92e
+		summarizeBy: none
+		sourceColumn: Capacity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SKU and Capacity Name'
+		dataType: string
+		lineageTag: c1b49b0c-ef66-4870-aa9e-d3f563cacc4d
+		summarizeBy: none
+		sourceColumn: SKU and Capacity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Capacities = m
+		mode: import
+		source = ```
+				let
+				    Source = #"Inventory - Base 0",
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Content", "reports", "deploymentPipelines", "Project"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each [capacities] <> null),
+				    #"Expanded capacities" = Table.ExpandListColumn(#"Filtered Rows", "capacities"),
+				    #"Expanded capacities1" = Table.ExpandRecordColumn(#"Expanded capacities", "capacities", {"id", "displayName", "sku", "region", "state"}, {"Capacity ID", "Capacity Name", "SKU", "Region", "State"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Expanded capacities1", each [Capacity ID] <> null and [Capacity ID] <> ""),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Filtered Rows1",{{"Since", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Capacity ID"}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Removed Duplicates",{"Since"}),
+				    #"Appended Query" = Table.Combine({#"Removed Columns1", #"Capacity-Unknown"}),
+				    #"Added Custom" = Table.AddColumn(#"Appended Query", "SKU and Capacity Name", each "(" & [SKU] & ") " & [Capacity Name]),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Custom","(Unknown) ","",Replacer.ReplaceText,{"SKU and Capacity Name"}),
+				    LastNonDemo = Table.ReplaceValue(#"Replaced Value","(Power BI Pro) ","",Replacer.ReplaceText,{"SKU and Capacity Name"}),
+				    
+				    #"Replaced Value2" = Table.ReplaceValue(LastNonDemo,"(FT1) Trial-20231210T183548Z-eEDgkCJMPEaeAeUSYzQdig","(F128) f128fabric",Replacer.ReplaceText,{"SKU and Capacity Name"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","FT1","F128",Replacer.ReplaceText,{"SKU"}),
+				    LastDemo = Table.ReplaceValue(#"Replaced Value3","Trial-20231210T183548Z-eEDgkCJMPEaeAeUSYzQdig","f128fabric",Replacer.ReplaceText,{"Capacity Name"}),
+				    Final = if not #"Is Demo" then LastNonDemo else LastDemo
+				in
+				    Final
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,258 @@
+table Reports
+	lineageTag: f7e7419b-f93e-4a81-aa28-dbf12917e780
+
+	measure 'Selected Report Name' = SELECTEDVALUE('Reports'[Report Name])
+		isHidden
+		lineageTag: 21e730d0-fbd4-4509-91a7-7b28d5964847
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Complexity Score' =
+			
+			VAR _measure_length = [Measure Expression Len Norm]
+			VAR _columns_in_viz_complexity = [Columns in Visuals Complexity Norm]
+			VAR _calc_columns_complexity = [Column Expression Len Norm]
+			VAR _excessive_analytics = MAX(1, [Visuals] - [Non-Analytic Objects] - ([Tracked Pages] * 10))
+			VAR _objects = MAX(1, [Non-Analytic Objects])
+			VAR _rows = COUNTROWS('Pages')
+			RETURN
+			IF ( _rows=0, BLANK(), _measure_length * _calc_columns_complexity * _columns_in_viz_complexity * _excessive_analytics * _objects )
+		formatString: 0.00
+		lineageTag: 82479ca7-2286-451c-badd-7c32c0b00ae9
+
+	measure 'Usability Score' =
+			
+			VAR _bookmarks = MAX(1, [Bookmarks] )
+			VAR _tables = MAX(1, [Table Visuals] )
+			VAR _columns = MAX(1, [Columns in Table Visuals])
+			VAR _visuals = MAX(1, [Visuals])
+			VAR _objects = MAX(1, [Non-Analytic Objects])
+			VAR _slicers = MAX(1, [Slicers])
+			VAR _tooltips = MAX(1, [Tooltip Pages])
+			VAR _drillthru = MAX(1, [Drillthru Pages])
+			VAR _rows = COUNTROWS('Pages')
+			RETURN
+			IF (
+			    _rows = 0,
+			    BLANK(),
+			    DIVIDE(_bookmarks * _slicers * _tooltips * _drillthru, _visuals)
+			)
+		formatString: #,0.00
+		lineageTag: 1a7dd953-6ac2-40a9-b9e7-976ce5445aec
+
+	measure 'Passivity Score' =
+			
+			VAR _rows = COUNTROWS('Pages')
+			RETURN
+			IF (
+			    _rows = 0,
+			    BLANK(),
+			    [Columns in Table Visuals] * DIVIDE([Table Visuals], MAX(1,[Visuals] - [Non-Analytic Objects]))
+			)
+		formatString: 0.00
+		lineageTag: 85f3c24b-f490-4224-8248-5da3f5554586
+
+	measure 'Report Link' = VAR _url = MAX(Reports[Report URL]) RETURN IF(ISBLANK(_url), BLANK(), _url)
+		isHidden
+		lineageTag: 2e9bc830-2fb8-4ca3-9158-a6ddcd2e2407
+		dataCategory: WebUrl
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Instrumented Reports' = COUNTROWS(Reports)
+		formatString: 0
+		lineageTag: 4a10da86-7f08-4ba4-993a-0772d4849bd1
+
+	column 'Report Key'
+		dataType: string
+		isHidden
+		isNullable: false
+		lineageTag: 3e9a2f3c-25ae-4daf-95cf-9b5aa1ed9c57
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Name'
+		dataType: string
+		lineageTag: 001cba22-5511-446a-b28e-8491c4bfca7b
+		summarizeBy: none
+		sourceColumn: Report Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Bookmarks Count'
+		dataType: double
+		isHidden
+		formatString: 0
+		lineageTag: 37e8ba9e-b393-4cc3-a7af-4a6150bba40b
+		summarizeBy: sum
+		sourceColumn: Bookmarks Count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report ID'
+		dataType: string
+		lineageTag: b1949b6b-ebed-4dfb-820d-97c1aac96860
+		summarizeBy: none
+		sourceColumn: Report ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'External Semantic Model'
+		dataType: string
+		lineageTag: 4d17d4e2-fbfd-426a-be59-fad3ba714cc3
+		summarizeBy: none
+		sourceColumn: External Semantic Model
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'External Semantic Model Workspace'
+		dataType: string
+		lineageTag: fea7eed5-f2d0-4bd3-861f-5e000bc1b849
+		summarizeBy: none
+		sourceColumn: External Semantic Model Workspace
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workspace ID'
+		dataType: string
+		isHidden
+		lineageTag: ec77e206-72a2-41fc-84ff-58dd191b6718
+		summarizeBy: none
+		sourceColumn: Workspace ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report URL'
+		dataType: string
+		lineageTag: 2cf83c29-58af-4fe0-a966-801dbe764b01
+		dataCategory: WebUrl
+		summarizeBy: none
+		sourceColumn: Report URL
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Type'
+		dataType: string
+		isHidden
+		lineageTag: a66bab37-29cb-48c7-991a-3f57dc43e18e
+		summarizeBy: none
+		sourceColumn: Report Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Project
+		dataType: string
+		lineageTag: 7afa08b8-311d-43ea-bfdb-ff9f5e75bc4c
+		summarizeBy: none
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Collection Method'
+		dataType: string
+		lineageTag: e97a5fed-fdcf-4462-91eb-35d6e1d47419
+		summarizeBy: none
+		sourceColumn: Data Collection Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Folder As Project'
+		dataType: string
+		lineageTag: 04ae284a-de77-4d62-91fc-2cc1ef416188
+		summarizeBy: none
+		sourceColumn: Folder As Project
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workspace
+		dataType: string
+		isHidden
+		lineageTag: e0e7da59-07a6-44d5-a8c4-7602615680a5
+		summarizeBy: none
+		sourceColumn: Workspace
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod Capacity ID'
+		dataType: string
+		lineageTag: b4e8338b-0d3b-4bac-b9e0-58e637368ece
+		summarizeBy: none
+		sourceColumn: Prod Capacity ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Instrumented At'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 524773a4-dbf4-44b3-af12-67096b6f6368
+		summarizeBy: none
+		sourceColumn: Instrumented At
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column 'First Instrumentation Date'
+		dataType: dateTime
+		formatString: dd-mmm-yy
+		lineageTag: 8eadc9e2-c3e2-46c4-bbd6-985535c894f9
+		summarizeBy: none
+		sourceColumn: First Instrumentation Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	partition Reports = m
+		mode: import
+		source =
+				let
+				    Source = #"Inventory - Reports - Base 3",
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Capacity ID", "Prod Capacity ID"}),
+				    #"Grouped Rows" = Table.Group(#"Removed Columns", {"Report Key"}, {{"data", each _, type table [Since=nullable datetime, Project=nullable text, Folder As Project=text, Report Name=nullable text, Bookmarks Count=nullable number, External Semantic Model=nullable text, Prod Capacity ID=any, Workspace ID=text, Report ID=nullable text, External Semantic Model Workspace=nullable text, Report Key=nullable text, Workspace=nullable text]}}),
+				    #"Added Custom3" = Table.AddColumn(#"Grouped Rows", "First Instrumentation Date", each List.Min([data][Since])),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Added Custom3",{{"First Instrumentation Date", type date}}),
+				    #"Expanded data" = Table.ExpandTableColumn(#"Changed Type", "data", {"Since", "Project", "Folder As Project", "Report Name", "Bookmarks Count", "External Semantic Model", "Prod Capacity ID", "Workspace ID", "Report ID", "External Semantic Model Workspace", "Workspace"}, {"Since", "Project", "Folder As Project", "Report Name", "Bookmarks Count", "External Semantic Model", "Prod Capacity ID", "Workspace ID", "Report ID", "External Semantic Model Workspace", "Workspace"}),
+				    #"Added Custom1" = Table.AddColumn(#"Expanded data", "Report Type", each "Power BI Report"),
+				    #"Added Custom2" = Table.AddColumn(#"Added Custom1", "Data Collection Method", each "BI Pixie Instrumentation"),
+				    //#"Appended Query" = Table.Combine({#"Added Custom2", #"Reports from Activity Logs"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Custom2",null,"NA",Replacer.ReplaceValue,{"External Semantic Model"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","","NA",Replacer.ReplaceValue,{"External Semantic Model"}),
+				    #"Replaced Value2" = Table.ReplaceValue(#"Replaced Value1","","NA",Replacer.ReplaceValue,{"External Semantic Model Workspace"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2",null,"NA",Replacer.ReplaceValue,{"External Semantic Model Workspace"}),
+				    #"Added Custom" = Table.AddColumn(#"Replaced Value3", "Report URL", each if [Workspace ID] = "Unknown" or [Report ID] = "Unknown" then null else "https://app.powerbi.com/groups/" & [Workspace ID] & "/reports/" & [Report ID]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Added Custom",{{"Since", type date}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"Since", "Instrumented At"}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Renamed Columns",{{"Instrumented At", Order.Descending}})),
+				    #"Removed Duplicates1" = Table.Distinct(#"Sorted Rows", {"Report Key"})
+				in
+				    #"Removed Duplicates1"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

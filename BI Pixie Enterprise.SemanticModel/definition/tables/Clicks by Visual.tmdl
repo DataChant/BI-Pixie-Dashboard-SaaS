@@ -1,0 +1,256 @@
+table 'Clicks by Visual'
+	lineageTag: 24657784-836c-4a3e-b24f-516e1ee9dfdf
+
+	measure 'Clicks in Visual' = ```
+			
+			VAR _sessions =
+			CALCULATE (
+			    [Page Sessions],
+			    TREATAS (
+			        VALUES ( 'Clicks by Visual'[Report Page Key] ),
+			        'Page Sessions'[Report Page Key]
+			    )
+			)
+			
+			VAR _links_and_bookmarks = 
+			CALCULATE (
+			    [Click Events],
+			    'Event Types'[Event Type] IN {"Link", "Bookmark"}
+			)
+			
+			VAR _clicks =
+			IF (
+			    _sessions > 0,
+			    SUMX (
+			        VALUES ('Visuals'[Visual Key] ),
+			        CALCULATE (
+			            VAR _EventsInMostTrackedColumn = 
+			            MAXX (
+			                CALCULATETABLE (
+			                    VALUES ( 'Clicks by Visual'[Filtered Column] ),
+			                    NOT ( 'Event Types'[Event Type] IN {"Link", "Bookmark"} )
+			                ),
+			                [Click Events] 
+			            )
+			            RETURN
+			            IF (
+			                _EventsInMostTrackedColumn > 0,
+			                MAX ( BLANK(), _EventsInMostTrackedColumn - _sessions )
+			            )
+			        )
+			    )
+			)
+			RETURN
+			_clicks
+			```
+		formatString: #,0
+		lineageTag: 5696391d-360e-4436-bf07-b65b22c658b0
+
+	measure 'Click Events' = COUNTROWS('Clicks by Visual')
+		lineageTag: e7774d73-37f1-4e27-ac15-db76568aa20d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Event Type'
+		dataType: string
+		isHidden
+		lineageTag: 413aee60-ca15-44cd-abf3-8c98173c2fe3
+		summarizeBy: none
+		sourceColumn: Event Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: b180abb2-43ea-44f7-9283-107a44cbfc79
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Page Index'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8ec5cc87-e69f-4dd8-89f1-61609ea7e864
+		summarizeBy: sum
+		sourceColumn: Page Index
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual ID'
+		dataType: string
+		isHidden
+		lineageTag: 5950a997-a8a7-4161-aaa2-a22d71367e2a
+		summarizeBy: none
+		sourceColumn: Visual ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual Type'
+		dataType: string
+		isHidden
+		lineageTag: 9d9ec4dc-c1af-4abc-b105-77180e858b92
+		summarizeBy: none
+		sourceColumn: Visual Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual Name'
+		dataType: string
+		isHidden
+		lineageTag: 27e53dd1-cdbb-451f-8270-0cfb26b8305d
+		summarizeBy: none
+		sourceColumn: Visual Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Filtered Column'
+		dataType: string
+		lineageTag: c94ef2ef-d1cf-4196-a6d9-50c5e83e4f66
+		summarizeBy: none
+		sourceColumn: Filtered Column
+
+		annotation SummarizationSetBy = Automatic
+
+	column Username
+		dataType: string
+		isHidden
+		lineageTag: 5e9047be-7f0c-4bbb-8fd7-83e55689cdf7
+		summarizeBy: none
+		sourceColumn: Username
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Client IP'
+		dataType: string
+		lineageTag: afccfc75-86bf-428d-b14a-6d03a3711220
+		summarizeBy: none
+		sourceColumn: Client IP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Platform
+		dataType: string
+		lineageTag: 6f3e7701-5300-4942-ae23-f12893dd3f28
+		summarizeBy: none
+		sourceColumn: Platform
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 0cda2cad-234e-4c93-a9dd-a464004c4b04
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: e3768301-a1fe-47d6-a8c3-cbedc4a15490
+		summarizeBy: none
+		sourceColumn: Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Report Page Key'
+		dataType: string
+		isHidden
+		lineageTag: 40015e5a-1deb-4820-ad68-d8781ccf6d20
+		summarizeBy: none
+		sourceColumn: Report Page Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual Key'
+		dataType: string
+		isHidden
+		lineageTag: 9fa30285-91ad-45e4-8f4d-6c0598a363e8
+		summarizeBy: none
+		sourceColumn: Visual Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Selected Value'
+		dataType: string
+		lineageTag: 4da5ce41-cb79-4afe-81ba-b66710504279
+		summarizeBy: none
+		sourceColumn: Selected Value
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Filtered Distinct Count'
+		dataType: int64
+		formatString: 0
+		lineageTag: b8c06f21-9fa5-4361-8d94-13d4db7f4701
+		summarizeBy: sum
+		sourceColumn: Filtered Distinct Count
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Created On'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f008009f-54d0-4b8a-acb9-3c254f13cc02
+		summarizeBy: none
+		sourceColumn: Created On
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Clicks by Visual' = m
+		mode: import
+		source =
+				let
+				    Source = Events,
+				    #"Filtered Rows" = Table.SelectRows(Source, each ([Event Type] = "Bookmark" or [Event Type] = "Link" or [Event Type] = "Slicer" or [Event Type] = "VizClick")),
+				    #"Filtered Rows1" = Table.SelectRows(#"Filtered Rows", each ([Visual ID] <> null and [Visual ID] <> "")),
+				    #"Added Custom" = Table.AddColumn(#"Filtered Rows1", "Custom", each Text.Length([Visual ID])),
+				    #"Filtered Rows2" = Table.SelectRows(#"Added Custom", each ([Custom] = 20)),
+				    #"Added Conditional Column" = Table.AddColumn(#"Filtered Rows2", "Selected Value", each if [Event Type] = "Bookmark" then [Bookmark] else if [Event Type] = "Link" then [Link] else [Filtered Values]),
+				    Custom1 = Table.AddColumn(#"Added Conditional Column", "New Distinct Count", each if [Event Type] = "Bookmark" then 1 else if [Event Type] = "Link" then 1 else [Filtered Distinct Count]),
+				    #"Filtered Rows3" = Table.SelectRows(Custom1, each [New Distinct Count] <> null and [New Distinct Count] <> ""),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Filtered Rows3",{"Filtered Distinct Count"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns2",{{"New Distinct Count", "Filtered Distinct Count"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Filtered Distinct Count", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"Custom", "Bookmark", "Feedback", "User-Agent", "Report Key", "Filtered Values", "Link"}),
+				    #"Inserted Merged Column" = Table.AddColumn(#"Removed Columns", "Visual Key", each Text.Combine({[Report Page Key], [Visual ID]}, "---"), type text),
+				    #"Replaced Value" = Table.ReplaceValue(#"Inserted Merged Column","","Not Applicable",Replacer.ReplaceValue,{"Filtered Column"})
+				in
+				    #"Replaced Value"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

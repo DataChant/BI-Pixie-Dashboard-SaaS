@@ -1,0 +1,60 @@
+table 'Visual Trust Levels'
+	lineageTag: 918841e9-537d-4977-9fa7-9a05e90f3d0f
+
+	measure 'Visual Trust CF Color' = MAX('Visual Trust Levels'[CF])
+		lineageTag: 35f484ff-754b-4252-af2a-5a0350a06b9e
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Visual State'
+		dataType: string
+		lineageTag: f477ddc3-4bba-40f5-9708-830880b2a6d3
+		summarizeBy: none
+		sourceColumn: Visual State
+		sortByColumn: Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Trust Level'
+		dataType: string
+		lineageTag: 7382953a-53d2-4f34-a085-9ab09ea6a288
+		summarizeBy: none
+		sourceColumn: Trust Level
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4736c917-d5fd-4118-b513-62fd305daf28
+		summarizeBy: none
+		sourceColumn: Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column CF
+		dataType: string
+		lineageTag: 9e956492-8dd0-4d0c-a501-a039c7bacd90
+		summarizeBy: none
+		sourceColumn: CF
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Visual Trust Levels' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("Tc6xDsIgEAbgV2nOtQ4clMCoNcRB3ZwIW1EvVkgsTV9foB0c7u5P/m84a+E405j2FKCFMz1ffko5sTw7VEwKDa610Ptvogf5YVP5YCFScKZ5JbeYmn929QPNnxx4gaqT6iAqvIeRplTNJS55iwKM0b3ADbxDXMLar/90hZw4GjQNOPcD", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Visual State" = _t, #"Trust Level" = _t, Order = _t, CF = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Visual State", type text}, {"Trust Level", type text}, {"Order", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

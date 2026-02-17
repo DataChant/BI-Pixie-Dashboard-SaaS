@@ -1,0 +1,47 @@
+table 'Export Metrics'
+	lineageTag: 4936f99d-d923-4876-a902-c9218ece71e0
+
+	column 'Export Metric'
+		dataType: string
+		lineageTag: f177e330-b085-44a1-bedc-477c6842080d
+		summarizeBy: none
+		sourceColumn: Export Metric
+		sortByColumn: Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a757b605-4fa6-4098-ab68-bce066f0e605
+		summarizeBy: sum
+		sourceColumn: Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Unit
+		dataType: string
+		lineageTag: c1dcfa5a-2ac8-4548-b320-295466d60877
+		summarizeBy: none
+		sourceColumn: Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Export Metrics' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WUlbIT1NwrSjILyopVtJRMgRiGC9WJ1opJL8kMUchKL+8GKooNQWowgiIQWJgJS6lRYklmfl5Co5l6QoawanJmkBZYyAGMvPzUpDNcQ4IVQjJzE2FKzNBUxaQmpit4Juam19UCTHO2wmkzBSIvZ2UYmMB", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Export Metric" = _t, Order = _t, Unit = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Export Metric", type text}, {"Order", Int64.Type}, {"Unit", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

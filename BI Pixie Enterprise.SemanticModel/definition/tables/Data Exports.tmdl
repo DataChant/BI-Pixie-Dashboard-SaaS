@@ -1,0 +1,324 @@
+table 'Data Exports'
+	lineageTag: ec1a8c6a-9269-4900-b17f-4560b726a10d
+
+	measure 'Export Duration Avg (Sec)' = DIVIDE(AVERAGE('Data Exports'[DurationMs]), 1000)
+		formatString: #,0.00
+		lineageTag: 9b1d8522-ab9f-4aac-b973-dbf6b89fcf7e
+
+	measure 'Export Query Processing CPU Time Avg (Sec)' = DIVIDE(AVERAGE('Data Exports'[QueryProcessingCpuTimeMs]), 1000)
+		formatString: #,0.00
+		lineageTag: b9670a43-372d-4015-87f7-ea95645bf8fd
+
+	measure 'Export Query Processing CPU Time Sum (Sec)' = DIVIDE(SUM('Data Exports'[QueryProcessingCpuTimeMs]), 1000)
+		formatString: 0.00
+		lineageTag: c721616a-46c3-4094-ae6f-4a156a1992ac
+
+	measure 'Export Total CPU Time Sum (Sec)' = DIVIDE(SUM('Data Exports'[TotalCpuTimeMs]), 1000)
+		formatString: #,0.00
+		lineageTag: 7ac0be6b-c3a1-4b90-80b2-656cddb89ff8
+
+	measure 'Export Total CPU Time Avg (Sec)' = DIVIDE(AVERAGE('Data Exports'[TotalCpuTimeMs]), 1000)
+		formatString: #,0.00
+		lineageTag: 0966aca3-b248-49e0-81a3-c258f4148cee
+
+	measure 'Total Rows Exported' = SUM('Data Exports'[QueryResultRows])
+		formatString: #,0
+		lineageTag: ba3da4d1-4388-45bf-8824-d385c362269c
+
+	measure 'Export Peak Memory Consumption KB Avg' = AVERAGE('Data Exports'[ApproximatePeakMemConsumptionKB])
+		lineageTag: 64e3089c-793b-4037-abeb-7a782bed4358
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Exports = CALCULATE(COUNTROWS('Data Exports'), KEEPFILTERS('Export Types'[Export Type] <> "Scroll Down"), KEEPFILTERS(NOT(ISBLANK(Visuals[Performance Key]))))
+		formatString: #,0
+		lineageTag: b14472f0-fbc5-4bb8-b81f-709dca0e42ff
+
+	measure 'Scroll Down in Visuals' = CALCULATE(COUNTROWS('Data Exports'), KEEPFILTERS('Data Exports'[Export Type] = "Scroll Down"), KEEPFILTERS(NOT(ISBLANK(Visuals[Performance Key]))))
+		formatString: #,0
+		lineageTag: a478e78f-4a88-4333-bddf-5715ded36d8d
+
+	measure 'Export Heatmap Performance' =
+			
+			VAR _x_cell_size = [X Heatmap Cell Size]
+			VAR _y_cell_size = [Y Heatmap Cell Size]
+			VAR _x = MAX('X Dimension'[X]) * _x_cell_size
+			VAR _y = MAX('Y Dimension'[Y]) * _y_cell_size
+			VAR _result =
+			CALCULATE(
+			    [Export Metric Value],
+			    KEEPFILTERS (
+			        Visuals[X] < _x && Visuals[X] + Visuals[Width] > _x + _x_cell_size &&
+			        Visuals[Y] < _y && Visuals[Y] + Visuals[Height] > _y + _y_cell_size
+			    )
+			)
+			RETURN
+			_result
+		formatString: #,0
+		lineageTag: 14fbbf4f-6a9f-4ea7-ba75-e8efa7755927
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Export DAX Query' =
+			
+			VAR _x = ISFILTERED('X Dimension'[X])
+			VAR _performance_key = [Performance Key in Heatmap]
+			RETURN
+			IF (
+			    NOT(_x),
+			    MAX('Data Exports'[DAXQuery]),
+			    CALCULATE (
+			        MAX('Data Exports'[DAXQuery]),
+			        KEEPFILTERS(Visuals[Performance Key] = _performance_key)
+			    )
+			)
+		lineageTag: 2dfad6b9-0c10-426e-b2ac-a8ddd627bc05
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Average # of Rows Exported' = AVERAGE('Data Exports'[QueryResultRows])
+		formatString: #,0.0
+		lineageTag: b37ca267-c729-42df-95d0-873635fb09ad
+
+	measure 'Export Metric Value' = ```
+			
+			    SWITCH (
+			        SELECTEDVALUE('Export Metrics'[Export Metric]),
+			        "Total Rows Exported", [Total Rows Exported],
+			        "# of Exports", [Exports],
+			        "Duration Avg (Sec)", [Export Duration Avg (Sec)],
+			        "Total CPU Time (Sec)", [Export Total CPU Time Sum (Sec)],
+			        "Peak Memory Avg (KB)", [Export Peak Memory Consumption KB Avg],
+			        BLANK()
+			    )
+			
+			```
+		lineageTag: 6ea7998b-0cc6-43f1-b723-512cdc02eb16
+
+		formatStringDefinition =
+				
+				VAR _metric = SELECTEDVALUE('Export Metrics'[Export Metric])
+				RETURN
+				IF(_metric IN {"Duration Avg (Sec)", "Peak Memory Avg (KB)"}, "#,0.00", "#,0")
+
+	measure 'Last Export Date' = MAX('Data Exports'[Date])
+		lineageTag: 7c4f05be-8086-4378-a715-26a593efa596
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Export Heatmap Title' = ```
+			
+			VAR _page_name = 
+			CALCULATE (
+			    MAX('Pages'[Page Name]),
+			    TOPN(1, 'Pages', [Export Metric Value], DESC)
+			)
+			RETURN
+			IF(ISBLANK([Export Metric Value]) || ISBLANK([Scanned visuals]), "No data found",
+			"Selected Page: '" & _page_name & "'")
+			```
+		lineageTag: 5ee9cf0c-34bf-4cce-8ab2-d30a8c02cab5
+
+		annotation PBI_FormatHint = {"isText":true}
+
+	column DAXQuery
+		dataType: string
+		lineageTag: 4716a32a-527e-4e48-83bf-a755f0d67e22
+		summarizeBy: none
+		sourceColumn: DAXQuery
+
+		annotation SummarizationSetBy = Automatic
+
+	column QueryResultRows
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: e5fe3a84-be5e-4b85-8799-47101865b5af
+		summarizeBy: sum
+		sourceColumn: QueryResultRows
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DurationMs
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 543eeb4a-2681-45b7-8e27-5c95b1f93573
+		summarizeBy: sum
+		sourceColumn: DurationMs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column QueryProcessingCpuTimeMs
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b4cca850-4251-4cc8-8237-bfa47818b5ad
+		summarizeBy: sum
+		sourceColumn: QueryProcessingCpuTimeMs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column TotalCpuTimeMs
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 26bae57f-6cde-4dfd-8518-74150b37f0a9
+		summarizeBy: sum
+		sourceColumn: TotalCpuTimeMs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ApproximatePeakMemConsumptionKB
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 37d1c9e6-c970-4e43-99f8-c993e7a2a42a
+		summarizeBy: sum
+		sourceColumn: ApproximatePeakMemConsumptionKB
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Max Rows'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: ccfe65b2-65cc-47e0-9581-e9bd0cae387a
+		summarizeBy: none
+		sourceColumn: Max Rows
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = User
+
+	column 'Export Type'
+		dataType: string
+		isHidden
+		lineageTag: 9635d7fd-1290-4225-87da-6a62ad020356
+		summarizeBy: none
+		sourceColumn: Export Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Confidence
+		dataType: double
+		lineageTag: dbd9c279-959b-4f11-9daa-a5044d16f03b
+		summarizeBy: none
+		sourceColumn: Confidence
+
+		annotation SummarizationSetBy = User
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: dd-mmm-yy
+		lineageTag: 64840eb4-dfef-42f9-9c79-623c0011329a
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation PBI_FormatHint = {"isDateTimeCustom":true}
+
+	column Time
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: 5d57fc84-9f44-46e8-973b-9b86f0831379
+		summarizeBy: none
+		sourceColumn: Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Performance Key'
+		dataType: string
+		isHidden
+		lineageTag: c8ae9905-ecc1-4c94-aadd-7cc0ef5ba51e
+		summarizeBy: none
+		sourceColumn: Performance Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column User
+		dataType: string
+		lineageTag: ea42d15f-133e-4ed8-9140-856be4270b67
+		summarizeBy: none
+		sourceColumn: User
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Data Exports' = m
+		mode: import
+		source = ```
+				let
+				    Source = AzureStorage.DataLake(#"Data Lake URL"),
+				    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/log_analytics/queries")),
+				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
+				    #"Filter N Last Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filter N Last Days",{"Content", "Name", "Date modified"}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "FnGetLogAnalyticsExportEvents", each FnGetLogAnalyticsExportEvents([Content])),
+				    #"Added Custom" = Table.AddColumn(#"Invoked Custom Function", "Export Logs", each Table.RowCount([FnGetLogAnalyticsExportEvents])),
+				    #"Filtered Files with Exports" = Table.SelectRows(#"Added Custom", each [Export Logs] > 0),
+				    #"RemovedExportLogs" = Table.RemoveColumns(#"Filtered Files with Exports",{"Export Logs"}),
+				    #"Invoked Custom Function1" = Table.AddColumn(#"RemovedExportLogs", "FnGetLogAnalyticsVisualEvent", each FnGetLogAnalyticsVisualEvent([Content])),
+				    #"Invoked Custom Function2" = Table.AddColumn(#"Invoked Custom Function1", "FnGetVisualInfoForExportEvents", each FnGetVisualInfoForExportEvents([FnGetLogAnalyticsExportEvents], [FnGetLogAnalyticsVisualEvent])),
+				    #"Removed Columns" = Table.RemoveColumns(#"Invoked Custom Function2",{"FnGetLogAnalyticsExportEvents", "FnGetLogAnalyticsVisualEvent"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Name", "Log Analytics File"}}),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Renamed Columns",{"Content", "Date modified"}),
+				    
+				    ExpandedColumns = Table.ExpandTableColumn(#"Removed Columns1", "FnGetVisualInfoForExportEvents",
+				        {"TimeGenerated", "User", "QueryResultRows", "DurationMs", "QueryProcessingCpuTimeMs", "TotalCpuTimeMs", "ApproximatePeakMemConsumptionKB", "Max Rows", "Export Type", "PowerBIWorkspaceId", "ReportId", "VisualId", "Confidence", "NewDatasetId", "DAXQuery"},
+				        {"TimeGenerated", "User", "QueryResultRows", "DurationMs", "QueryProcessingCpuTimeMs", "TotalCpuTimeMs", "ApproximatePeakMemConsumptionKB", "Max Rows", "Export Type", "PowerBIWorkspaceId", "ReportId", "VisualId", "Confidence", "NewDatasetId", "DAXQuery"}),
+				    #"Filtered Rows" = Table.SelectRows(ExpandedColumns, each [VisualId] <> null and [VisualId] <> ""),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Filtered Rows",{{"NewDatasetId", "DatasetId"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Log Analytics File", type text}, {"TimeGenerated", type datetimezone}, {"DAXQuery", type text}, {"User", type text}, {"QueryResultRows", Int64.Type}, {"DurationMs", Int64.Type}, {"QueryProcessingCpuTimeMs", Int64.Type}, {"TotalCpuTimeMs", Int64.Type}, {"ApproximatePeakMemConsumptionKB", Int64.Type}, {"Max Rows", Int64.Type}, {"Export Type", type text}, {"ReportId", type text}, {"VisualId", type text}, {"Confidence", type number}, {"DatasetId", type text}}),
+				    #"Inserted Date" = Table.AddColumn(#"Changed Type", "Date", each DateTime.Date([TimeGenerated]), type date),
+				    #"Inserted Time" = Table.AddColumn(#"Inserted Date", "Time", each DateTime.Time([TimeGenerated]), type time),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Inserted Time",{"Log Analytics File", "TimeGenerated"}),
+				    #"Merged Queries" = Table.NestedJoin(#"Removed Columns2", {"ReportId", "DatasetId"}, #"PBI Reports - Base", {"Report ID", "Dataset ID"}, "PBI Reports - Base", JoinKind.LeftOuter),
+				    #"Expanded PBI Reports - Base" = Table.ExpandTableColumn(#"Merged Queries", "PBI Reports - Base", {"Workspace ID", "Report Key"}, {"Report Workspace ID", "Report Key"}),
+				    #"Add Performance Key" = Table.AddColumn(#"Expanded PBI Reports - Base", "Performance Key", each Text.Lower([ReportId] & "---" & [VisualId])),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Add Performance Key",{"Report Workspace ID", "Report Key", "DatasetId", "VisualId", "ReportId", "PowerBIWorkspaceId"}),
+				    
+				    NonDemoStep = #"Removed Columns3",
+				    
+				    FirstDemoStep = Table.AddIndexColumn(NonDemoStep, "Index", 1, 1, Int64.Type),
+				    #"Calculated Modulo" = Table.TransformColumns(FirstDemoStep, {{"Index", each 1 + Number.Mod(_, 23), type number}}),
+				    MergedDemoUsers = Table.NestedJoin(#"Calculated Modulo", {"Index"}, #"Users Demo", {"Index"}, "Users Demo", JoinKind.LeftOuter),
+				    #"Expanded Users Demo" = Table.ExpandTableColumn(MergedDemoUsers, "Users Demo", {"User Key"}, {"User Key"}),
+				    #"Removed Columns4" = Table.RemoveColumns(#"Expanded Users Demo",{"User"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns4",{{"User Key", "User"}}),
+				    LastDemoStep = Table.RemoveColumns(#"Renamed Columns2",{"Index"}),
+				    LastStep = if #"Is Demo" then LastDemoStep else NonDemoStep
+				in
+				    LastStep
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

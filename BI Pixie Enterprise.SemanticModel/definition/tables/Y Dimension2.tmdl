@@ -1,0 +1,19 @@
+table 'Y Dimension2'
+	isHidden
+	lineageTag: 6c5dcccb-39b6-4fc9-8f1b-290fbac85875
+
+	column Y
+		isHidden
+		formatString: 0
+		lineageTag: 0a76b3d2-870c-4862-9a42-7b02d8e6a127
+		summarizeBy: sum
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Y Dimension2' = calculated
+		mode: import
+		source = GENERATESERIES(0, 54, 1)
+
+	annotation PBI_Id = 89689947dac44a72bda8567aa737c507
+

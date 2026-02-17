@@ -1,0 +1,46 @@
+table 'PBI Datasets Datasources'
+	isHidden
+	lineageTag: adb1cf8b-86e8-4dc4-8213-a6d1a4747bb3
+
+	column 'Dataset ID'
+		dataType: string
+		isHidden
+		lineageTag: 01e6ddc6-5a4c-4b3b-93b2-da10684499d4
+		summarizeBy: none
+		sourceColumn: Dataset ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Source ID'
+		dataType: string
+		isHidden
+		lineageTag: 8b7366b9-a629-4352-99e9-0d2f4690cb22
+		summarizeBy: none
+		sourceColumn: Data Source ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI Datasets Datasources' = m
+		mode: import
+		queryGroup: 'Power BI Scan'
+		source =
+				let
+				    Source = #"PBI Workspace Datasets - Base",
+				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Dataset ID", "datasourceUsages"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [datasourceUsages] <> null),
+				    #"Expanded datasourceUsages" = Table.ExpandListColumn(#"Filtered Rows", "datasourceUsages"),
+				    #"Expanded datasourceUsages1" = Table.ExpandRecordColumn(#"Expanded datasourceUsages", "datasourceUsages", {"datasourceInstanceId"}, {"datasourceInstanceId"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded datasourceUsages1",{{"datasourceInstanceId", "Data Source ID"}})
+				in
+				    #"Renamed Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

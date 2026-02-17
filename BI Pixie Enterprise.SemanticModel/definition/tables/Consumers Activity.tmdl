@@ -1,0 +1,200 @@
+table 'Consumers Activity'
+	lineageTag: 70ec35ce-0826-4364-8bac-08bc88356395
+
+	measure 'Consumer Activities in PBI Logs' = COUNTROWS('Consumers Activity')
+		formatString: #,0
+		lineageTag: b48bad66-4a41-4450-b5e5-9790f69adb10
+
+	measure 'Data Exports' = MAX([Exports], CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Fabric Operations'[Activity Key] = "ExportReport")))
+		formatString: #,0
+		lineageTag: 1d16fec0-593b-462b-982c-30b008f13ae7
+
+	measure 'Analysis in Excel' = CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Consumers Activity'[Activity Name] = "Analysis in Excel"))
+		formatString: 0
+		lineageTag: 96a73492-ca96-46e4-97a6-5099b02d3545
+
+	measure 'PDF Exports' = CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Fabric Operations'[Activity Key] = "ExportArtifact"), KEEPFILTERS('Consumers Activity'[Export Type] = "PDF"))
+		formatString: #,0
+		lineageTag: 9ca2d23b-4527-411d-963d-a288fbc20e6f
+
+	measure 'PPTX Exports' = CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Fabric Operations'[Activity Key] = "ExportArtifact"), KEEPFILTERS('Consumers Activity'[Export Type] = "PPTX"))
+		formatString: #,0
+		lineageTag: 88ccccee-9c3f-4cfe-9742-48a4c42008ed
+
+	measure 'Report Exports' = CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Fabric Operations'[Activity Key] = "ExportArtifact"))
+		formatString: #,0
+		lineageTag: 541f7e2c-c4ad-4533-b2c4-f3ec83ed2fbf
+
+	measure 'All Consumer Activities' = [Report Sessions] + [Page Clicks] + [Visual interactions] + [Slicer clicks] + [Bookmark clicks] + [Tooltip opens] + [Drillthroughs] + [Link clicks] + [Data Exports] + [Report Exports] + [Analysis in Excel]
+		formatString: #,0
+		lineageTag: 4fdfc462-3e91-4086-b5fc-da91e9635af4
+
+	measure 'View Report PBI Activity Logs' = CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Fabric Operations'[Activity Key] = "ViewReport"))
+		formatString: #,0
+		lineageTag: b23f59c3-d861-4a3e-99b7-215172e5fd91
+
+	measure 'Active Usage in PBI Activity Logs' = CALCULATE([Consumer Activities in PBI Logs], KEEPFILTERS('Fabric Operations'[Activity Key] <> "ViewReport"))
+		lineageTag: bcc959b9-116a-4dd1-af27-63fa6877fad7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'All Activities' = ```
+			
+			SWITCH(
+			    SELECTEDVALUE('Fabric Operations'[Activity Key]),
+			    "ViewReport", [Report Sessions],
+			    "Page Views", [Page Sessions],
+			    "Visual Interactions", [Visual Interactions],
+			    "Slicer Clicks", [Slicer Clicks],
+			    "Bookmark Clicks", [Bookmark Clicks],
+			    "Tooltip Views",[Tooltip Opens],
+			    "Drillthroughs", [Drillthroughs],
+			    "Link Clicks", [Link Clicks],
+			    [Producer Activities]
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 8dc464be-5388-4cd6-b7cf-5ad6cd2ed720
+
+	column Operation
+		dataType: string
+		lineageTag: fe38e5d2-a581-435c-a7fd-860bb2fbc05d
+		summarizeBy: none
+		sourceColumn: Operation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workload
+		dataType: string
+		lineageTag: 369d3c7e-fef0-4871-accf-abb42a3de60d
+		summarizeBy: none
+		sourceColumn: Workload
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Distribution Method'
+		dataType: string
+		lineageTag: 789343c6-91e8-4fa2-9e2f-87458a554de6
+		summarizeBy: none
+		sourceColumn: Distribution Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consumption Method'
+		dataType: string
+		lineageTag: 0895b18d-e7ea-4a6d-a7e8-c364781c98ed
+		summarizeBy: none
+		sourceColumn: Consumption Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Artifact Kind'
+		dataType: string
+		lineageTag: 7665b0aa-a0d7-4db7-83ea-ac010711be7a
+		summarizeBy: none
+		sourceColumn: Artifact Kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity Name'
+		dataType: string
+		lineageTag: 840e28c4-ef65-4f91-9dec-4c5d957b5be1
+		summarizeBy: none
+		sourceColumn: Activity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 67d7f8ba-de6e-42cb-ad4c-7eafe2ecd7b4
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: bdd6b94a-389a-4c46-b7df-3ac8658c19f2
+		summarizeBy: none
+		sourceColumn: Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Item Key'
+		dataType: string
+		isHidden
+		lineageTag: f6d80922-955a-4504-aaee-7366acf70f35
+		summarizeBy: none
+		sourceColumn: Item Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Export Type'
+		dataType: string
+		lineageTag: 92facb39-8258-491a-a916-dcf25e48e69c
+		summarizeBy: none
+		sourceColumn: Export Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Agent'
+		dataType: string
+		lineageTag: c8e270df-adcb-4373-af76-c0cc7d9af203
+		summarizeBy: none
+		sourceColumn: User Agent
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: a1c8ff91-792e-4524-9172-6e2a5f4cd6b6
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Consumers Activity' = m
+		mode: import
+		queryGroup: 'Power BI Activities'
+		source = ```
+				let
+				    Source = #"Consumers Activity - Base",
+				    #"Expanded ExportedArtifactInfo" = Table.ExpandRecordColumn(Source, "ExportedArtifactInfo", {"ExportType"}, {"ExportType"}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Expanded ExportedArtifactInfo",{"SharingInformation", "SharingAction", "ShareLinkId", "SharingScope", "ExportedArtifactDownloadInfo.ExportType", "ExportedArtifactDownloadInfo.ArtifactObjectId", "ExportedArtifactDownloadInfo.ArtifactName", "ExportedArtifactDownloadInfo.ExportCreationTime", "ExportedArtifactDownloadInfo.PageCount"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each not ([Operation] = "ViewReport" and [ConsumptionMethod] = "Export Report") ),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"DistributionMethod", "Distribution Method"}, {"ExportType", "Export Type"}, {"ArtifactKind", "Artifact Kind"}, {"ConsumptionMethod", "Consumption Method"}}),
+				    LastNonDemo = Table.RemoveColumns(#"Renamed Columns",{"User Id", "Client IP"}),
+				    
+				    
+				    #"Merged Queries" = Table.NestedJoin(LastNonDemo, {"Item Key"}, #"Demo Data", {"Report Key"}, "Demo Data", JoinKind.LeftOuter),
+				    #"Expanded Demo Data" = Table.ExpandTableColumn(#"Merged Queries", "Demo Data", {"User Key"}, {"User Key.1"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Expanded Demo Data", each [User Key.1] <> null and [User Key.1] <> ""),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Filtered Rows1",{"User Key"}),
+				    LastDemo = Table.RenameColumns(#"Removed Columns2",{{"User Key.1", "User Key"}}),
+				    Final = if not #"Is Demo" then LastNonDemo else LastDemo
+				in
+				    Final
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

@@ -1,0 +1,387 @@
+table 'Performance Data'
+	lineageTag: 46846e3d-50b6-4f67-a30b-3c344d1445cd
+
+	measure 'Performance value' =
+			
+			IF(
+			    SELECTEDVALUE('Performance Stats'[Stat]) = "SUM",
+			    SUM('Performance Data'[Value]),
+			    DIVIDE(SUM('Performance Data'[Weighted Value]), [Performance log count])
+			)
+		formatString: #,0.00
+		lineageTag: 620e148e-6069-45b8-831d-e36388166797
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Heatmap Performance' =
+			
+			VAR _x_cell_size = [X Heatmap Cell Size]
+			VAR _y_cell_size = [Y Heatmap Cell Size]
+			VAR _x = MAX('X Dimension'[X]) * _x_cell_size
+			VAR _y = MAX('Y Dimension'[Y]) * _y_cell_size
+			
+			VAR _result =
+			CALCULATE(
+			    [Performance Value],
+			    KEEPFILTERS (
+			        Visuals[X] < _x && Visuals[X] + Visuals[Width] > _x + _x_cell_size &&
+			        Visuals[Y] < _y && Visuals[Y] + Visuals[Height] > _y + _y_cell_size
+			    )
+			)
+			RETURN
+			_result
+		lineageTag: e1351c79-b396-4cbb-b385-0ae6fc6c6f75
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Performance Key in Heatmap' = ```
+			
+			VAR _x = MAX('X Dimension'[X]) * [X Heatmap Cell Size]
+			VAR _y = MAX('Y Dimension'[Y]) * [Y Heatmap Cell Size]
+			VAR _visual_z =
+			CALCULATE(
+			    [Visual Z],
+			    FILTER (
+			        'Visuals',
+			        [Visual X] <= _x + [X Heatmap Cell Size] && [Visual X] + [Visual width] >= _x &&
+			        [Visual Y] <= _y + [Y Heatmap Cell Size] && [Visual Y] + [Visual height] >= _y 
+			    )
+			)
+			
+			RETURN
+			CALCULATE(
+			    SELECTEDVALUE('Visuals'[Performance Key]),
+			    FILTER (
+			        'Visuals',
+			        [Visual X] <= _x + [X Heatmap Cell Size] && [Visual X] + [Visual width] >= _x &&
+			        [Visual Y] <= _y + [Y Heatmap Cell Size] && [Visual Y] + [Visual height] >= _y &&
+			        [Visual Z] = _visual_z  
+			    )
+			)
+			```
+		lineageTag: 14bccb40-9212-423e-a85b-b4f1e4a1acc5
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Metric Clarification' =
+			
+			VAR _function = SELECTEDVALUE('Performance Stats'[Stat])
+			RETURN
+			"The '" & SELECTEDVALUE('Performance Metrics'[Metric]) & "' measurement in each visual's rendering event is grouped by date, report and visual and is aggregated by the '" & _function & "' function." & IF(_function <> "SUM", " Then, multiple dates and visuals are aggregated using a weighted average. The count of visual load events is used as the weight.", "")
+		lineageTag: 5f74c4c2-8740-4140-b164-e87bde967c39
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Dates collected' = DISTINCTCOUNT('Performance Data'[Date])
+		lineageTag: 39e7fcb6-628f-43e3-bd4a-9580c3d59169
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Performance Heatmap Visual Border' = ```
+			
+			VAR _x_cell_size = [X Heatmap Cell Size]
+			VAR _y_cell_size = [Y Heatmap Cell Size]
+			VAR _x = MAX('X Dimension'[X]) * _x_cell_size
+			VAR _y = MAX('Y Dimension'[Y]) * _y_cell_size
+			VAR _pages = DISTINCTCOUNT('Visuals'[Report Page Key])
+			VAR _visuals_in_cell = 
+			CALCULATE ( 
+			    COUNTROWS(Visuals),
+			    KEEPFILTERS (
+			        'Visuals'[X] <= _x + _x_cell_size && 'Visuals'[X] + 'Visuals'[Width] >= _x &&
+			        'Visuals'[Y] <= _y + _y_cell_size && 'Visuals'[Y] + 'Visuals'[Height] >= _y
+			    )
+			)
+			
+			VAR _visuals_above_end_here = 
+			CALCULATE (
+			    COUNTROWS(Visuals),
+			    KEEPFILTERS (
+			        'Visuals'[Y] + 'Visuals'[Height] >= _y && 'Visuals'[Y] + 'Visuals'[Height] <= _y + _y_cell_size &&
+			        'Visuals'[X] <= _x + _x_cell_size && 'Visuals'[X] + 'Visuals'[Width] >= _x
+			    )
+			)
+			
+			VAR _visuals_below_start_here = 
+			CALCULATE (
+			    COUNTROWS('Visuals'),
+			    KEEPFILTERS (
+			        'Visuals'[Y] >= _y && 'Visuals'[Y] <= _y + _y_cell_size &&
+			        'Visuals'[X] <= _x + _x_cell_size && 'Visuals'[X] + 'Visuals'[Width] >= _x
+			    )
+			)
+			
+			VAR _left_visuals_end_here = 
+			CALCULATE (
+			    COUNTROWS('Visuals'),
+			    KEEPFILTERS(
+			        'Visuals'[X] + 'Visuals'[Width] >= _x && 'Visuals'[X] + 'Visuals'[Width] <= _x + _x_cell_size &&
+			        'Visuals'[Y] <= _y + _y_cell_size &&  'Visuals'[Y] + 'Visuals'[Height] >= _y
+			    )
+			)
+			
+			VAR _right_visuals_start_here =
+			CALCULATE (
+			    COUNTROWS ('Visuals'),
+			    KEEPFILTERS (
+			        'Visuals'[X] >= _x && Visuals[X] <= _x + _x_cell_size &&
+			        'Visuals'[Y] <= _y + _y_cell_size && 'Visuals'[Y] + 'Visuals'[Height] >= _y
+			    )
+			)
+			
+			VAR _visuals_with_top_left_corner = 
+			    CALCULATE (
+			        COUNTROWS ('Visuals'),
+			        KEEPFILTERS (
+			            'Visuals'[X] >= _x && 'Visuals'[X] <= _x + _x_cell_size &&
+			            'Visuals'[Y] >= _y && 'Visuals'[Y] <= _y + _y_cell_size
+			        )
+			    )
+			
+			VAR _visuals_with_top_right_corner = 
+			CALCULATE (
+			    COUNTROWS ('Visuals'),
+			    KEEPFILTERS (
+			        'Visuals'[X] + 'Visuals'[Width] >= _x && 'Visuals'[X] + 'Visuals'[Width] <= _x + _x_cell_size &&
+			        'Visuals'[Y] >= _y && 'Visuals'[Y] <= _y + _y_cell_size
+			    )
+			)
+			
+			VAR _visuals_with_bottom_left_corner = 
+			CALCULATE (
+			    COUNTROWS ('Visuals'),
+			        KEEPFILTERS (
+			        'Visuals'[X] >= _x && 'Visuals'[X] <= _x + _x_cell_size &&
+			        'Visuals'[Y] + 'Visuals'[Height] >= _y && 'Visuals'[Y] + 'Visuals'[Height] <= _y + _y_cell_size
+			    )
+			)
+			
+			VAR _visuals_with_bottom_right_corner = 
+			CALCULATE (
+			    COUNTROWS ('Visuals'),
+			        KEEPFILTERS (
+			        'Visuals'[X] + 'Visuals'[Width] >= _x && 'Visuals'[X] + 'Visuals'[Width] <= _x + _x_cell_size &&
+			        'Visuals'[Y] + 'Visuals'[Height] >= _y && 'Visuals'[Y] + 'Visuals'[Height] <= _y + _y_cell_size
+			    )
+			)
+			
+			RETURN
+			SWITCH (
+			    TRUE (),
+			    ISBLANK(_visuals_in_cell), " ",
+			    (_visuals_with_top_left_corner > 0 && _visuals_with_bottom_right_corner > 0) || (_visuals_with_top_right_corner > 0 && _visuals_with_bottom_left_corner > 0), "╋",
+			    
+			    _visuals_above_end_here > 0 && _visuals_with_bottom_left_corner = 0 &&  _visuals_with_bottom_right_corner = 0  && (_visuals_with_top_left_corner > 0 || _visuals_with_top_right_corner > 0), "┳",
+			    _visuals_with_top_left_corner > 0 && _visuals_with_top_right_corner > 0 && _visuals_with_bottom_left_corner = 0 && _visuals_with_bottom_right_corner = 0, "┳",
+			    
+			    _visuals_below_start_here > 0 && _visuals_with_top_right_corner = 0 && _visuals_with_top_left_corner = 0 && (_visuals_with_bottom_left_corner > 0 || _visuals_with_bottom_right_corner > 0), "┷",
+			    _visuals_with_top_left_corner = 0 && _visuals_with_top_right_corner = 0 && _visuals_with_bottom_left_corner > 0 && _visuals_with_bottom_right_corner > 0, "┷", 
+			    
+			    _right_visuals_start_here > 0 && _visuals_with_bottom_left_corner = 0 &&  _visuals_with_top_left_corner = 0 && (_visuals_with_bottom_right_corner > 0 || _visuals_with_top_right_corner > 0), "┫",
+			    _visuals_with_top_left_corner = 0 && _visuals_with_top_right_corner > 0 && _visuals_with_bottom_left_corner = 0 && _visuals_with_bottom_right_corner > 0, "┫",
+			    
+			    _left_visuals_end_here > 0 && _visuals_with_top_right_corner = 0 && _visuals_with_bottom_right_corner = 0 && (_visuals_with_bottom_left_corner > 0 || _visuals_with_top_left_corner > 0), "┣",
+			    _visuals_with_top_left_corner > 0 && _visuals_with_top_right_corner = 0 && _visuals_with_bottom_left_corner > 0 && _visuals_with_bottom_right_corner = 0, "┣", 
+			
+			    _visuals_with_top_left_corner = 0 && _visuals_with_top_right_corner = 0 && _visuals_with_bottom_left_corner = 0 && _visuals_with_bottom_right_corner > 0, "┛",
+			    _visuals_with_top_left_corner = 0 && _visuals_with_top_right_corner = 0 && _visuals_with_bottom_left_corner > 0 && _visuals_with_bottom_right_corner = 0, "┗",
+			    _visuals_with_top_left_corner > 0 && _visuals_with_top_right_corner = 0 && _visuals_with_bottom_left_corner = 0 && _visuals_with_bottom_right_corner = 0, "┎",
+			    _visuals_with_top_left_corner = 0 && _visuals_with_top_right_corner > 0 && _visuals_with_bottom_left_corner = 0 && _visuals_with_bottom_right_corner = 0, "┓",
+			    
+			    _visuals_above_end_here > 0 || _visuals_below_start_here, "━",
+			    _left_visuals_end_here > 0 || _right_visuals_start_here > 0, "┃",
+			    _visuals_in_cell > 0, " ",
+			    _pages > 1, " ", 
+			    BLANK()
+			)
+			```
+		isHidden
+		lineageTag: ba9411e9-8c90-4555-84e5-3554d679fbfc
+
+		changedProperty = IsHidden
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Performance log count' = SUM('Performance Data'[Log Count])
+		formatString: #,0
+		lineageTag: 1c4b60c6-9388-4e46-8aaf-2e543624e723
+
+	measure 'Performance Compared to P90' = ```
+			
+			VAR _p90 =
+			CALCULATE (
+			    [Performance value],
+			    REMOVEFILTERS ( 'Performance Stats' ),
+			    'Performance Stats'[Stat] = "P90"
+			)
+			
+			RETURN
+			DIVIDE([Performance value], _p90)
+			
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 1439e7b0-69ef-4f36-9166-a5e0d48657f8
+
+	measure 'Performance Heatmap Title' = ```
+			
+			VAR _page_key = 
+			CALCULATE (
+			    MAX('Pages'[Report Page Key]),
+			    TOPN(1, 'Pages', [Performance value], DESC)
+			)
+			VAR _page_name = 
+			CALCULATE (
+			    MAX('Pages'[Page Name]),
+			    KEEPFILTERS( 'Pages'[Report Page Key] = _page_key )
+			)
+			
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    SUM(License[Capability Heatmaps]) < 1 || SUM(License[Capability Performance]) < 1, "No data found",
+			    ISBLANK([Scanned visuals]), "No data found",
+			    "Selected Page: '" & _page_name & "'"
+			) 
+			```
+		lineageTag: fafeaab4-4a38-4ee4-bb50-a6d8a059eae8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Perf Heatmap Visual Type' = ```
+			
+			VAR _perf_key = [Performance Key in Heatmap]
+			VAR _visual_type_guid =
+			CALCULATE (
+			    MAX ( Visuals[Visual Type] ),
+			    KEEPFILTERS ( Visuals[Performance Key] = _perf_key )
+			)
+			VAR _visual_type = 
+			    CALCULATE ( MAX('All Visual Types'[Visual Type] ),
+			    KEEPFILTERS ( 'All Visual Types'[GUID] = _visual_type_guid )
+			)
+			RETURN _visual_type
+			```
+		lineageTag: b59f845e-8d3a-4a6b-b3e0-dfed6b9862cf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 4224c412-5194-4772-bb74-aa2fd6272a31
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Performance Key'
+		dataType: string
+		isHidden
+		lineageTag: 7379837a-c31f-429f-8cb9-5caae4acaa81
+		summarizeBy: none
+		sourceColumn: Performance Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Metric
+		dataType: string
+		isHidden
+		lineageTag: c86107dd-3f7b-4222-a401-9434ba3b67f5
+		summarizeBy: none
+		sourceColumn: Metric
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stat
+		dataType: string
+		isHidden
+		lineageTag: fbda46d9-a30f-41d7-9937-4ab6bb477b9f
+		summarizeBy: none
+		sourceColumn: Stat
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Consumption Method'
+		dataType: string
+		lineageTag: e8783f67-3b02-43d0-b7ed-6bf4f7eae839
+		summarizeBy: none
+		sourceColumn: Consumption Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Log Count'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 24c8f70f-a6e7-4064-8b6c-ca18d74059b9
+		summarizeBy: sum
+		sourceColumn: Log Count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Weighted Value'
+		dataType: double
+		isHidden
+		lineageTag: 6127c524-f13e-436e-9024-97a8db0b555b
+		summarizeBy: sum
+		sourceColumn: Weighted Value
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Value
+		dataType: double
+		isHidden
+		lineageTag: 8526fabe-9e14-46ee-9602-66665e2b4334
+		summarizeBy: sum
+		sourceColumn: Value
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition 'Performance Data' = m
+		mode: import
+		queryGroup: Performance
+		source =
+				let
+				    Source = #"Performance by Day - Base",
+				    #"Unpivoted Other Columns" = Table.UnpivotOtherColumns(Source, {"Consumption Method", "Date", "Performance Key", "Run Count"}, "Attribute", "Value"),
+				    #"Split Column by Delimiter" = Table.SplitColumn(#"Unpivoted Other Columns", "Attribute", Splitter.SplitTextByEachDelimiter({"_"}, QuoteStyle.Csv, true), {"Attribute.1", "Attribute.2"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Split Column by Delimiter",{{"Attribute.1", type text}, {"Attribute.2", type text}}),
+				    #"Split Column by Delimiter1" = Table.SplitColumn(#"Changed Type", "Attribute.1", Splitter.SplitTextByEachDelimiter({"Ms"}, QuoteStyle.Csv, true), {"Attribute.1.1", "Attribute.1.2"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Split Column by Delimiter1", each [Value] <> "None"),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Filtered Rows",{{"Attribute.1.1", type text}, {"Attribute.1.2", type text}, {"Value", type number}, {"Date", type date}, {"Run Count", Int64.Type}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type1",{"Attribute.1.2"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Removed Columns",{{"Attribute.1.1", "Metric"}, {"Attribute.2", "Stat"}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Renamed Columns", "Value2", each if Text.StartsWith([Metric], "Query Result Rows") then [Value] else [Value] / 1000, type number),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Added Conditional Column",{"Value"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns1",{{"Value2", "Value"}}),
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Renamed Columns1",{{"Run Count", Int64.Type}}),
+				    #"Added Custom" = Table.AddColumn(#"Changed Type2", "Weighted Value", each [Run Count] * [Value], type number),
+				    Final = Table.RenameColumns(#"Added Custom",{{"Run Count", "Log Count"}})
+				in
+				    Final
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

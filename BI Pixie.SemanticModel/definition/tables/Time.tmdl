@@ -1,0 +1,126 @@
+table Time
+	lineageTag: fd770ab6-adb7-4f93-b7ca-c930d6833dc0
+
+	column Time
+		dataType: dateTime
+		formatString: Long Time
+		lineageTag: ac9df8d8-5c9c-4f55-8eca-fe5073830423
+		summarizeBy: none
+		sourceColumn: Time
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column Hour
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 382ea348-9f2e-4f00-b6b8-f0108fa2cbc4
+		summarizeBy: sum
+		sourceColumn: Hour
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Minute
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5711f5e0-d0c9-4e6e-8afe-cb98be32db06
+		summarizeBy: sum
+		sourceColumn: Minute
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Second
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c8d09f13-3ca0-4f4b-a0bd-e51b63f3eea8
+		summarizeBy: sum
+		sourceColumn: Second
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'Time Hierarchy'
+		lineageTag: fe2f009e-d125-4027-a7ef-e9b5c9ac14fe
+
+		level Hour
+			lineageTag: 6faeab19-20c9-4bb5-b87b-b25e1d1f986b
+			column: Hour
+
+		level Minute
+			lineageTag: 55514d6e-c854-4f10-a06c-44cc73e7e193
+			column: Minute
+
+		level Second
+			lineageTag: 91717aaf-7b8d-40d7-a183-4f365d129007
+			column: Second
+
+	partition Time = m
+		mode: import
+		source = ```
+				let
+				    // Define starting and ending times
+				    StartTime = #time(0, 0, 0),
+				    // Number of seconds in a day: 24 * 60 * 60 = 86400
+				    NumberOfSecondsInDay = 86400,
+				    SecondIncrement = #duration(0, 0, 0, 1),
+				    
+				    // Create a list of times from 00:00:00 to 23:59:59
+				    TimeList = List.Times(
+				        StartTime, 
+				        NumberOfSecondsInDay, 
+				        SecondIncrement
+				    ),
+				    
+				    // Convert the list of times into a table
+				    TimeTable = Table.FromList(
+				        TimeList, 
+				        Splitter.SplitByNothing(), 
+				        null, 
+				        null, 
+				        ExtraValues.Error
+				    ),
+				    
+				    // Rename the automatically generated column
+				    RenamedColumns = Table.RenameColumns(
+				        TimeTable, 
+				        {{"Column1", "Time"}}
+				    ),
+				    
+				    // Add Hour, Minute, and Second columns
+				    AddHourColumn = Table.AddColumn(
+				        RenamedColumns, 
+				        "Hour", 
+				        each Time.Hour([Time]), 
+				        Int64.Type
+				    ),
+				    AddMinuteColumn = Table.AddColumn(
+				        AddHourColumn, 
+				        "Minute", 
+				        each Time.Minute([Time]), 
+				        Int64.Type
+				    ),
+				    AddSecondColumn = Table.AddColumn(
+				        AddMinuteColumn, 
+				        "Second", 
+				        each Time.Second([Time]), 
+				        Int64.Type
+				    ),
+				    #"Filtered Rows" = Table.SelectRows(AddSecondColumn, each ([Hour] = 0 or [Hour] = 12)),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Filtered Rows",{{"Time", type time}})
+				in
+				    #"Changed Type"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

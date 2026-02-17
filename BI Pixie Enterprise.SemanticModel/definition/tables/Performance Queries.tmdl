@@ -1,0 +1,86 @@
+table 'Performance Queries'
+	lineageTag: 758fc20a-960a-48ac-ab61-b52b70f1a8fc
+
+	measure 'Sampled DAX Query' =
+			
+			VAR _max_date = MAX('Performance Queries'[Date])
+			RETURN
+			CALCULATE (
+			    MIN ( 'Performance Queries'[DAX Query] ),
+			    KEEPFILTERS ( 'Performance Queries'[Date] = _max_date )
+			)
+		lineageTag: 5e1e4bc1-ed47-4f63-b5ab-ac75bd5ef640
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 67d78123-b4e5-4d6a-a134-f0af5b25e2e4
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'DAX Query'
+		dataType: string
+		lineageTag: 06691fa3-bfc8-411e-a7eb-73ec2ed72ddb
+		summarizeBy: none
+		sourceColumn: DAX Query
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Performance Key'
+		dataType: string
+		isHidden
+		lineageTag: 70d9f37f-2ee0-4720-ac5e-f488eb4fbd31
+		summarizeBy: none
+		sourceColumn: Performance Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column DatasetId
+		dataType: string
+		lineageTag: f9f42f93-78ce-4c8a-b7bd-20eb3cfb190b
+		summarizeBy: none
+		sourceColumn: DatasetId
+
+		annotation SummarizationSetBy = Automatic
+
+	column PowerBIWorkspaceId
+		dataType: string
+		lineageTag: 04acc913-0a46-46bc-a8ca-3012b9d15660
+		summarizeBy: none
+		sourceColumn: PowerBIWorkspaceId
+
+		annotation SummarizationSetBy = Automatic
+
+	column Roles
+		dataType: string
+		lineageTag: a7e845fa-2644-453f-9690-ffaaa49bbfa1
+		summarizeBy: none
+		sourceColumn: Roles
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Performance Queries' = m
+		mode: import
+		queryGroup: Performance
+		source =
+				let
+				    Source = #"Performance Queries - Base",
+				    #"Removed Duplicates" = Table.Distinct(Source, {"Date", "Performance Key"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

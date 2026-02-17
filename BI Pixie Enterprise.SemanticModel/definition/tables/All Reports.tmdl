@@ -1,0 +1,30 @@
+table 'All Reports'
+	lineageTag: 2ef78e27-9b6c-4ffb-ae77-52e2f2b0f2aa
+
+	measure 'All Reports' = COUNTROWS('All Reports')
+		lineageTag: 4ba684a1-b606-49c0-95cb-83f6df017b20
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Report Key'
+		lineageTag: 863ed308-dbe2-4e1a-b54e-0c624379f551
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Reports[Report Key]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'All Reports' = calculated
+		mode: import
+		source =
+				
+				DISTINCT(
+				    UNION(
+				        DISTINCT('Reports'[Report Key]),
+				        DISTINCT('PBI Reports'[Report Key]),
+				        DISTINCT('PBI App Reports'[Report Key])
+				    )
+				)
+
+	annotation PBI_Id = 1aaeac0aabce4b04a003093c9036080a
+

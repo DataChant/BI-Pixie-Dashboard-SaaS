@@ -1,0 +1,167 @@
+table 'Producers Activity'
+	lineageTag: 0d882761-8300-4064-ac1e-a2088a22fa26
+
+	measure 'Producer Activities' = COUNTROWS('Producers Activity')
+		formatString: #,0
+		lineageTag: 70da590e-0bc7-47b4-b998-218904b30415
+
+	measure Producers = DISTINCTCOUNT('Producers Activity'[User Key])
+		formatString: #,0
+		lineageTag: c36ca6ae-ba51-4f5c-aa00-4b461478257b
+
+	measure Consumers = COUNTX(VALUES(Users), [All Consumer Activities])
+		lineageTag: c0350e14-b3e5-442d-b511-dc0002fcb720
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure '% of Producers' = DIVIDE([Producers], [Users])
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: d8c64caf-de7a-4437-a15b-3938ebdfe77d
+
+	measure 'ROI Score' = ```
+			
+			VAR _all_consumer_activities = [All Consumer Activities]
+			VAR _producer_activities = [Producer Activities]
+			VAR _producer_complexity = [Complexity Score]
+			VAR _data_exports = [Data Exports]
+			VAR _pct_analysis_in_excel = 
+			IF ( 
+			    ISBLANK ( _data_exports ),
+			    1,
+			    MAX ( 0.001, DIVIDE ( [Analysis in Excel], _data_exports ) )
+			)
+			RETURN
+			DIVIDE ( _all_consumer_activities, _producer_activities * _producer_complexity) *
+			[DAU / MAU (Excluding Passive)] *
+			[Consumers] *
+			_pct_analysis_in_excel
+			```
+		formatString: 0.00
+		lineageTag: 7c9fcbb0-0faf-4ad1-878e-cb9e9abfc59e
+
+	measure 'Email Subscription Runs' = CALCULATE([Producer Activities], KEEPFILTERS('Fabric Operations'[Activity Key] = "RunEmailSubscription"))
+		formatString: #,0
+		lineageTag: 92523a99-88d4-439c-bc45-faebc7a741ae
+
+	column Operation
+		dataType: string
+		isHidden
+		lineageTag: 58fe8478-4c81-4ff5-8c3c-cc444d090230
+		summarizeBy: none
+		sourceColumn: Operation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Workload
+		dataType: string
+		lineageTag: 8c32d483-29ff-488e-bc6a-4c6f5311a7ba
+		summarizeBy: none
+		sourceColumn: Workload
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Distribution Method'
+		dataType: string
+		lineageTag: b16b0a84-8682-4c27-9af3-17b2e688296c
+		summarizeBy: none
+		sourceColumn: Distribution Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Artifact Kind'
+		dataType: string
+		lineageTag: 352e776a-1dc3-4c85-bb60-fdd94e6ced4f
+		summarizeBy: none
+		sourceColumn: Artifact Kind
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isHidden
+		formatString: Long Date
+		lineageTag: 3b656dc6-7f17-4ba6-bfc4-7f99383d9d84
+		summarizeBy: none
+		sourceColumn: Date
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Time
+		dataType: dateTime
+		isHidden
+		formatString: Long Time
+		lineageTag: 914cf14f-e32f-41f0-b6d7-d435e0031681
+		summarizeBy: none
+		sourceColumn: Time
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Time
+
+	column 'Item Key'
+		dataType: string
+		isHidden
+		lineageTag: e8f2626d-3fc0-47d3-99ef-2d36ce99ed4b
+		summarizeBy: none
+		sourceColumn: Item Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'User Key'
+		dataType: string
+		isHidden
+		lineageTag: d38a6800-260a-4d5e-b445-66085fb13e7f
+		summarizeBy: none
+		sourceColumn: User Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Producers Activity' = m
+		mode: import
+		queryGroup: 'Power BI Activities'
+		source = ```
+				let
+				    Source = #"Activity Logs - Base",
+				    #"Removed Columns3" = Table.RemoveColumns(Source,{"CreationTime"}),
+				    #"Merged Queries1" = Table.NestedJoin(#"Removed Columns3", {"Activity"}, #"Consumer Activity Types", {"Activity Key"}, "Consumer Activity Types", JoinKind.LeftAnti),
+				    #"Added Custom" = Table.AddColumn(#"Merged Queries1", "Item Key", each if [ReportId] = null then [DatasetId] else [ReportId]),
+				    #"Filtered Rows" = Table.SelectRows(#"Added Custom", each ([WorkSpaceName] <> null and [Operation] <> "ViewDataflow")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"ImportId", "ImportSource", "ImportDisplayName", "AggregatedWorkspaceInformation", "HasFullReportAttachment", "SubscriptionDetails", "Activity", "ItemName", "WorkSpaceName", "DatasetName", "ReportName", "CapacityId", "CapacityName", "WorkspaceId", "ObjectId", "DatasetId", "ReportId", "ArtifactId", "ArtifactName", "ReportType", "Consumer Activity Types", "ConsumptionMethod", "SharingScope", "SharingAction", "ShareLinkId", "SharingInformation", "ExportedArtifactDownloadInfo"}),
+				    #"Replaced Value" = Table.ReplaceValue(#"Removed Columns","PowerBI","Power BI",Replacer.ReplaceText,{"Workload"}),
+				    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","PaginatedReports","Paginated Reports",Replacer.ReplaceText,{"Workload"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Replaced Value1", each ([Operation] <> "DeleteDatasetRows")),
+				    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each [Item Key] <> null and [Item Key] <> ""),
+				    #"Filtered Rows3" = Table.SelectRows(#"Filtered Rows2", each ([Operation] <> "RefreshDataset")),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Filtered Rows3",{"FolderAccessRequests", "ExportedArtifactInfo", "UserAgent", "UserId", "ClientIP"}),
+				    
+				    LastNonDemo = Table.RenameColumns(#"Removed Columns1",{{"DistributionMethod", "Distribution Method"}, {"ArtifactKind", "Artifact Kind"}}),
+				
+				    #"Added Index" = Table.AddIndexColumn(LastNonDemo, "Index", 0, 1, Int64.Type),
+				    #"Calculated Modulo" = Table.TransformColumns(#"Added Index", {{"Index", each Number.Mod(_, 3), type number}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Calculated Modulo",{{"Index", type text}}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Changed Type","0","alice@acme.com",Replacer.ReplaceText,{"Index"}),
+				    #"Replaced Value4" = Table.ReplaceValue(#"Replaced Value3","1","bob@acme.com",Replacer.ReplaceText,{"Index"}),
+				    #"Replaced Value5" = Table.ReplaceValue(#"Replaced Value4","2","patrick@acme.com",Replacer.ReplaceText,{"Index"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Replaced Value5",{"User Key"}),
+				    LastDemo = Table.RenameColumns(#"Removed Columns2",{{"Index", "User Key"}}),
+				    Final = if not #"Is Demo" then LastNonDemo else LastDemo
+				in
+				    Final
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

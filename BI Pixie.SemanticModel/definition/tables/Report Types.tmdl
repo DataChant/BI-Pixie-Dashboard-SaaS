@@ -1,0 +1,24 @@
+table 'Report Types'
+	lineageTag: 42812009-adca-4435-b43f-0c8e8067d5db
+
+	column 'Report Type'
+		dataType: string
+		lineageTag: db89a820-a7fd-45ca-904a-8884737b0d14
+		summarizeBy: none
+		sourceColumn: Report Type
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Report Types' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WCsgvTy1ScPJUCEotyC8qUYrVAYolpmfmJZakpsAFYwE=", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [#"Report Type" = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Report Type", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

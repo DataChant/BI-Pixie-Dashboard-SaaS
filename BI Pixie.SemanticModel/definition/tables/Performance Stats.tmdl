@@ -1,0 +1,40 @@
+table 'Performance Stats'
+	lineageTag: 2a58e05a-1eb9-46ce-a24b-946c78bca98b
+
+	column Stat
+		dataType: string
+		lineageTag: a7fa63ed-1716-4932-9994-220611dc77ac
+		summarizeBy: none
+		sourceColumn: Stat
+		sortByColumn: Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 77ec1d87-6c28-4487-b785-13f6a0c3cf3f
+		summarizeBy: sum
+		sourceColumn: Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Performance Stats' = m
+		mode: import
+		queryGroup: Performance
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45WcgxzV9JRMlSK1YlWCg71BbKNwOwAUwMg2xjCNjcFsk0gbEuQuKlSbCwA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Stat = _t, Order = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Stat", type text}, {"Order", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

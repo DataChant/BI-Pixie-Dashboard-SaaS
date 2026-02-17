@@ -1,0 +1,39 @@
+table 'Dataset Endorsement Types'
+	lineageTag: 7862d70f-dd70-4977-b329-df99b8f635ab
+
+	column Endorsement
+		dataType: string
+		lineageTag: caa50b03-994b-4cb7-ba4d-56b80027984b
+		summarizeBy: none
+		sourceColumn: Endorsement
+		sortByColumn: Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: string
+		isHidden
+		lineageTag: 1e7beab3-8a9c-4620-be92-9036f067e1c6
+		summarizeBy: none
+		sourceColumn: Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Dataset Endorsement Types' = m
+		mode: import
+		queryGroup: 'Power BI Scan'
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8svPS1XSUTJRitWJVgooys/NL0lNAQoYgwWcU4tKMtMywSJGYBHfxOKS1CIg11ApNhYA", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Endorsement = _t, Order = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Endorsement", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

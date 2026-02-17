@@ -1,0 +1,17 @@
+table 'Interactions X'
+	lineageTag: c6b61529-e33b-4723-bae7-defe93b9f1c8
+
+	column Interactions
+		formatString: 0
+		lineageTag: 53281130-dd61-4642-8f7d-29ac59fd849f
+		summarizeBy: none
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Interactions X' = calculated
+		mode: import
+		source = GENERATESERIES(0, MAX('Report Sessions'[Pages Interaction Count]))
+
+	annotation PBI_Id = e678f08162df47c9b38c5b224bed3734
+

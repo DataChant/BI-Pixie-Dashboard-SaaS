@@ -1,0 +1,18 @@
+table 'Export Max Allowed'
+	lineageTag: 9b4b27ec-b7d3-497c-b491-6447db2030ab
+
+	column 'Max Rows'
+		formatString: 0
+		lineageTag: c2388c86-cbfe-42e1-906b-2e92aa59c2ef
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Data Exports[Max Rows]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Export Max Allowed' = calculated
+		mode: import
+		source = DISTINCT('Data Exports'[Max Rows])
+
+	annotation PBI_Id = c9224838f2234b1e9ae1c93f64329969
+

@@ -1,0 +1,170 @@
+{
+  "triggerPrompts": [
+    {
+      "prompt": "What is the customer satisfaction score by report?"
+    },
+    {
+      "prompt": "Which report has the highest customer satisfaction?"
+    },
+    {
+      "prompt": "Which report has the lowest customer satisfaction?"
+    }
+  ],
+  "contactObjectId": "6c3062da-4bee-408e-9ff7-6a28ba8474e6",
+  "sourceMetadata": {
+    "visualMetadata": {
+      "themeCollection": {
+        "baseTheme": {
+          "name": "CY23SU11",
+          "reportVersionAtImport": {
+            "visual": "1.8.86",
+            "report": "2.0.86",
+            "page": "1.3.86"
+          },
+          "type": "SharedResources"
+        }
+      },
+      "resourcePackages": [
+        {
+          "name": "SharedResources",
+          "type": "SharedResources",
+          "items": [
+            {
+              "name": "CY23SU11",
+              "path": "ResourcePackages/SharedResources/0083fab54255b34d16797f20d99d1698a7e2406bbc031f5948fed0ae0c9b3489-CY23SU11.json",
+              "type": "BaseTheme"
+            }
+          ]
+        }
+      ],
+      "cache": {
+        "key": "JTdCJTIydmlzdWFsVHlwZSUyMiUzQSUyMmNsdXN0ZXJlZEJhckNoYXJ0JTIyJTJDJTIycXVlcnklMjIlM0ElN0IlMjJxdWVyeVN0YXRlJTIyJTNBJTdCJTIyQ2F0ZWdvcnklMjIlM0ElN0IlMjJwcm9qZWN0aW9ucyUyMiUzQSU1QiU3QiUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlJlcG9ydHMlMjIlN0QlN0QlMkMlMjJQcm9wZXJ0eSUyMiUzQSUyMlJlcG9ydCUyME5hbWUlMjIlN0QlN0QlMkMlMjJxdWVyeVJlZiUyMiUzQSUyMlJlcG9ydHMuUmVwb3J0JTIyJTJDJTIybmF0aXZlUXVlcnlSZWYlMjIlM0ElMjJSZXBvcnQlMjIlMkMlMjJhY3RpdmUlMjIlM0F0cnVlJTdEJTVEJTdEJTJDJTIyWSUyMiUzQSU3QiUyMnByb2plY3Rpb25zJTIyJTNBJTVCJTdCJTIyZmllbGQlMjIlM0ElN0IlMjJNZWFzdXJlJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMkZlZWRiYWNrJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJDU0FUJTIwKE11bHRpcGxlJTIwUmVzcG9uc2VzKSUyMiU3RCU3RCUyQyUyMnF1ZXJ5UmVmJTIyJTNBJTIyRmVlZGJhY2suQ1NBVCUyMChNdWx0aXBsZSUyMFJlc3BvbnNlcyklMjIlMkMlMjJuYXRpdmVRdWVyeVJlZiUyMiUzQSUyMkNTQVQlMjAoQWxsJTIwUmVzcG9uc2VzKSUyMiUyQyUyMmRpc3BsYXlOYW1lJTIyJTNBJTIyQ1NBVCUyMChBbGwlMjBSZXNwb25zZXMpJTIyJTdEJTJDJTdCJTIyZmllbGQlMjIlM0ElN0IlMjJNZWFzdXJlJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMkZlZWRiYWNrJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJDU0FUJTIwKExhc3QlMjBSZXNwb25zZSklMjIlN0QlN0QlMkMlMjJxdWVyeVJlZiUyMiUzQSUyMkZlZWRiYWNrLkNTQVQlMjAoTGFzdCUyMFJlc3BvbnNlKSUyMiUyQyUyMm5hdGl2ZVF1ZXJ5UmVmJTIyJTNBJTIyQ1NBVCUyMChMYXRlc3QlMjBSZXNwb25zZXMpJTIyJTJDJTIyZGlzcGxheU5hbWUlMjIlM0ElMjJDU0FUJTIwKExhdGVzdCUyMFJlc3BvbnNlcyklMjIlN0QlNUQlMkMlMjJmaWVsZFBhcmFtZXRlcnMlMjIlM0ElNUIlN0IlMjJwYXJhbWV0ZXJFeHByJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMkNTQVQlMjB0eXBlJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJDU0FUJTIwY291bnQlMjIlN0QlN0QlMkMlMjJpbmRleCUyMiUzQTAlMkMlMjJsZW5ndGglMjIlM0EyJTdEJTVEJTdEJTdEJTJDJTIyc29ydERlZmluaXRpb24lMjIlM0ElN0IlMjJzb3J0JTIyJTNBJTVCJTdCJTIyZmllbGQlMjIlM0ElN0IlMjJNZWFzdXJlJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMkZlZWRiYWNrJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJDU0FUJTIwKE11bHRpcGxlJTIwUmVzcG9uc2VzKSUyMiU3RCU3RCUyQyUyMmRpcmVjdGlvbiUyMiUzQSUyMkRlc2NlbmRpbmclMjIlN0QlNUQlMkMlMjJpc0RlZmF1bHRTb3J0JTIyJTNBdHJ1ZSU3RCU3RCUyQyUyMm9iamVjdHMlMjIlM0ElN0IlMjJsZWdlbmQlMjIlM0ElNUIlN0IlMjJwcm9wZXJ0aWVzJTIyJTNBJTdCJTIydGl0bGVUZXh0JTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMicnJTIyJTdEJTdEJTdEJTJDJTIyc2hvdyUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjJ0cnVlJTIyJTdEJTdEJTdEJTJDJTIycG9zaXRpb24lMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyJ1RvcCclMjIlN0QlN0QlN0QlMkMlMjJzaG93VGl0bGUlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIydHJ1ZSUyMiU3RCU3RCU3RCU3RCU3RCU1RCUyQyUyMnpvb20lMjIlM0ElNUIlN0IlMjJwcm9wZXJ0aWVzJTIyJTNBJTdCJTIyc2hvdyUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjJmYWxzZSUyMiU3RCU3RCU3RCUyQyUyMnNob3dMYWJlbHMlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyZmFsc2UlMjIlN0QlN0QlN0QlMkMlMjJzaG93VG9vbHRpcCUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjJmYWxzZSUyMiU3RCU3RCU3RCU3RCU3RCU1RCUyQyUyMmNhdGVnb3J5QXhpcyUyMiUzQSU1QiU3QiUyMnByb3BlcnRpZXMlMjIlM0ElN0IlMjJ0aXRsZVRleHQlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyJyclMjIlN0QlN0QlN0QlMkMlMjJwcmVmZXJyZWRDYXRlZ29yeVdpZHRoJTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMjIwRCUyMiU3RCU3RCU3RCUyQyUyMm1heE1hcmdpbkZhY3RvciUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjI1MEwlMjIlN0QlN0QlN0QlMkMlMjJncmlkbGluZVNob3clMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyZmFsc2UlMjIlN0QlN0QlN0QlMkMlMjJzaG93QXhpc1RpdGxlJTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMmZhbHNlJTIyJTdEJTdEJTdEJTdEJTdEJTVEJTJDJTIybGFiZWxzJTIyJTNBJTVCJTdCJTIycHJvcGVydGllcyUyMiUzQSU3QiUyMnNob3clMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIydHJ1ZSUyMiU3RCU3RCU3RCU3RCU3RCU1RCUyQyUyMnZhbHVlQXhpcyUyMiUzQSU1QiU3QiUyMnByb3BlcnRpZXMlMjIlM0ElN0IlMjJncmlkbGluZVNob3clMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyZmFsc2UlMjIlN0QlN0QlN0QlMkMlMjJzaG93JTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMmZhbHNlJTIyJTdEJTdEJTdEJTJDJTIydGl0bGVGb250U2l6ZSUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjI4RCUyMiU3RCU3RCU3RCUyQyUyMnNob3dBeGlzVGl0bGUlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyZmFsc2UlMjIlN0QlN0QlN0QlN0QlN0QlNUQlN0QlMkMlMjJ2aXN1YWxDb250YWluZXJPYmplY3RzJTIyJTNBJTdCJTIyYmFja2dyb3VuZCUyMiUzQSU1QiU3QiUyMnByb3BlcnRpZXMlMjIlM0ElN0IlMjJzaG93JTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMnRydWUlMjIlN0QlN0QlN0QlMkMlMjJ0cmFuc3BhcmVuY3klMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyMEQlMjIlN0QlN0QlN0QlN0QlN0QlNUQlMkMlMjJib3JkZXIlMjIlM0ElNUIlN0IlMjJwcm9wZXJ0aWVzJTIyJTNBJTdCJTIyc2hvdyUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjJ0cnVlJTIyJTdEJTdEJTdEJTJDJTIyY29sb3IlMjIlM0ElN0IlMjJzb2xpZCUyMiUzQSU3QiUyMmNvbG9yJTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMiclMjMyODE2NDknJTIyJTdEJTdEJTdEJTdEJTdEJTJDJTIycmFkaXVzJTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMjE1RCUyMiU3RCU3RCU3RCU3RCU3RCU1RCUyQyUyMmRyb3BTaGFkb3clMjIlM0ElNUIlN0IlMjJwcm9wZXJ0aWVzJTIyJTNBJTdCJTIyc2hvdyUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjJ0cnVlJTIyJTdEJTdEJTdEJTdEJTdEJTVEJTJDJTIydGl0bGUlMjIlM0ElNUIlN0IlMjJwcm9wZXJ0aWVzJTIyJTNBJTdCJTIydGV4dCUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjInQ3VzdG9tZXIlMjBTYXRpc2ZhY3Rpb24lMjAoQ1NBVCklMjBieSUyMFJlcG9ydCclMjIlN0QlN0QlN0QlMkMlMjJ0aXRsZVdyYXAlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIydHJ1ZSUyMiU3RCU3RCU3RCUyQyUyMmZvbnRDb2xvciUyMiUzQSU3QiUyMnNvbGlkJTIyJTNBJTdCJTIyY29sb3IlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyJyUyMzI4MTY0OSclMjIlN0QlN0QlN0QlN0QlN0QlMkMlMjJiYWNrZ3JvdW5kJTIyJTNBJTdCJTIyc29saWQlMjIlM0ElN0IlMjJjb2xvciUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjInJTIzRjhDRjcwJyUyMiU3RCU3RCU3RCU3RCU3RCUyQyUyMmZvbnRTaXplJTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMjEyRCUyMiU3RCU3RCU3RCU3RCU3RCU1RCUyQyUyMnN1YlRpdGxlJTIyJTNBJTVCJTdCJTIycHJvcGVydGllcyUyMiUzQSU3QiUyMnRleHQlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyJyclMjIlN0QlN0QlN0QlMkMlMjJzaG93JTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMmZhbHNlJTIyJTdEJTdEJTdEJTdEJTdEJTVEJTJDJTIyZGl2aWRlciUyMiUzQSU1QiU3QiUyMnByb3BlcnRpZXMlMjIlM0ElN0IlMjJzaG93JTIyJTNBJTdCJTIyZXhwciUyMiUzQSU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMnRydWUlMjIlN0QlN0QlN0QlMkMlMjJjb2xvciUyMiUzQSU3QiUyMnNvbGlkJTIyJTNBJTdCJTIyY29sb3IlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIyJyUyMzI4MTY0OSclMjIlN0QlN0QlN0QlN0QlN0QlMkMlMjJ3aWR0aCUyMiUzQSU3QiUyMmV4cHIlMjIlM0ElN0IlMjJMaXRlcmFsJTIyJTNBJTdCJTIyVmFsdWUlMjIlM0ElMjIzRCUyMiU3RCU3RCU3RCU3RCU3RCU1RCU3RCU3RCU3QiUyMmZpbHRlcnMlMjIlM0ElNUIlN0IlMjJuYW1lJTIyJTNBJTIyZjk4ODQ2OTkwYjM4N2I2M2MxNzglMjIlMkMlMjJkaXNwbGF5TmFtZSUyMiUzQSUyMlJlcG9ydCUyMiUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlJlcG9ydHMlMjIlN0QlN0QlMkMlMjJQcm9wZXJ0eSUyMiUzQSUyMlJlcG9ydCUyME5hbWUlMjIlN0QlN0QlMkMlMjJ0eXBlJTIyJTNBJTIyQ2F0ZWdvcmljYWwlMjIlMkMlMjJmaWx0ZXIlMjIlM0ElN0IlMjJWZXJzaW9uJTIyJTNBMiUyQyUyMkZyb20lMjIlM0ElNUIlN0IlMjJOYW1lJTIyJTNBJTIyciUyMiUyQyUyMkVudGl0eSUyMiUzQSUyMlJlcG9ydHMlMjIlMkMlMjJUeXBlJTIyJTNBMCU3RCU1RCUyQyUyMldoZXJlJTIyJTNBJTVCJTdCJTIyQ29uZGl0aW9uJTIyJTNBJTdCJTIyTm90JTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMkluJTIyJTNBJTdCJTIyRXhwcmVzc2lvbnMlMjIlM0ElNUIlN0IlMjJDb2x1bW4lMjIlM0ElN0IlMjJFeHByZXNzaW9uJTIyJTNBJTdCJTIyU291cmNlUmVmJTIyJTNBJTdCJTIyU291cmNlJTIyJTNBJTIyciUyMiU3RCU3RCUyQyUyMlByb3BlcnR5JTIyJTNBJTIyUmVwb3J0JTIwTmFtZSUyMiU3RCU3RCU1RCUyQyUyMlZhbHVlcyUyMiUzQSU1QiU1QiU3QiUyMkxpdGVyYWwlMjIlM0ElN0IlMjJWYWx1ZSUyMiUzQSUyMm51bGwlMjIlN0QlN0QlNUQlNUQlN0QlN0QlN0QlN0QlN0QlNUQlN0QlMkMlMjJob3dDcmVhdGVkJTIyJTNBJTIyVXNlciUyMiUyQyUyMmlzSGlkZGVuSW5WaWV3TW9kZSUyMiUzQXRydWUlMkMlMjJpc0xvY2tlZEluVmlld01vZGUlMjIlM0F0cnVlJTJDJTIyb2JqZWN0cyUyMiUzQSU3QiUyMmdlbmVyYWwlMjIlM0ElNUIlN0IlMjJwcm9wZXJ0aWVzJTIyJTNBJTdCJTIyaXNJbnZlcnRlZFNlbGVjdGlvbk1vZGUlMjIlM0ElN0IlMjJleHByJTIyJTNBJTdCJTIyTGl0ZXJhbCUyMiUzQSU3QiUyMlZhbHVlJTIyJTNBJTIydHJ1ZSUyMiU3RCU3RCU3RCU3RCU3RCU1RCU3RCU3RCUyQyU3QiUyMm5hbWUlMjIlM0ElMjIxNjIyYTk0NzhhYzZiMGQ4YjA0MCUyMiUyQyUyMmRpc3BsYXlOYW1lJTIyJTNBJTIyQ2FwYWNpdHklMjIlMkMlMjJvcmRpbmFsJTIyJTNBMCUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMkNhcGFjaXRpZXMlMjIlN0QlN0QlMkMlMjJQcm9wZXJ0eSUyMiUzQSUyMlNLVSUyMGFuZCUyMENhcGFjaXR5JTIwTmFtZSUyMiU3RCU3RCUyQyUyMnR5cGUlMjIlM0ElMjJDYXRlZ29yaWNhbCUyMiUyQyUyMmhvd0NyZWF0ZWQlMjIlM0ElMjJVc2VyJTIyJTJDJTIyaXNMb2NrZWRJblZpZXdNb2RlJTIyJTNBdHJ1ZSU3RCUyQyU3QiUyMm5hbWUlMjIlM0ElMjI4ZTM5MGI3Yzc0YzA5ODkxMDkzMyUyMiUyQyUyMmRpc3BsYXlOYW1lJTIyJTNBJTIyV29ya3NwYWNlJTIyJTJDJTIyb3JkaW5hbCUyMiUzQTIlMkMlMjJmaWVsZCUyMiUzQSU3QiUyMkNvbHVtbiUyMiUzQSU3QiUyMkV4cHJlc3Npb24lMjIlM0ElN0IlMjJTb3VyY2VSZWYlMjIlM0ElN0IlMjJFbnRpdHklMjIlM0ElMjJXb3Jrc3BhY2VzJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJXb3Jrc3BhY2UlMjBOYW1lJTIyJTdEJTdEJTJDJTIydHlwZSUyMiUzQSUyMkNhdGVnb3JpY2FsJTIyJTJDJTIyaG93Q3JlYXRlZCUyMiUzQSUyMlVzZXIlMjIlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyMWQ1MmE5MDcxMTFhOGU0OTQ0ZGUlMjIlMkMlMjJkaXNwbGF5TmFtZSUyMiUzQSUyMlByb2plY3QlMjIlMkMlMjJvcmRpbmFsJTIyJTNBMyUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlJlcG9ydHMlMjIlN0QlN0QlMkMlMjJQcm9wZXJ0eSUyMiUzQSUyMlByb2plY3QlMjIlN0QlN0QlMkMlMjJ0eXBlJTIyJTNBJTIyQ2F0ZWdvcmljYWwlMjIlMkMlMjJob3dDcmVhdGVkJTIyJTNBJTIyVXNlciUyMiUyQyUyMmlzTG9ja2VkSW5WaWV3TW9kZSUyMiUzQXRydWUlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyRmlsdGVyZjlhM2JlZGUxOTIyNDI3NjgyNjAlMjIlMkMlMjJkaXNwbGF5TmFtZSUyMiUzQSUyMlBhZ2UlMjIlMkMlMjJvcmRpbmFsJTIyJTNBNSUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlBhZ2VzJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJQYWdlJTIwTmFtZSUyMiU3RCU3RCUyQyUyMnR5cGUlMjIlM0ElMjJDYXRlZ29yaWNhbCUyMiUyQyUyMmhvd0NyZWF0ZWQlMjIlM0ElMjJVc2VyJTIyJTJDJTIyaXNMb2NrZWRJblZpZXdNb2RlJTIyJTNBdHJ1ZSU3RCUyQyU3QiUyMm5hbWUlMjIlM0ElMjJGaWx0ZXJiZjQzN2QxYjZhNzUzYjg2NmRiNyUyMiUyQyUyMmRpc3BsYXlOYW1lJTIyJTNBJTIyUGxhdGZvcm0lMjIlMkMlMjJvcmRpbmFsJTIyJTNBNiUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlBsYXRmb3JtcyUyMiU3RCU3RCUyQyUyMlByb3BlcnR5JTIyJTNBJTIyUGxhdGZvcm0lMjIlN0QlN0QlMkMlMjJ0eXBlJTIyJTNBJTIyQ2F0ZWdvcmljYWwlMjIlMkMlMjJob3dDcmVhdGVkJTIyJTNBJTIyVXNlciUyMiUyQyUyMmlzTG9ja2VkSW5WaWV3TW9kZSUyMiUzQXRydWUlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyRmlsdGVyNzFlMzJhODA0ZTJkZTFiNDI4ZmElMjIlMkMlMjJkaXNwbGF5TmFtZSUyMiUzQSUyMlVzZXIlMjIlMkMlMjJvcmRpbmFsJTIyJTNBOCUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlVzZXJzJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJVc2VyJTIwS2V5JTIyJTdEJTdEJTJDJTIydHlwZSUyMiUzQSUyMkNhdGVnb3JpY2FsJTIyJTJDJTIyaG93Q3JlYXRlZCUyMiUzQSUyMlVzZXIlMjIlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyNmM5Mzk4ZTA4YzNiY2IzMDk1OTElMjIlMkMlMjJkaXNwbGF5TmFtZSUyMiUzQSUyMkRhdGUlMjIlMkMlMjJvcmRpbmFsJTIyJTNBOSUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMkNhbGVuZGFyJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJEYXRlJTIyJTdEJTdEJTJDJTIydHlwZSUyMiUzQSUyMlJlbGF0aXZlRGF0ZSUyMiUyQyUyMmhvd0NyZWF0ZWQlMjIlM0ElMjJVc2VyJTIyJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMmQ5NDljYzU0NjlhMmVjNzZjY2IwJTIyJTJDJTIyZGlzcGxheU5hbWUlMjIlM0ElMjJWaXN1YWwlMjBJRCUyMiUyQyUyMm9yZGluYWwlMjIlM0ExMSUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlZpc3VhbHMlMjIlN0QlN0QlMkMlMjJQcm9wZXJ0eSUyMiUzQSUyMlZpc3VhbCUyMElEJTIyJTdEJTdEJTJDJTIydHlwZSUyMiUzQSUyMkNhdGVnb3JpY2FsJTIyJTJDJTIyaG93Q3JlYXRlZCUyMiUzQSUyMlVzZXIlMjIlMkMlMjJpc0xvY2tlZEluVmlld01vZGUlMjIlM0F0cnVlJTdEJTJDJTdCJTIybmFtZSUyMiUzQSUyMkZpbHRlcjJjYzc5M2Q1YjZjYWI5N2E0MGFmJTIyJTJDJTIyZGlzcGxheU5hbWUlMjIlM0ElMjJVc2VybmFtZSUyMiUyQyUyMm9yZGluYWwlMjIlM0ExMiUyQyUyMmZpZWxkJTIyJTNBJTdCJTIyQ29sdW1uJTIyJTNBJTdCJTIyRXhwcmVzc2lvbiUyMiUzQSU3QiUyMlNvdXJjZVJlZiUyMiUzQSU3QiUyMkVudGl0eSUyMiUzQSUyMlVzZXIlMjBhbmQlMjBJUCUyMEFkZHJlc3NlcyUyMiU3RCU3RCUyQyUyMlByb3BlcnR5JTIyJTNBJTIyVXNlcm5hbWUlMjIlN0QlN0QlMkMlMjJ0eXBlJTIyJTNBJTIyQ2F0ZWdvcmljYWwlMjIlMkMlMjJob3dDcmVhdGVkJTIyJTNBJTIyVXNlciUyMiUyQyUyMmlzTG9ja2VkSW5WaWV3TW9kZSUyMiUzQXRydWUlMkMlMjJvYmplY3RzJTIyJTNBJTdCJTIyZ2VuZXJhbCUyMiUzQSU1QiU3QiUyMnByb3BlcnRpZXMlMjIlM0ElN0IlN0QlN0QlNUQlN0QlN0QlMkMlN0IlMjJuYW1lJTIyJTNBJTIyRmlsdGVyODBiMWFlZjc5MDZkZDdlMGQzMjYlMjIlMkMlMjJkaXNwbGF5TmFtZSUyMiUzQSUyMkNsaWVudCUyMElQJTIyJTJDJTIyb3JkaW5hbCUyMiUzQTEzJTJDJTIyZmllbGQlMjIlM0ElN0IlMjJDb2x1bW4lMjIlM0ElN0IlMjJFeHByZXNzaW9uJTIyJTNBJTdCJTIyU291cmNlUmVmJTIyJTNBJTdCJTIyRW50aXR5JTIyJTNBJTIyVXNlciUyMGFuZCUyMElQJTIwQWRkcmVzc2VzJTIyJTdEJTdEJTJDJTIyUHJvcGVydHklMjIlM0ElMjJDbGllbnQlMjBJUCUyMiU3RCU3RCUyQyUyMnR5cGUlMjIlM0ElMjJDYXRlZ29yaWNhbCUyMiUyQyUyMmhvd0NyZWF0ZWQlMjIlM0ElMjJVc2VyJTIyJTJDJTIyaXNMb2NrZWRJblZpZXdNb2RlJTIyJTNBdHJ1ZSU3RCU1RCU3RA==",
+        "query": {
+          "Query": {
+            "Version": 2,
+            "From": [
+              {
+                "Name": "r",
+                "Entity": "Reports"
+              },
+              {
+                "Name": "f",
+                "Entity": "Feedback"
+              }
+            ],
+            "Where": [
+              {
+                "Condition": {
+                  "Not": {
+                    "Expression": {
+                      "In": {
+                        "Expressions": [
+                          {
+                            "Column": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Source": "r"
+                                }
+                              },
+                              "Property": "Report Name"
+                            }
+                          }
+                        ],
+                        "Values": [
+                          [
+                            {
+                              "Literal": {
+                                "Value": "null"
+                              }
+                            }
+                          ]
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            ],
+            "OrderBy": [
+              {
+                "Expression": {
+                  "Measure": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Source": "f"
+                      }
+                    },
+                    "Property": "CSAT (Multiple Responses)"
+                  }
+                },
+                "Direction": 2
+              }
+            ],
+            "Select": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Source": "r"
+                    }
+                  },
+                  "Property": "Report Name"
+                },
+                "NativeReferenceName": "Report",
+                "Name": "Reports.Report"
+              },
+              {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Source": "f"
+                    }
+                  },
+                  "Property": "CSAT (Multiple Responses)"
+                },
+                "NativeReferenceName": "CSAT (All Responses)",
+                "Name": "Feedback.CSAT (Multiple Responses)"
+              },
+              {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Source": "f"
+                    }
+                  },
+                  "Property": "CSAT (Last Response)"
+                },
+                "NativeReferenceName": "CSAT (Latest Responses)",
+                "Name": "Feedback.CSAT (Last Response)"
+              }
+            ],
+            "GroupBy": []
+          },
+          "Binding": {
+            "Version": 1,
+            "Primary": {
+              "Groupings": [
+                {
+                  "Projections": [
+                    0,
+                    1,
+                    2
+                  ]
+                }
+              ]
+            },
+            "DataReduction": {
+              "Primary": {
+                "Window": {
+                  "Count": 1000
+                }
+              },
+              "DataVolume": 4
+            }
+          }
+        }
+      }
+    }
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/verifiedAnswers/definition/2.0.0/schema.json"
+}

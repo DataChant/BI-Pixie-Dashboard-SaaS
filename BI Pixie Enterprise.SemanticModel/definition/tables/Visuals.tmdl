@@ -1,0 +1,372 @@
+table Visuals
+	lineageTag: 9ef96648-35e6-4ba1-8d63-04c6dafaa430
+
+	measure 'Count of Visuals' = COUNTROWS ( Visuals )
+		formatString: #,0
+		lineageTag: 54596833-7182-4db6-a8de-9d69834964bb
+
+	measure 'Certified Visuals' = CALCULATE([Count of Visuals], 'All Visual Types'[Visual State] = "Certified")
+		formatString: #,0
+		lineageTag: 64f6c416-16a4-45e0-a754-2373a3f6030f
+
+	measure 'Trust State in Heatmap' = ```
+			
+			VAR _cell_size_x = [X Heatmap Cell Size2]
+			VAR _cell_size_y = [Y Heatmap Cell Size2] 
+			VAR _x = MAX('X Dimension2'[X]) * _cell_size_x
+			VAR _y = MAX('Y Dimension2'[Y]) * _cell_size_y
+			VAR _pages = DISTINCTCOUNT('Visual Scans'[Report Page Key])
+			
+			VAR _all_visuals_in_area =
+			    FILTER (
+			        'Visuals',
+			        Visuals[X] < _x && Visuals[X] + Visuals[Width] > _x + _cell_size_x &&
+			        Visuals[Y] < _y && Visuals[Y] + Visuals[Height] > _y + _cell_size_y
+			    )
+			
+			VAR _lowest_trust =
+			    MAXX (
+			        _all_visuals_in_area,
+			        VAR _current_visual_type = 'Visuals'[Visual Type]
+			        VAR _visual_state =
+			            CALCULATE(
+			                MAX ( 'All Visual Types'[Visual State] ),
+			                KEEPFILTERS ( 'All Visual Types'[GUID] = _current_visual_type )
+			            )
+			        VAR _order_value = 
+			            CALCULATE(
+			                MIN ('Visual Trust Levels'[Order]),
+			                KEEPFILTERS ( 'Visual Trust Levels'[Visual State] = _visual_state )
+			            )
+			        RETURN
+			        IF(ISBLANK(_order_value), -1, _order_value)
+			    )
+			
+			VAR _result =
+			    IF (
+			        _lowest_trust = -1 || _pages > 1,
+			        BLANK(),
+			        CALCULATE (
+			            MAX ('Visual Trust Levels'[CF] ),
+			            KEEPFILTERS ( 'Visual Trust Levels'[Order] = _lowest_trust )
+			        )
+			    )
+			
+			RETURN
+			_result
+			```
+		lineageTag: c4e82596-c4d0-45b5-9e6c-656d7172895c
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Uncertified Visuals' = CALCULATE([Count of Visuals], 'All Visual Types'[Visual State] = "Not Certified")
+		formatString: #,0
+		lineageTag: 0dca4e3a-9cf8-473b-bb14-18323fae7a5c
+
+	measure 'Risky Visuals' = CALCULATE([Count of Visuals], 'Visual Trust Levels'[Visual State] IN {"Unlisted", "Unknown"})
+		formatString: 0
+		lineageTag: 9efa2f5c-cab1-495f-a938-19ce8fceb32d
+
+	measure 'Visual Type in Custom Visuals Heatmap' = ```
+			
+			VAR _cell_size_x = [X Heatmap Cell Size2]
+			VAR _cell_size_y = [Y Heatmap Cell Size2] 
+			VAR _x = MAX('X Dimension2'[X]) * _cell_size_x
+			VAR _y = MAX('Y Dimension2'[Y]) * _cell_size_y
+			
+			VAR _all_visuals_in_area =
+			    FILTER (
+			        'Visuals',
+			        [Visual X] < _x && [Visual X] + [Visual width] > _x + _cell_size_x &&
+			        [Visual Y] < _y && [Visual Y] + [Visual height] > _y + _cell_size_y
+			    )
+			
+			VAR _lowest_trust =
+			    MAXX (
+			        _all_visuals_in_area,
+			        VAR _current_visual_type = 'Visuals'[Visual Type]
+			        VAR _visual_state =
+			            CALCULATE(
+			                MAX ( 'All Visual Types'[Visual State] ),
+			                FILTER (
+			                    'All Visual Types',
+			                    'All Visual Types'[GUID] = _current_visual_type
+			                )
+			            )
+			        VAR _order_value = 
+			            CALCULATE(
+			                MIN ('Visual Trust Levels'[Order]),
+			                FILTER (
+			                    'Visual Trust Levels',
+			                    'Visual Trust Levels'[Visual State] = _visual_state
+			                )
+			            )
+			        RETURN
+			        IF(ISBLANK(_order_value), -1, _order_value)
+			    )
+			
+			VAR _visual_type =
+			    CALCULATE (
+			        MAX ( 'All Visual Types'[Visual Type] ),
+			        KEEPFILTERS ( 'Visual Trust Levels'[Order] = _lowest_trust ),
+			        _all_visuals_in_area
+			    )
+			VAR _result =
+			    IF (
+			        _lowest_trust = -1,
+			        BLANK(),
+			        _visual_type
+			    )
+			
+			RETURN
+			_result
+			```
+		lineageTag: ed9f2cc4-553c-4be9-a9f4-6c4333339466
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Custom Visuals Heatmap Title' =
+			
+			VAR _page_name = SELECTEDVALUE('Pages'[Page Name])
+			RETURN
+			SWITCH (
+			    TRUE(),
+			    ISBLANK([Scanned visuals]), "No data found",
+			    ISBLANK(_page_name), "Select a page to track its Custom Visuals in the Heatmap.",
+			    "Selected Page: " & _page_name )
+		lineageTag: c057d410-66b3-4072-bfd0-a8c307a6bb52
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Visual Key in Custom Visuals Heatmap' = ```
+			
+			VAR _cell_size_x = [X Heatmap Cell Size2]
+			VAR _cell_size_y = [Y Heatmap Cell Size2] 
+			VAR _x = MAX('X Dimension2'[X]) * _cell_size_x
+			VAR _y = MAX('Y Dimension2'[Y]) * _cell_size_y
+			
+			VAR _all_visuals_in_area =
+			    FILTER (
+			        'Visuals',
+			        [Visual X] < _x && [Visual X] + [Visual width] > _x + _cell_size_x &&
+			        [Visual Y] < _y && [Visual Y] + [Visual height] > _y + _cell_size_y
+			    )
+			
+			VAR _lowest_trust =
+			    MAXX (
+			        _all_visuals_in_area,
+			        VAR _current_visual_type = 'Visuals'[Visual Type]
+			        VAR _visual_state =
+			            CALCULATE(
+			                MAX ( 'All Visual Types'[Visual State] ),
+			                FILTER (
+			                    'All Visual Types',
+			                    'All Visual Types'[GUID] = _current_visual_type
+			                )
+			            )
+			        VAR _order_value = 
+			            CALCULATE(
+			                MIN ('Visual Trust Levels'[Order]),
+			                FILTER (
+			                    'Visual Trust Levels',
+			                    'Visual Trust Levels'[Visual State] = _visual_state
+			                )
+			            )
+			        RETURN
+			        IF(ISBLANK(_order_value), -1, _order_value)
+			    )
+			
+			VAR _visual_key =
+			    CALCULATE (
+			        MAX ( 'Visuals'[Visual Key] ),
+			        KEEPFILTERS ( 'Visual Trust Levels'[Order] = _lowest_trust ),
+			        _all_visuals_in_area
+			    )
+			VAR _result =
+			    IF (
+			        _lowest_trust = -1,
+			        BLANK(),
+			        _visual_key
+			    )
+			
+			RETURN
+			_result
+			```
+		lineageTag: 687edcda-5013-4495-a50b-ae37970accda
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Visual ID in Custom Visuals Heatmap' =
+			
+			CALCULATE (
+			    MAX ( Visuals[Visual ID] ),
+			    FILTER (
+			        Visuals,
+			        Visuals[Visual Key] = [Visual Key in Custom Visuals Heatmap]
+			    )
+			)
+		lineageTag: 82362541-b3a6-4396-a3de-b351c627ed7d
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Visual Name in Custom Visuals Heatmap' =
+			
+			CALCULATE (
+			    MAX ( Visuals[Visual Display Name] ),
+			    FILTER (
+			        Visuals,
+			        Visuals[Visual Key] = [Visual Key in Custom Visuals Heatmap]
+			    )
+			)
+		lineageTag: dc4a9fec-72ef-4d3d-85fa-e1103cbead32
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Report Page Key'
+		dataType: string
+		isHidden
+		lineageTag: 5752a976-73b4-480f-a9f9-645e1a256056
+		summarizeBy: none
+		sourceColumn: Report Page Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual ID'
+		dataType: string
+		lineageTag: eba08a22-b0e1-4628-b837-e685e181f475
+		summarizeBy: none
+		sourceColumn: Visual ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual Key'
+		dataType: string
+		isHidden
+		lineageTag: 9b07707f-48fb-4908-a88a-b83f1d2f341a
+		summarizeBy: none
+		sourceColumn: Visual Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual Type'
+		dataType: string
+		isHidden
+		lineageTag: 92b65549-eaa4-44b7-a834-733eb0a691a3
+		summarizeBy: none
+		sourceColumn: Visual Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Visual Display Name'
+		dataType: string
+		lineageTag: cd4b0fb6-b72e-479b-aad6-03d7f2d2b7ee
+		summarizeBy: none
+		sourceColumn: Visual Display Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column X
+		dataType: double
+		isHidden
+		lineageTag: e1fb8834-57cf-4643-99c3-43a43a05915a
+		summarizeBy: sum
+		sourceColumn: X
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Y
+		dataType: double
+		isHidden
+		lineageTag: 72f38e64-b4f1-4ad6-9783-b5a7a729fa42
+		summarizeBy: sum
+		sourceColumn: Y
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Z
+		dataType: int64
+		formatString: 0
+		lineageTag: e00c8d4d-0b33-4017-9bec-ae363b4fe478
+		summarizeBy: sum
+		sourceColumn: Z
+
+		annotation SummarizationSetBy = Automatic
+
+	column Width
+		dataType: double
+		isHidden
+		lineageTag: 6db80a66-55f1-41d7-b4c3-754f43254749
+		summarizeBy: sum
+		sourceColumn: Width
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Height
+		dataType: double
+		isHidden
+		lineageTag: 1476ffc4-9279-4d00-95fe-4e4235b35e58
+		summarizeBy: sum
+		sourceColumn: Height
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Tab Order'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9f9f79d3-4180-4df7-bfcc-d82dd5970916
+		summarizeBy: sum
+		sourceColumn: Tab Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Performance Key'
+		dataType: string
+		lineageTag: 5824bd5c-24fc-4a1d-9059-a0b83598b564
+		summarizeBy: none
+		sourceColumn: Performance Key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Visuals = m
+		mode: import
+		source =
+				let
+				    Source = #"Visual Scans",
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(Source,{{"Since", Order.Descending}})),
+				    #"Removed Duplicates1" = Table.Distinct(#"Sorted Rows", {"Visual Key"}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Removed Duplicates1",{"Report Page Key", "Visual ID", "Visual Type", "Visual Display Name", "X", "Y", "Z", "Width", "Height", "Tab Order", "Visual Key", "Performance Key"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Removed Other Columns",{{"Performance Key", type text}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Changed Type",{{"Performance Key", Text.Lower, type text}})
+				in
+				    #"Lowercased Text"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,692 @@
+{
+  "visualType": "tableEx",
+  "query": {
+    "queryState": {
+      "Values": {
+        "projections": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Fabric Operations"
+                  }
+                },
+                "Property": "Activity"
+              }
+            },
+            "queryRef": "Fabric Operations.Activity",
+            "nativeQueryRef": "Activity"
+          },
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Consumers Activity"
+                  }
+                },
+                "Property": "All Activities"
+              }
+            },
+            "queryRef": "Consumers Activity.All Activities",
+            "nativeQueryRef": "Count",
+            "displayName": "Count"
+          }
+        ]
+      }
+    },
+    "sortDefinition": {
+      "sort": [
+        {
+          "field": {
+            "Measure": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Consumers Activity"
+                }
+              },
+              "Property": "All Activities"
+            }
+          },
+          "direction": "Descending"
+        }
+      ]
+    }
+  },
+  "objects": {
+    "grid": [
+      {
+        "properties": {
+          "outlineStyle": {
+            "expr": {
+              "Literal": {
+                "Value": "4D"
+              }
+            }
+          },
+          "outlineColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "ThemeDataColor": {
+                    "ColorId": 2,
+                    "Percent": 0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "columnHeaders": [
+      {
+        "properties": {
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "8D"
+              }
+            }
+          },
+          "wordWrap": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "autoSizeColumnWidth": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "values": [
+      {
+        "properties": {
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "8D"
+              }
+            }
+          },
+          "urlIcon": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "wordWrap": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      },
+      {
+        "properties": {
+          "webURL": {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Workspaces"
+                  }
+                },
+                "Property": "Workspace Link"
+              }
+            }
+          }
+        },
+        "selector": {
+          "data": [
+            {
+              "dataViewWildcard": {
+                "matchingOption": 1
+              }
+            }
+          ],
+          "metadata": "Workspaces.Workspace Name"
+        }
+      },
+      {
+        "properties": {
+          "webURL": {
+            "expr": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Reports"
+                  }
+                },
+                "Property": "Report Link"
+              }
+            }
+          }
+        },
+        "selector": {
+          "data": [
+            {
+              "dataViewWildcard": {
+                "matchingOption": 1
+              }
+            }
+          ],
+          "metadata": "Report Keys.Report"
+        }
+      }
+    ],
+    "columnWidth": [
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "65.88769188997128D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Report Sessions.Avg interactions per report session"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "59.43103564892779D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Report Sessions.Sessions"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "46.94309794382465D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Report Sessions.Passive users"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "45.6809417058592D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Report Sessions.Users"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "105.0200042605213D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Report Keys.Report"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "92.24542796014806D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Workspaces.Workspace Name"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "115.8886740754031D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Reports.Report Name"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "79.63130011577593D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Capacities.SKU and Capacity Name"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "52.77432414806513D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Users.Users"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "24.70265067539471D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Reports.Report link"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "58D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Producers Activity.Producers"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "63D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Producers Activity.Consumers"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "72.31564075943075D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Producers Activity.Consumers per Producer"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "61.93508824335367D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Consumers Activity.Consumer Activities"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "83.5346796136879D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Producers Activity.Engagement / Effort"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "272.86227110419344D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Fabric Operations.Activity"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "90.20818579500357D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Consumers Activity.All Activities"
+        }
+      },
+      {
+        "properties": {
+          "value": {
+            "expr": {
+              "Literal": {
+                "Value": "90.70661196257981D"
+              }
+            }
+          }
+        },
+        "selector": {
+          "data": [
+            {
+              "scopeId": {
+                "Comparison": {
+                  "ComparisonKind": 0,
+                  "Left": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Fabric Operations"
+                        }
+                      },
+                      "Property": "Source"
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "'BI Pixie Instrumentation'"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "total": [
+      {
+        "properties": {
+          "totals": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "columnFormatting": [
+      {
+        "properties": {
+          "dataBars": {
+            "positiveColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'maxColor'"
+                    }
+                  }
+                }
+              }
+            },
+            "negativeColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'minColor'"
+                    }
+                  }
+                }
+              }
+            },
+            "axisColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'foreground'"
+                    }
+                  }
+                }
+              }
+            },
+            "reverseDirection": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "hideText": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "totalMatchingOption": {
+              "expr": {
+                "Literal": {
+                  "Value": "1L"
+                }
+              }
+            }
+          }
+        },
+        "selector": {
+          "metadata": "Consumers Activity.All Activities"
+        }
+      }
+    ]
+  },
+  "visualContainerObjects": {
+    "title": [
+      {
+        "properties": {
+          "text": {
+            "expr": {
+              "Literal": {
+                "Value": "'Activities'"
+              }
+            }
+          },
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "titleWrap": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "fontColor": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F8CF70'"
+                  }
+                }
+              }
+            }
+          },
+          "background": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#281649'"
+                  }
+                }
+              }
+            }
+          },
+          "fontSize": {
+            "expr": {
+              "Literal": {
+                "Value": "12D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "background": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "border": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#281649'"
+                  }
+                }
+              }
+            }
+          },
+          "radius": {
+            "expr": {
+              "Literal": {
+                "Value": "15D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "dropShadow": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          },
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#b3b3b3'"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "divider": [
+      {
+        "properties": {
+          "show": {
+            "expr": {
+              "Literal": {
+                "Value": "true"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualConfiguration/2.2.0/schema.json"
+}

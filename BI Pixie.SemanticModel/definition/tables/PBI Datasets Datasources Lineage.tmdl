@@ -1,0 +1,152 @@
+table 'PBI Datasets Datasources Lineage'
+	isHidden
+	lineageTag: 9abf5d2c-e643-4e50-9c46-b77e05586052
+
+	column 'Dataset ID'
+		isHidden
+		lineageTag: 50ed2292-949a-48e1-b2ef-458a542b0ab3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Dataset ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Data Source ID'
+		isHidden
+		lineageTag: 8e340524-d199-434f-a146-71cab5c1e477
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Data Source ID]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PBI Datasets Datasources Lineage' = calculated
+		mode: import
+		source = ```
+				
+				
+				    // Step 1: Resolve Dataflow Hierarchy using the pre-calculated path.
+				    // This variable will hold all (Descendant, Ancestor) pairs.
+				    VAR Step1_DescendantAncestorPairs =
+				        DISTINCT (
+				            SELECTCOLUMNS (
+				                GENERATE (
+				                    FILTER(
+				                        'PBI Dataflows Upstream',
+				                        NOT ISBLANK('PBI Dataflows Upstream'[CalculatedDataflowPath]) && 'PBI Dataflows Upstream'[CalculatedDataflowPath] <> ""
+				                    ),
+				                    VAR _Path = 'PBI Dataflows Upstream'[CalculatedDataflowPath]
+				                    VAR _PathLength = PATHLENGTH ( _Path )
+				                    RETURN GENERATESERIES ( 1, IF ( _PathLength > 1, _PathLength - 1, 0 ) )
+				                ),
+				                "DescendantDataflowID", 'PBI Dataflows Upstream'[Dataflow ID],
+				                "AncestorDataflowID", PATHITEM ( 'PBI Dataflows Upstream'[CalculatedDataflowPath], [Value], TEXT )
+				            )
+				        )
+				
+				    // Step 2: Get all unique dataflows from the master 'PBI Dataflows' table.
+				    // These are the primary dataflows whose lineage we want to trace.
+				    VAR AllUniqueDataflowsFromMasterList =
+				        DISTINCT(
+				            SELECTCOLUMNS('PBI Dataflows', "MasterDataflowID", 'PBI Dataflows'[Dataflow ID])
+				        )
+				
+				    // Step 3: Determine effective lineage for datasource lookup.
+				    // For each "MasterDataflowID", list all dataflows (itself or its ancestors)
+				    // whose datasources should be considered for it.
+				    VAR EffectiveLineageForDSLookup =
+				        DISTINCT (
+				            UNION (
+				                // Part A: A dataflow considers its own datasources.
+				                // For every MasterDataflowID, it can be its own source of datasources.
+				                SELECTCOLUMNS (
+				                    AllUniqueDataflowsFromMasterList,
+				                    "DataflowOfInterest", [MasterDataflowID],
+				                    "DataflowWhoseDSSourcesToConsider", [MasterDataflowID] // Itself
+				                ),
+				
+				                // Part B: An ancestor provides datasources to a MasterDataflowID.
+				                // This uses the pattern that worked in your separate table.
+				                SELECTCOLUMNS (
+				                    GENERATE (
+				                        AllUniqueDataflowsFromMasterList, // Outer iteration: [MasterDataflowID]
+				                        VAR _CurrentMasterDF_ID = [MasterDataflowID] // Capture current MasterDataflowID
+				                        RETURN
+				                            FILTER (
+				                                Step1_DescendantAncestorPairs,
+				                                [DescendantDataflowID] = _CurrentMasterDF_ID // Use the variable in the filter
+				                            )
+				                    ),
+				                    "DataflowOfInterest", [MasterDataflowID], // This comes from AllUniqueDataflowsFromMasterList context
+				                    "DataflowWhoseDSSourcesToConsider", [AncestorDataflowID] // This comes from the filtered Step1_DescendantAncestorPairs context
+				                )
+				            )
+				        )
+				        // Result: (DataflowOfInterest, DataflowWhoseDSSourcesToConsider)
+				
+				    // Step 4: Link dataflows (DataflowOfInterest) to their (potentially inherited) actual Data Source IDs.
+				    VAR Step4_DataflowAndAssociatedDSSources =
+				        DISTINCT (
+				            SELECTCOLUMNS (
+				                GENERATE (
+				                    EffectiveLineageForDSLookup, // Has (DataflowOfInterest, DataflowWhoseDSSourcesToConsider)
+				                    VAR _currentDFToConsiderForDS = [DataflowWhoseDSSourcesToConsider]
+				                    RETURN
+				                        CALCULATETABLE (
+				                            SELECTCOLUMNS (
+				                                'PBI Dataflows Datasources',
+				                                "__temp_DS_ID", 'PBI Dataflows Datasources'[Data Source ID]
+				                            ),
+				                            'PBI Dataflows Datasources'[Dataflow ID] = _currentDFToConsiderForDS
+				                        )
+				                ),
+				                "FinalDataflowID", [DataflowOfInterest],
+				                "DataSourceID", [__temp_DS_ID]
+				            )
+				        )
+				
+				    // Step 5: Link datasets to these dataflow-sourced datasources.
+				    VAR Step5_DatasetToDSSourceViaDataflows =
+				        DISTINCT (
+				            SELECTCOLUMNS (
+				                GENERATE (
+				                    Step4_DataflowAndAssociatedDSSources, // Has (FinalDataflowID, DataSourceID)
+				                    VAR _currentFinalDFID = [FinalDataflowID]
+				                    RETURN
+				                        CALCULATETABLE (
+				                            SELECTCOLUMNS (
+				                                'PBI Datasets Dataflows',
+				                                "__temp_Dataset_ID", 'PBI Datasets Dataflows'[Dataset ID]
+				                            ),
+				                            'PBI Datasets Dataflows'[Dataflow ID] = _currentFinalDFID
+				                        )
+				                ),
+				                "Dataset ID", [__temp_Dataset_ID],
+				                "Data Source ID", [DataSourceID]
+				            )
+				        )
+				
+				    // Step 6: Get direct dataset-to-datasource links.
+				    VAR Step6_DirectDatasetToDSSourceLinks =
+				        DISTINCT (
+				            SELECTCOLUMNS (
+				                'PBI Datasets Datasources',
+				                "Dataset ID", 'PBI Datasets Datasources'[Dataset ID],
+				                "Data Source ID", 'PBI Datasets Datasources'[Data Source ID]
+				            )
+				        )
+				
+				    // Final Step: Combine and remove duplicates.
+				    VAR FinalResultTable =
+				        DISTINCT (
+				            UNION (
+				                Step5_DatasetToDSSourceViaDataflows,
+				                Step6_DirectDatasetToDSSourceLinks
+				            )
+				        )
+				    RETURN
+				        FinalResultTable
+				```
+
+	annotation PBI_Id = 563fd6fdcf4c4779bae3755e605cdb6b
+

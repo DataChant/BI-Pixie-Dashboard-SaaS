@@ -1,0 +1,59 @@
+table 'Activity Metrics'
+	lineageTag: ab944475-91d7-433c-82fb-bec3319e0f7e
+
+	column 'Activity metrics'
+		lineageTag: 1cc73fab-9332-4b6e-b676-9b4a681d966d
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Activity metrics order'
+
+		relatedColumnDetails
+			groupByColumn: 'Activity metrics fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity metrics fields'
+		isHidden
+		lineageTag: ab65eead-71c1-4321-84fa-27eefc967f92
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Activity metrics order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "kind": 2,
+				  "version": 3
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Activity metrics order'
+		isHidden
+		formatString: 0
+		lineageTag: 30e40173-5691-4c59-b7b3-b61807fdfe4b
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Activity Metrics' = calculated
+		mode: import
+		source =
+				{
+				    ("Report Views", NAMEOF('Report Sessions'[Report Sessions]), 1),
+				    ("Page Views", NAMEOF('Page Sessions'[Page Sessions]), 2),
+				    ("Visual Interactions", NAMEOF('Page Sessions'[Visual Interactions]), 3),
+				    ("Slicer Clicks", NAMEOF('Page Sessions'[Slicer Clicks]), 4),
+				    ("Bookmark Clicks", NAMEOF('Events'[Bookmark Clicks]), 5),
+				    ("Tooltip Views", NAMEOF('Page Sessions'[Tooltip Opens]), 6),
+				    ("Drillthroughs", NAMEOF('Events'[Drillthroughs]), 7),
+				    ("Link Clicks", NAMEOF('Events'[Link Clicks]), 8),
+				    ("Scroll Down in Visuals", NAMEOF('Data Exports'[Scroll Down in Visuals]), 9),
+				    ("Data Exports", NAMEOF('Consumers Activity'[Data Exports]), 10),
+				    ("PDF Exports", NAMEOF('Consumers Activity'[PDF Exports]), 11),
+				    ("PPTX Exports", NAMEOF('Consumers Activity'[PPTX Exports]), 12),
+				    ("Live Analysis in Excel", NAMEOF('Consumers Activity'[Analysis in Excel]), 13)
+				}
+
+	annotation PBI_Id = 0ace6f73806b4cb5a82bf92342ecc9e9
+
