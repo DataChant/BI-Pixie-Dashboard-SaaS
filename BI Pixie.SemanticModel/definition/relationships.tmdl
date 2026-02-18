@@ -38,10 +38,6 @@ relationship AutoDetected_8bc30ef2-cc6d-425e-9228-7fd804291cbc
 	fromColumn: Reports.'Workspace ID'
 	toColumn: Workspaces.'Workspace ID'
 
-relationship f112e012-6d61-1044-553d-e8ba80f931f9
-	fromColumn: 'Workspaces Scans'.'Capacity ID'
-	toColumn: Capacities.'Capacity ID'
-
 relationship 1b817fca-1a74-d567-2995-3eaa3fb9bfab
 	fromColumn: 'Page Scans'.'Report Page Key'
 	toColumn: Pages.'Report Page Key'
@@ -66,11 +62,6 @@ relationship 00aea207-518a-bae6-f469-866cf85d42f3
 	fromColumn: Workspaces.'Last Capacity ID'
 	toColumn: Capacities.'Capacity ID'
 
-relationship 407284fa-cf7f-acc4-da33-9d85ed17697e
-	isActive: false
-	fromColumn: 'Workspaces Scans'.'Workspace ID'
-	toColumn: Workspaces.'Workspace ID'
-
 relationship f2ecbbfa-0756-cb3e-dd07-1fb70d8d0488
 	fromColumn: 'Page Scans'.'Page Index'
 	toColumn: 'Page Indices'.'Page Index'
@@ -86,15 +77,6 @@ relationship 69378908-0d8c-e5ec-6ff3-010a381b6adc
 relationship 26c2f337-b585-57af-d104-4fd2f0fa7f2c
 	fromColumn: 'Page Sessions'.'Page Session Index'
 	toColumn: 'Session Indices'.'Session Index'
-
-relationship e03dac7c-8407-df73-d1c7-42571c29c454
-	fromColumn: 'Performance Users'.'Performance Key'
-	toColumn: 'Visuals with Performance'.'Performance Key'
-
-relationship 19755776-0e0b-e8b2-e309-4d026c273a4d
-	crossFilteringBehavior: bothDirections
-	fromColumn: Visuals.'Performance Key'
-	toColumn: 'Visuals with Performance'.'Performance Key'
 
 relationship bb4d5e0b-a7a7-4b97-b5e5-298b336c2628
 	fromColumn: 'Page Sessions'.'Session Start Date'
@@ -115,50 +97,6 @@ relationship 8859b08a-27bd-ccc1-9e54-fdae33bbb01a
 relationship 3a3b686f-4936-ac68-bc49-4bea704e5720
 	fromColumn: 'Clicks by Visual'.Date
 	toColumn: Calendar.Date
-
-relationship beb07c98-884b-d265-4ced-f16112c5e533
-	fromColumn: 'Performance Data'.Date
-	toColumn: Calendar.Date
-
-relationship 5cc5e4c4-05f4-7ac9-0709-7708d64d27ff
-	fromColumn: 'Performance Data'.'Performance Key'
-	toColumn: 'Visuals with Performance'.'Performance Key'
-
-relationship 368fbf74-eb11-59e1-44b6-2fa191c9bcb6
-	fromColumn: 'Performance Data'.Stat
-	toColumn: 'Performance Stats'.Stat
-
-relationship 0fafc018-a746-6a9b-49f4-ddedb02b3e15
-	fromColumn: 'Performance Data'.Metric
-	toColumn: 'Performance Metrics'.Metric
-
-relationship d1f49239-3420-cb55-d82f-bb7a1619b331
-	fromColumn: 'Performance Fields'.'Performance Key'
-	toColumn: 'Visuals with Performance'.'Performance Key'
-
-relationship 9d856c30-8ba0-1486-d47c-5ce3c93992b0
-	fromColumn: 'Performance Fields'.Date
-	toColumn: Calendar.Date
-
-relationship db4c2260-1d29-ad5f-04fb-556a2dd308f3
-	fromColumn: 'Performance Users'.Date
-	toColumn: Calendar.Date
-
-relationship cd7f5ffc-a0b0-543c-725d-718695635b08
-	fromColumn: 'Performance Queries'.Date
-	toColumn: Calendar.Date
-
-relationship 0a67dc1e-92db-922b-092d-e66f9283f6aa
-	fromColumn: 'Performance Queries'.'Performance Key'
-	toColumn: 'Visuals with Performance'.'Performance Key'
-
-relationship 3463978a-7596-ae5d-7167-190e2ba77791
-	fromColumn: 'Performance Users'.Metric
-	toColumn: 'Performance Metrics'.Metric
-
-relationship 4e9365a2-5351-2ad6-657d-1bbb40561f9c
-	fromColumn: 'Performance Users'.Stat
-	toColumn: 'Performance Stats'.Stat
 
 relationship b337abf2-2667-3e57-5f82-40fe59b7d1af
 	fromColumn: 'Internal Users'.'Manager ID'
@@ -238,113 +176,6 @@ relationship de49a675-0254-a0bc-6a00-13d695365df7
 	fromColumn: Survey.Feedback
 	toColumn: Answers.Feedback
 
-relationship efa55f8f-36d8-7d05-4298-1c5e553073f4
-	fromColumn: 'Consumers Activity'.Date
-	toColumn: Calendar.Date
-
-relationship 8226dcda-9fe7-a09c-48f5-88ad404b361e
-	fromColumn: 'Producers Activity'.Date
-	toColumn: Calendar.Date
-
-relationship 73f5f35c-9318-f0af-6a40-053304aec56e
-	fromColumn: 'Producers Activity'.Time
-	toColumn: Time.Time
-
-relationship 1b50a7ce-17f6-3a0d-69e9-da70cfaafc66
-	fromColumn: 'Consumers Activity'.Time
-	toColumn: Time.Time
-
-relationship 4cd51a7c-f2e2-d08a-ece8-d39ab76efdb7
-	fromColumn: 'Sharing Activity'.Date
-	toColumn: Calendar.Date
-
-relationship 1965fa59-3e36-51f7-f6d4-77b85c4c8585
-	fromColumn: 'Sharing Activity'.Time
-	toColumn: Time.Time
-
-relationship 0f6b3701-c4b4-c34e-1a75-b5c900930ef8
-	fromColumn: 'Sharing Activity'.'Item Key'
-	toColumn: Reports.'Report Key'
-
-relationship 291e5f7c-df82-a470-e633-43faf8406f32
-	fromColumn: 'Producers Activity'.Operation
-	toColumn: 'Fabric Operations'.'Activity Key'
-
-relationship 15e048e0-614f-74cf-ae2c-f870909c417a
-	fromColumn: 'Consumers Activity'.Operation
-	toColumn: 'Fabric Operations'.'Activity Key'
-
-relationship d8b8e78b-dcbb-6e56-4ef0-03fec3d07519
-	fromColumn: 'PBI Reports'.'Dataset ID'
-	toColumn: 'PBI Datasets'.'Dataset ID'
-
-relationship 953839a4-6ea2-0c4c-0a57-ca33c674a896
-	fromColumn: 'PBI Dataflows Upstream'.'Dataflow ID'
-	toColumn: 'PBI Dataflows'.'Dataflow ID'
-
-relationship e3f149a1-738e-bce5-257b-4f92aa4c11e3
-	fromColumn: 'PBI Datasets Dataflows'.'Dataflow ID'
-	toColumn: 'PBI Dataflows'.'Dataflow ID'
-
-relationship 1d08dc81-c8c9-3943-0ecc-3b5d8d8c7073
-	fromColumn: 'PBI Datasets Datasources Lineage'.'Data Source ID'
-	toColumn: 'PBI Datasources'.'Data Source ID'
-
-relationship dd7738d3-37ee-3100-9b93-ae781fa00dc3
-	fromColumn: 'PBI Dataflows Datasources'.'Data Source ID'
-	toColumn: 'PBI Datasources'.'Data Source ID'
-
-relationship 30fc0b21-ea41-9ab7-851b-78be26466b3d
-	crossFilteringBehavior: bothDirections
-	fromColumn: 'PBI Datasets Datasources Lineage'.'Dataset ID'
-	toColumn: 'PBI Datasets'.'Dataset ID'
-
-relationship 913dabfc-8d71-ca26-3582-a627eeb7abfc
-	fromColumn: 'PBI Reports'.Endorsement
-	toColumn: 'Report Endorsement Types'.Endorsement
-
-relationship c5fb6cdf-5e63-07cc-1541-8d42154d4027
-	fromColumn: 'PBI Reports'.'Report ID'
-	toColumn: 'PBI App Reports'.'Original Report Object ID'
-
-relationship 8807d74c-5bba-6a8f-096c-cc37f2bd29ef
-	fromColumn: 'Data Exports'.Date
-	toColumn: Calendar.Date
-
-relationship 6b3d52f8-9290-1b2d-2514-554cf6b2d869
-	fromColumn: 'Data Exports'.Time
-	toColumn: Time.Time
-
-relationship 2801a7d1-0907-ed3a-0ece-1a63126d49af
-	fromColumn: 'Data Exports'.'Performance Key'
-	toColumn: 'Visuals with Performance'.'Performance Key'
-
-relationship 6e571dde-b490-1b67-440e-c2a42058ead0
-	fromColumn: 'Data Exports'.'Max Rows'
-	toColumn: 'Export Max Allowed'.'Max Rows'
-
-relationship a30cf6da-025c-7205-9d21-3b19610eaa8e
-	fromColumn: 'Data Exports'.'Export Type'
-	toColumn: 'Export Types'.'Export Type'
-
-relationship ef1fea71-be9a-81b3-ddab-eecf211e72c9
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: Reports.'Report Key'
-	toColumn: 'All Reports'.'Report Key'
-
-relationship 5a8c664e-16a3-a869-28dc-d23884a93593
-	fromColumn: 'PBI Datasets'.Endorsement
-	toColumn: 'Dataset Endorsement Types'.Endorsement
-
-relationship b871a91f-4771-a398-d6fb-dd3aac4236b4
-	fromColumn: 'PBI Tables'.'Dataset ID'
-	toColumn: 'PBI Datasets'.'Dataset ID'
-
-relationship 8af22365-3c82-3909-338c-a092ab177d97
-	fromColumn: 'PBI Measures'.'Dataset Table Key'
-	toColumn: 'PBI Tables'.'Dataset Table Key'
-
 relationship 36e30241-fe69-d1b3-1de6-6ac1ecbf4a84
 	fromColumn: 'RLS Events'.Date
 	toColumn: Calendar.Date
@@ -356,6 +187,40 @@ relationship 5f9c256e-0348-281d-3674-3dd540aae7be
 relationship 3dbfd7b4-8c32-10a5-7c40-dda988c79f14
 	fromColumn: 'RLS Events'.'Report Page Key'
 	toColumn: Pages.'Report Page Key'
+
+relationship 1398e074-a5e8-bf27-006c-37e203cfb0b8
+	fromColumn: Visuals.'Visual Type'
+	toColumn: 'All Visual Types'.GUID
+
+relationship a1938040-733c-68a9-ac21-302845764e30
+	fromColumn: Events.'Visual Type'
+	toColumn: 'All Visual Types'.GUID
+
+relationship 513526d0-dc4f-60e4-e1e9-ed228ea4f6a9
+	fromColumn: 'All Visual Types'.'Visual State'
+	toColumn: 'Visual Trust Levels'.'Visual State'
+
+relationship 14d384d9-f7c0-e839-e751-e81fbced17e0
+	fromColumn: Pages.'Report Key'
+	toColumn: Reports.'Report Key'
+
+relationship f4e6eca5-41df-ee8c-92cf-5110945d6e9a
+	fromColumn: 'Page Sessions'.'Duration (Sec)'
+	toColumn: 'Durations X'.'Duration (Sec)'
+
+relationship d57616c9-7823-53e3-ced9-f546e93d7b70
+	fromColumn: 'Report Sessions'.'Duration (Sec)'
+	toColumn: 'Durations X'.'Duration (Sec)'
+
+relationship 9bac0782-c824-50dd-ae4a-58c996b52386
+	fromColumn: 'Page Sessions'.'Session Interactions'
+	toColumn: 'Interactions X'.Interactions
+
+relationship ef1fea71-be9a-81b3-ddab-eecf211e72c9
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Reports.'Report Key'
+	toColumn: 'All Reports'.'Report Key'
 
 relationship 0332e1c1-d6be-4db9-8e8b-34aaabbd6714
 	fromColumn: Events.'User Key'
@@ -372,10 +237,6 @@ relationship 870c6c07-134f-8887-62e3-94d0032ee1c0
 
 relationship c8c128d1-0f45-8e76-8525-0a286f932860
 	fromColumn: Feedback.'User Key'
-	toColumn: Users.'User Key'
-
-relationship 11db2091-105a-ec98-7bba-657128fb4e18
-	fromColumn: 'Performance Users'.User
 	toColumn: Users.'User Key'
 
 relationship b57da92e-ed26-dede-5517-264f28d24de7
@@ -406,79 +267,9 @@ relationship b7c33877-52dc-7dcb-e9c4-6802ff8848e8
 	fromColumn: 'Survey Latest'.'User Key'
 	toColumn: Users.'User Key'
 
-relationship 27f47c77-e16a-b38b-6fef-e28dbc4da960
-	fromColumn: 'Producers Activity'.'User Key'
-	toColumn: Users.'User Key'
-
-relationship 380b5e0c-bd40-c8aa-e37f-bb67c5d95e3a
-	fromColumn: 'Sharing Activity'.'User Key'
-	toColumn: Users.'User Key'
-
-relationship b6ba8469-fc35-d4df-2ee7-82292556feb5
-	fromColumn: 'Consumers Activity'.'User Key'
-	toColumn: Users.'User Key'
-
-relationship eee5299c-4aae-32f5-eb2e-0d45b8a3ee44
-	fromColumn: 'Data Exports'.User
-	toColumn: Users.'User Key'
-
 relationship 3582b674-879f-16b8-046d-60a124540e5c
 	fromColumn: 'RLS Events'.'User Key'
 	toColumn: Users.'User Key'
-
-relationship 1398e074-a5e8-bf27-006c-37e203cfb0b8
-	fromColumn: Visuals.'Visual Type'
-	toColumn: 'All Visual Types'.GUID
-
-relationship a1938040-733c-68a9-ac21-302845764e30
-	fromColumn: Events.'Visual Type'
-	toColumn: 'All Visual Types'.GUID
-
-relationship 513526d0-dc4f-60e4-e1e9-ed228ea4f6a9
-	fromColumn: 'All Visual Types'.'Visual State'
-	toColumn: 'Visual Trust Levels'.'Visual State'
-
-relationship 71bcb9d3-e2b5-0244-8df2-aece1dc3e112
-	fromColumn: 'PBI Columns'.'Dataset Table Key'
-	toColumn: 'PBI Tables'.'Dataset Table Key'
-
-relationship e4620bc3-defd-816b-43c2-ef9e2b1be5eb
-	fromColumn: 'PBI Datasets'.'Configured By'
-	toColumn: Developers.Developer
-
-relationship 14d384d9-f7c0-e839-e751-e81fbced17e0
-	fromColumn: Pages.'Report Key'
-	toColumn: Reports.'Report Key'
-
-relationship 58efa256-9979-4888-e6ff-ce9895844c5a
-	fromColumn: 'PBI Reports'.'Report Type'
-	toColumn: 'Report Types'.'Report Type'
-
-relationship 417a3b52-99d3-bc2a-c387-8afc8a9a68b8
-	fromColumn: 'Producers Activity'.'Item Key'
-	toColumn: 'PBI Reports'.'Report ID'
-
-relationship fa13a0f4-564d-fa2c-1bea-79eb65d422aa
-	fromColumn: 'Consumers Activity'.'Item Key'
-	toColumn: 'PBI Reports'.'Report ID'
-
-relationship b6114f47-aea9-d91b-f4fb-a3b7141ede79
-	crossFilteringBehavior: bothDirections
-	fromCardinality: one
-	fromColumn: Reports.'Report Key'
-	toColumn: 'PBI Reports'.'Report Key'
-
-relationship f4e6eca5-41df-ee8c-92cf-5110945d6e9a
-	fromColumn: 'Page Sessions'.'Duration (Sec)'
-	toColumn: 'Durations X'.'Duration (Sec)'
-
-relationship d57616c9-7823-53e3-ced9-f546e93d7b70
-	fromColumn: 'Report Sessions'.'Duration (Sec)'
-	toColumn: 'Durations X'.'Duration (Sec)'
-
-relationship 9bac0782-c824-50dd-ae4a-58c996b52386
-	fromColumn: 'Page Sessions'.'Session Interactions'
-	toColumn: 'Interactions X'.Interactions
 
 relationship 22dd0961-09dd-f1db-99de-2a146495d0db
 	fromColumn: 'Page Sessions'.'User Key'

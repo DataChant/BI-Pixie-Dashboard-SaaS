@@ -16,10 +16,6 @@ queryGroup Parameters
 
 	annotation PBI_QueryGroupOrder = 0
 
-queryGroup Performance
-
-	annotation PBI_QueryGroupOrder = 4
-
 queryGroup Users
 
 	annotation PBI_QueryGroupOrder = 6
@@ -28,29 +24,9 @@ queryGroup Tests
 
 	annotation PBI_QueryGroupOrder = 3
 
-queryGroup 'Power BI Activities'
-
-	annotation PBI_QueryGroupOrder = 7
-
-queryGroup 'Log Analytics'
-
-	annotation PBI_QueryGroupOrder = 5
-
-queryGroup 'Log Analytics\Transform File from Log Analytics - Queries - Base'
-
-	annotation PBI_QueryGroupOrder = 0
-
-queryGroup 'Log Analytics\Transform File from Log Analytics - Queries - Base\Helper Queries'
-
-	annotation PBI_QueryGroupOrder = 0
-
 queryGroup 'Power BI Scan'
 
 	annotation PBI_QueryGroupOrder = 8
-
-queryGroup 'Power BI Scan\PBI Scan Helper'
-
-	annotation PBI_QueryGroupOrder = 0
 
 queryGroup RLS
 
@@ -62,7 +38,7 @@ queryGroup 'Visual Types'
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["FnLoadActivityLogs","Activity Logs - Base","Activity Logs - Empty","Consumers Activity - Base","Consumer Activity Types","Demo Data","Consumers Activity","Sharing Activity","Producers Activity","FnLoadDatalakeFile","FnLoadInventory","FnGetReportRawSessions","FnCountSlicerEventsInner","FnCountSlicerEvents","FnGetPageSessions","FnGetSessions","All Visual Types","Capacities","Capacity-Unknown","Clicks by Visual","Data Exports","Data Selections","Deployment Pipelines","Event Types","Export Metrics","Events","Feedback","Feedback Icons","Feedback Type","Fabric Operations","Inventory Scans","License","license-status json","Page Scans","Pages","Page Sessions","Platforms","Report Types","Report Sessions","Page Sessions - Test","Report Scans","Survey","Survey Questions","Time","Visual Attributes Options","Visual Scans","Visual Trust Levels","Visuals","Workspaces","Workspace-Unknown","Workspaces Scans","Visual Types","FnSessionizeRLSEvents","RLS Events Demo","RLS Events","Data Lake URL","Subscription Email","License Key","FnLoadReportSessionFromDataLakeFile","FnLoadPageSessionFromDataLakeFile","Events - Datalake Base","Events - Base","Projects and Reports - Base","Events - Datalake Hierarchy - Base","Data Selection Events","Data Selections - Base","Report Sessions - Base","Inventory - Base 0","Inventory - Reports - Base 1","Inventory - Reports - Base 2","Inventory - Reports - Base 3","Workspaces - Base","Are Users Anonymous","Last N Days","Last N Days Log Analytics","Session timeout (min)","Inventory - Pages - Base 1","Inventory - Report IDs - Demo","FnPrepareSCD","Performance Queries - Base","Performance Queries - Empty","Performance by Day - Base","Performance by Day - Empty","Visuals with Performance","Performance Data","Performance Users","Performance Users - Empty","Performance Fields","Performance Metrics","Performance Stats","Performance Queries","Internal Users - Base","External Users","Managers","Internal Users","Internal Users - Empty","External Users - Empty","Feedback - Base","Is Demo","Reports from Activity Logs","Instrumentation Activities","PBIScanSampleFile","PBIScanContent","FnLoadPBIScanFile","Transform PBI Scan Sample File","Users Demo","PBI Workspaces Scans - Base","PBI Workspaces Reports - Base","PBI Workspace Permissions - Base","PBI Workspace User Permissions","PBI Workspace Group Permissions","PBI Workspace Datasets - Base","PBI Datasets Tables - Base","PBI Reports - Base","PBI Reports","PBI App Reports","PBI Datasets","PBI Tables","PBI Columns","PBI Measures","PBI Datasets Datasources","Dataset Endorsement Types","Report Endorsement Types","PBI Datasets Dataflows","PBI Dataflows - Base","PBI Dataflows Upstream","FnGetMatchingLogsAnalyticsEvent","Data Visual Events All","Data Exports Unmatched All","Sample Log Analytics File","Sample Log Analytics Content","Sample Export Events","FnGetLogAnalyticsExportEvents","Sample Visual Events","FnGetLogAnalyticsVisualEvent","Export Events Merged","FnGetVisualInfoForExportEvents","PBI Dataflows Datasources","PBI Dataflows","PBI Datasources","Data Exports Unmatched","PBI Datasources Demo","PBI Datasources Demo Files","Built In Visuals","Custom Visuals","Unlisted Visuals","Unknown Visuals","Visual Type Fix","EmptyUnkownVisualTypes","UncertifiedDemo","Is SaaS","Reports"]
+annotation PBI_QueryOrder = ["FnLoadDatalakeFile","FnLoadInventory","FnGetReportRawSessions","FnCountSlicerEventsInner","FnCountSlicerEvents","FnGetPageSessions","FnGetSessions","All Visual Types","Capacities","Capacity-Unknown","Clicks by Visual","Data Selections","Deployment Pipelines","Event Types","Export Metrics","Events","Feedback","Feedback Icons","Feedback Type","Inventory Scans","License","Page Scans","Pages","Page Sessions","Platforms","Report Sessions","Page Sessions - Test","Report Scans","Survey","Survey Questions","Time","Visual Attributes Options","Visual Scans","Visual Trust Levels","Visuals","Workspaces","Visual Types","FnSessionizeRLSEvents","RLS Events Demo","RLS Events","Data Lake URL","License Key","FnLoadReportSessionFromDataLakeFile","FnLoadPageSessionFromDataLakeFile","Events - Datalake Base","Events - Base","Projects and Reports - Base","Events - Datalake Hierarchy - Base","Data Selection Events","Data Selections - Base","Report Sessions - Base","Inventory - Base 0","Inventory - Reports - Base 1","Inventory - Reports - Base 2","Inventory - Reports - Base 3","Workspace-Unknown","Workspaces - Base","Are Users Anonymous","Last N Days","Session timeout (min)","Inventory - Pages - Base 1","Inventory - Report IDs - Demo","FnPrepareSCD","Internal Users - Base","External Users","Managers","Internal Users","Internal Users - Empty","External Users - Empty","Feedback - Base","Is Demo","Instrumentation Activities","Built In Visuals","Custom Visuals","Unlisted Visuals","Unknown Visuals","Visual Type Fix","EmptyUnkownVisualTypes","UncertifiedDemo","Is SaaS","Reports"]
 
 annotation PBI_ProTooling = ["DevMode","CalcGroup","DaxQueryView_Desktop","TMDLView_Desktop","CopilotTooling"]
 
@@ -92,7 +68,6 @@ ref table Reports
 ref table 'Feedback Icons'
 ref table 'CSAT type'
 ref table 'Design Attributes'
-ref table 'Workspaces Scans'
 ref table Workspaces
 ref table Capacities
 ref table 'Visual Scans'
@@ -104,13 +79,6 @@ ref table Visuals
 ref table 'X Dimension'
 ref table 'Y Dimension'
 ref table 'Visual Attributes Options'
-ref table 'Performance Users'
-ref table 'Visuals with Performance'
-ref table 'Performance Data'
-ref table 'Performance Fields'
-ref table 'Performance Metrics'
-ref table 'Performance Stats'
-ref table 'Performance Queries'
 ref table Managers
 ref table 'Internal Users'
 ref table 'External Users'
@@ -124,39 +92,14 @@ ref table 'Feedback Type'
 ref table Answers
 ref table 'Interactions X'
 ref table 'Durations X'
-ref table 'Consumers Activity'
-ref table 'Fabric Operations'
-ref table 'Producers Activity'
-ref table 'Sharing Activity'
-ref table 'PBI Datasources'
-ref table 'PBI Datasets'
-ref table 'PBI Tables'
-ref table 'PBI Columns'
-ref table 'PBI Measures'
-ref table 'PBI Datasets Datasources'
-ref table 'PBI Reports'
-ref table 'PBI Dataflows Upstream'
-ref table 'Dataset Endorsement Types'
-ref table 'Data Exports'
-ref table 'PBI Datasets Dataflows'
-ref table 'PBI Dataflows Datasources'
-ref table 'PBI Dataflows'
-ref table 'PBI Datasets Datasources Lineage'
-ref table 'Report Endorsement Types'
-ref table 'PBI App Reports'
 ref table 'Export Metrics'
-ref table 'Export Types'
-ref table 'Export Max Allowed'
 ref table 'Business Outcome Metrics'
 ref table 'All Reports'
 ref table 'RLS Events'
 ref table 'RLS Metric'
 ref table 'All Visual Types'
 ref table 'Visual Trust Levels'
-ref table Developers
 ref table 'Deployment Pipelines'
-ref table 'Report Types'
-ref table 'license-status json'
 
 ref cultureInfo en-US
 

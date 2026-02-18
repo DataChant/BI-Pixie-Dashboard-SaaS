@@ -109,11 +109,20 @@ table Users
 		formatString: #,0
 		lineageTag: 7478c931-d86c-4003-9864-04651e4bc79f
 
-	measure 'Passive Users' = [Users] - [Engaged Users]
+	measure 'Passive Users' =
+			
+			VAR _users = [Users]
+			VAR _engaged_users = [Engaged Users]
+			RETURN
+			IF (
+			    ISBLANK(_engaged_users),
+			    BLANK(),
+			    [Users] - [Engaged Users]
+			)
 		formatString: #,0
 		lineageTag: 4de70adc-cfbf-4de2-944f-5efb18fcabc0
 
-	measure Users = COUNTX(Users, [Page Sessions] + [Consumer Activities in PBI Logs])
+	measure Users = COUNTX(Users, [Page Sessions])
 		lineageTag: 58465bb1-cee8-4dae-a19b-7c8460ea4ca9
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
@@ -147,7 +156,11 @@ table Users
 			
 			VAR max_date = MAX('Calendar'[Date])
 			RETURN
-			CALCULATE([Users], FILTER(ALL('Calendar'[Date]), 'Calendar'[Date] <= max_date))
+			IF (
+			    ISBLANK([Users]),
+			    BLANK(),
+			    CALCULATE([Users], FILTER(ALL('Calendar'[Date]), 'Calendar'[Date] <= max_date))
+			)
 		formatString: #,0
 		lineageTag: ad4caac8-990f-48cc-a494-60c083d126c4
 
@@ -361,14 +374,7 @@ table Users
 		source =
 				
 				DISTINCT (
-				    UNION (
-				        SUMMARIZE ( 'Events', 'Events'[User Key] ),
-				        SUMMARIZE ( 'Producers Activity', 'Producers Activity'[User Key] ),
-				        SUMMARIZE ( 'Consumers Activity', 'Consumers Activity'[User Key] ),
-				        SUMMARIZE ( 'Data Exports', 'Data Exports'[User] ),
-				        SUMMARIZE ( 'Performance Users', 'Performance Users'[User] ),
-				        SUMMARIZE ( 'RLS Events', 'RLS Events'[User Key] )
-				    )
+				    SUMMARIZE ( 'Events', 'Events'[User Key] )
 				)
 
 	annotation PBI_Id = 1608d8cbee784e8f92b8b94e7deaaa3a

@@ -13,15 +13,15 @@ table 'Report Sessions'
 		formatString: #,0.0
 		lineageTag: f7910b5d-506f-4d8a-94e8-c17b08b9c9f7
 
-	measure '% Interactive Reports' = DIVIDE([Interactive Reports], [Scanned Reports])
+	measure '% Interactive Reports' = DIVIDE([Interactive Reports], [Instrumented Reports])
 		formatString: #,0.0%;-#,0.0%;#,0.0%
 		lineageTag: 17d45ff6-2690-4ef9-9683-69bd6e59195c
 
-	measure '% Passive Reports' = DIVIDE([Passive Reports], [All Reports])
+	measure '% Passive Reports' = DIVIDE([Passive Reports], [Instrumented Reports])
 		formatString: #,0.0%;-#,0.0%;#,0.0%
 		lineageTag: 9ebb1b05-0c20-4f78-b223-2ce4ca24bd5d
 
-	measure '% Unused Reports' = DIVIDE([Unused Reports], [All Reports])
+	measure '% Unused Reports' = DIVIDE([Unused Reports], [Instrumented Reports])
 		formatString: #,0.0%;-#,0.0%;#,0.0%
 		lineageTag: 12fe8d25-f79d-44aa-ae93-8e81e3d2269f
 
@@ -83,7 +83,7 @@ table 'Report Sessions'
 		formatString: #,0
 		lineageTag: ca44364e-b57c-4d1e-8d50-af3bbab7af88
 
-	measure 'Unused Reports' = [All Reports] - [Opened Reports]
+	measure 'Unused Reports' = [Instrumented Reports] - [Opened Reports]
 		formatString: #,0
 		lineageTag: d35c801a-b42d-4835-8b90-72a44858d01f
 

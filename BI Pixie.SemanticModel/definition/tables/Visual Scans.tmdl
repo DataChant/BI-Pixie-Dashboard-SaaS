@@ -332,7 +332,6 @@ table 'Visual Scans'
 			VAR _row_count = COUNTROWS(_top_pages)
 			RETURN
 			SWITCH ( TRUE(),
-			    SUM(License[Capability Heatmaps]) < 1, "No data found",
 			    ISBLANK([Scanned visuals]), "No data found",
 			    _row_count > 3, "More than 3 pages are loaded in Heatmap.",
 			    _row_count > 1, "Selected Pages: " & _page_name,
@@ -787,5 +786,5 @@ table 'Visual Scans'
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

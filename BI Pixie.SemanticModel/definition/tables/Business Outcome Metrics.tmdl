@@ -46,10 +46,7 @@ table 'Business Outcome Metrics'
 				    ("Feedback: CSAT", NAMEOF('Feedback'[CSAT (Last Response)]), 4),
 				    ("Survey: NPS", NAMEOF('Survey'[NPS]), 5),
 				    ("Survey: Financial Gains", NAMEOF('Survey'[Survey Financial Gains]), 6),
-				    ("Survey: Hours of Savings", NAMEOF('Survey'[Survey Time Savings (Hours)]), 7),
-				    ("Performance: Total CPU Time (Second)", NAMEOF('Performance Users'[Total CPU Time]), 8),
-				    ("Performance: Clicks per CPU Second", NAMEOF('Performance Users'[Clicks per Second of Total CPU]), 9),
-				    ("ROI Score", NAMEOF('Producers Activity'[ROI Score]), 10)
+				    ("Survey: Hours of Savings", NAMEOF('Survey'[Survey Time Savings (Hours)]), 7)
 				}
 
 	annotation PBI_Id = fe01695b093d4bd1b9da1579667f6811

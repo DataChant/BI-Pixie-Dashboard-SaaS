@@ -53,7 +53,11 @@ table Reports
 		formatString: 0.00
 		lineageTag: 85f3c24b-f490-4224-8248-5da3f5554586
 
-	measure 'Report Link' = VAR _url = MAX(Reports[Report URL]) RETURN IF(ISBLANK(_url), BLANK(), _url)
+	measure 'Report Link' =
+			
+			VAR _users = [Users]
+			VAR _url = MAX(Reports[Report URL])
+			RETURN IF(ISBLANK(_url) || ISBLANK(_users), BLANK(), _url)
 		isHidden
 		lineageTag: 2e9bc830-2fb8-4ca3-9158-a6ddcd2e2407
 		dataCategory: WebUrl
