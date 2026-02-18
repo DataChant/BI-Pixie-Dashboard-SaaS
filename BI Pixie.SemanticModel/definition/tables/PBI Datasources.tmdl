@@ -94,8 +94,9 @@ table 'PBI Datasources'
 		queryGroup: 'Power BI Scan'
 		source = ```
 				let
-				    Source = AzureStorage.DataLake(#"Data Lake URL"),
-				    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/pbi_scans/latest/")),
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "\",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter  & #"License Key"),
+				    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "\pbi_scans\latest\")),
 				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Hidden Files1",{"Content", "Name", "Date modified"}),
 				    #"Filtered Hidden Files2" = Table.SelectRows(#"Removed Other Columns", each [Attributes]?[Hidden]? <> true),

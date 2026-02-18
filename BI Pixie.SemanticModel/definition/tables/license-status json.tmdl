@@ -1,67 +1,9 @@
-table License
-	lineageTag: 6422a6ad-62cf-4fd7-9325-ae3090539c4c
-
-	measure 'Performance License' =
-			
-			IF (
-			    AND (
-			        SUM ( License[Capability Performance] ) > 0,
-			        SUM ( License[Capability Heatmaps] ) > 0
-			    ),
-			    "",
-			    "Not supported in current subscription"
-			)
-		lineageTag: a72a983c-58d0-4d2e-8ab0-8ab7781b8af6
-
-		annotation PBI_FormatHint = {"isText":true}
-
-	measure 'Security License' =
-			
-			IF (
-			    SUM ( License[Capability Security] ) > 0,
-			    "",
-			    "Not supported in current subscription"
-			)
-		lineageTag: bcce2aa8-e113-40ce-a819-c83c066eab86
-
-		annotation PBI_FormatHint = {"isText":true}
-
-	measure 'User Satisfaction License' =
-			
-			IF (
-			    SUM ( License[Capability User Satisfaction] ) > 0,
-			    "",
-			    "Not supported in current subscription"
-			)
-		lineageTag: fef01265-ac47-4224-90b5-d03033a79232
-
-		annotation PBI_FormatHint = {"isText":true}
-
-	measure 'Heatmaps License' =
-			
-			IF (
-			    SUM ( License[Capability Heatmaps] ) > 0,
-			    "",
-			    "Not supported in current subscription"
-			)
-		lineageTag: 58bf7218-7566-4143-b818-3ada256cf563
-
-		annotation PBI_FormatHint = {"isText":true}
-
-	measure 'Filtered Values License' =
-			
-			IF (
-			    SUM ( License[Capability Filtered Values] ) > 0,
-			    "",
-			    "Not supported in current subscription"
-			)
-		lineageTag: e9ae74d3-b18c-44bb-8d43-fb1c6433eb3c
-
-		annotation PBI_FormatHint = {"isText":true}
+table 'license-status json'
+	lineageTag: 5e829e3a-d1c8-4c9d-beb9-7d4982e2576e
 
 	column license_key
 		dataType: string
-		lineageTag: 617ad128-d39f-4f81-8162-5dcbac3c58ab
+		lineageTag: 01c15966-fcca-43ae-9b1c-4f7d23d3c901
 		summarizeBy: none
 		sourceColumn: license_key
 
@@ -69,7 +11,7 @@ table License
 
 	column status
 		dataType: string
-		lineageTag: eb1470eb-e4c9-48d2-bbe1-5f691dd85a54
+		lineageTag: 3f924ecd-fef0-4383-809d-2f9264e4f8c8
 		summarizeBy: none
 		sourceColumn: status
 
@@ -77,7 +19,7 @@ table License
 
 	column tier
 		dataType: string
-		lineageTag: 3928f79b-1a33-4799-b739-65f54353f3b4
+		lineageTag: 270736cd-d954-47dd-943e-9295ff2c241e
 		summarizeBy: none
 		sourceColumn: tier
 
@@ -85,7 +27,7 @@ table License
 
 	column message
 		dataType: string
-		lineageTag: 3d0ce904-84f3-4d5e-a509-643198ec3ced
+		lineageTag: 1aec92a2-21c9-44b7-9e75-5c02d4739dff
 		summarizeBy: none
 		sourceColumn: message
 
@@ -93,7 +35,7 @@ table License
 
 	column exceeded
 		dataType: string
-		lineageTag: 3ec31cc8-ce0b-474c-9c4c-549e0c5b5cf2
+		lineageTag: 07687a38-ddb1-47c0-91f7-0cf27fcff179
 		summarizeBy: none
 		sourceColumn: exceeded
 
@@ -102,16 +44,17 @@ table License
 	column updated_at
 		dataType: dateTime
 		formatString: General Date
-		lineageTag: 5b5a82da-e8f1-4546-81b9-454db5ee8111
+		lineageTag: b6ab93c8-7268-46c7-9cfa-c5ddd8a78193
 		summarizeBy: none
 		sourceColumn: updated_at
 
 		annotation SummarizationSetBy = Automatic
 
-	partition License = m
+	partition 'license-status json' = m
 		mode: import
 		source =
 				let
+				
 				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
 				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key", [HierarchicalNavigation=true]),
 				    LicenseResponse = Json.Document(Source{[Name="license-status.json"]}[Content]),
@@ -130,7 +73,7 @@ table License
 				in
 				    #"Changed Type"
 
-	annotation PBI_ResultType = Table
-
 	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
 

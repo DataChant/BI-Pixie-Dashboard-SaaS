@@ -275,8 +275,11 @@ table 'Data Exports'
 		mode: import
 		source = ```
 				let
-				    Source = AzureStorage.DataLake(#"Data Lake URL"),
-				    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/log_analytics/queries")),
+				
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+				    
+				    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "/log_analytics/queries")),
 				    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 				    #"Filter N Last Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
 				    #"Removed Other Columns" = Table.SelectColumns(#"Filter N Last Days",{"Content", "Name", "Date modified"}),

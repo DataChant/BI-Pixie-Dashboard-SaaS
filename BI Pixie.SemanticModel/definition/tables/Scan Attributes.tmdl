@@ -56,33 +56,6 @@ table 'Scan Attributes'
 				
 				```
 
-		calculationItem 'Workspace Attribute' =
-				
-				VAR _max_current_date = MAX('Calendar'[Date])
-				VAR _min_current_date = MIN('Calendar'[Date])
-				VAR _max_timestamp_scan =
-				    CALCULATE (
-				        MAX('Workspaces Scans'[Since]),
-				        FILTER(
-				            'Workspaces Scans',
-				            'Workspaces Scans'[Date Since] <= _max_current_date &&
-				                ('Workspaces Scans'[Date Until] = BLANK() || 'Workspaces Scans'[Date Until] >= _min_current_date )
-				        )
-				    )
-				
-				RETURN
-				IF (
-				    ISBLANK ( [Visual Scan Rows] ),
-				    BLANK(),
-				    CALCULATE (
-				        SELECTEDMEASURE(),
-				        FILTER(
-				            'Workspaces Scans',
-				            'Workspaces Scans'[Since] = _max_timestamp_scan
-				        )
-				    )
-				)
-
 	column Calc
 		dataType: string
 		lineageTag: bb5f0bac-60c7-4f2d-a8d2-561fb1c35230

@@ -72,7 +72,7 @@ table Users
 			
 			COUNTX (
 			    Users,
-			    [Interactive Page Sessions] + [Active Usage in PBI Activity Logs]
+			    [Interactive Page Sessions]
 			)
 			
 			```

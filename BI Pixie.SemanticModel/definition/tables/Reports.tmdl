@@ -11,16 +11,15 @@ table Reports
 
 	measure 'Complexity Score' =
 			
-			VAR _measure_length = [Measure Expression Len Norm]
 			VAR _columns_in_viz_complexity = [Columns in Visuals Complexity Norm]
-			VAR _calc_columns_complexity = [Column Expression Len Norm]
 			VAR _excessive_analytics = MAX(1, [Visuals] - [Non-Analytic Objects] - ([Tracked Pages] * 10))
 			VAR _objects = MAX(1, [Non-Analytic Objects])
 			VAR _rows = COUNTROWS('Pages')
 			RETURN
-			IF ( _rows=0, BLANK(), _measure_length * _calc_columns_complexity * _columns_in_viz_complexity * _excessive_analytics * _objects )
-		formatString: 0.00
+			IF ( _rows=0, BLANK(), _columns_in_viz_complexity * _excessive_analytics * _objects )
 		lineageTag: 82479ca7-2286-451c-badd-7c32c0b00ae9
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Usability Score' =
 			
@@ -254,5 +253,5 @@ table Reports
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Table
+	annotation PBI_ResultType = Exception
 

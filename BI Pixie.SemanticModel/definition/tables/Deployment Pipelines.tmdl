@@ -86,7 +86,8 @@ table 'Deployment Pipelines'
 		source =
 				let
 				    Source = #"Inventory - Base 0",
-				    #"Removed Other Columns" = Table.SelectColumns(Source,{"Since", "Project", "deploymentPipelines"}),
+				    #"Filtered Rows1" = Table.SelectRows(Source, each ([Type] = "DeploymentPipelines/")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows1",{"Since", "Project", "deploymentPipelines"}),
 				    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [deploymentPipelines] <> null),
 				    #"Expanded deploymentPipelines" = Table.ExpandListColumn(#"Filtered Rows", "deploymentPipelines"),
 				    #"Expanded deploymentPipelines1" = Table.ExpandRecordColumn(#"Expanded deploymentPipelines", "deploymentPipelines", {"id", "displayName", "stages", "production_workspace"}, {"id", "displayName", "stages", "production_workspace"}),

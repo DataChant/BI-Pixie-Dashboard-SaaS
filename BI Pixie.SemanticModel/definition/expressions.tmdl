@@ -215,8 +215,11 @@ expression FnLoadReportSessionFromDataLakeFile = ```
 
 expression 'Events - Datalake Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Files - Datalake Base" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/events/")),
+		    
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Files - Datalake Base" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/events/")),
 		    #"Filtered Rows" = Table.SelectRows(#"Files - Datalake Base", each [Extension] = ".tsv"),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
 		    #"Filtered Rows1" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days")),
@@ -343,53 +346,44 @@ expression 'Last N Days' = -1 meta [IsParameterQuery=true, Type="Number", IsPara
 
 	annotation PBI_ResultType = Number
 
-expression 'Projects and Reports - Base' =
+expression 'Projects and Reports - Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL",[HierarchicalNavigation=true]),
-		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Content"}),
-		    #"Expanded Content" = Table.ExpandTableColumn(#"Removed Other Columns", "Content", {"Content"}, {"Content"}),
-		    #"Expanded Content1" = Table.ExpandTableColumn(#"Expanded Content", "Content", {"Content", "Folder Path", "Name"}, {"Content.1", "Folder Path", "Name"}),
-		    #"Filtered Rows2" = Table.SelectRows(#"Expanded Content1", each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/events/")),
-		    #"Duplicated Column" = Table.DuplicateColumn(#"Filtered Rows2", "Name", "Project"),
-		    #"Renamed Columns" = Table.RenameColumns(#"Duplicated Column",{{"Content.1", "Content"}}),
-		    #"Merged Columns" = Table.CombineColumns(#"Renamed Columns",{"Folder Path", "Name"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"Path"),
-		    #"Added Suffix" = Table.TransformColumns(#"Merged Columns", {{"Path", each _ & "/", type text}}),
-		    #"Expanded Content.1" = Table.ExpandTableColumn(#"Added Suffix", "Content", {"Content", "Name"}, {"Content", "Name"}),
-		    #"Duplicated Column1" = Table.DuplicateColumn(#"Expanded Content.1", "Name", "Report"),
-		    #"Merged Columns1" = Table.CombineColumns(#"Duplicated Column1",{"Path", "Name"},Combiner.CombineTextByDelimiter("", QuoteStyle.None),"Path"),
-		    #"Filtered Rows" = Table.SelectRows(#"Merged Columns1", each [Report] <> "BI Pixie Inventory" and [Report] <> "BI Pixie Performance"),
-		    #"Inserted Merged Column" = Table.AddColumn(#"Filtered Rows", "Report Key", each Text.Lower(Text.Combine({Text.Trim([Project]), Text.Trim([Report])}, "---")), type text),
-		    #"Expanded Content2" = Table.ExpandTableColumn(#"Inserted Merged Column", "Content", {"Content", "Name"}, {"Content", "Username1"}),
-		    #"Filtered Rows1" = Table.SelectRows(#"Expanded Content2", each [Username1] <> null and [Username1] <> ""),
-		    #"Expanded Content3" = Table.ExpandTableColumn(#"Filtered Rows1", "Content", {"Content", "Date modified", "Name"}, {"Content", "Date modified", "Name"}),
-		    #"Added Custom" = Table.AddColumn(#"Expanded Content3", "Username2", each if [Content] is table then [Name] else null),
-		    #"Added Custom1" = Table.AddColumn(#"Added Custom", "User Key", each if [Username2] = null then [Username1] else [Username1] & "\" & [Username2]),
-		    #"Removed Columns1" = Table.RemoveColumns(#"Added Custom1",{"Username2", "Username1"}),
-		    #"Added Conditional Column" = Table.AddColumn(#"Removed Columns1", "Subfolder", each if [Content] is table then [Content] else null),
-		    #"Expanded Subfolder" = Table.ExpandTableColumn(#"Added Conditional Column", "Subfolder", {"Content", "Date modified", "Name"}, {"Content.1", "Date modified2", "Name.1"}),
-		    #"Added Conditional Column1" = Table.AddColumn(#"Expanded Subfolder", "Custom", each if [Name.1] = null then [Content] else [Content.1]),
-		    #"Removed Columns" = Table.RemoveColumns(#"Added Conditional Column1",{"Name.1", "Content.1", "Content", "Name", "Path"}),
-		    #"Renamed Columns1" = Table.RenameColumns(#"Removed Columns",{{"Custom", "Content"}}),
-		    #"Added Conditional Column2" = Table.AddColumn(#"Renamed Columns1", "DateTime", each if [Date modified2] = null then [Date modified] else [Date modified2]),
-		    #"Removed Columns2" = Table.RemoveColumns(#"Added Conditional Column2",{"Date modified2", "Date modified"}),
-		    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns2",{{"DateTime", "Date modified"}}),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns2",{{"Date modified", type datetime}})
+		
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key", [HierarchicalNavigation=true]),
+		    #"Drill down to events" = Source{[Name="events"]}[Content],
+		    #"Renamed Columns3" = Table.RenameColumns(#"Drill down to events",{{"Name", "Project"}}),
+		    
+		    #"Removed Other Columns" = Table.SelectColumns(#"Renamed Columns3",{"Content", "Project"}),
+		    #"Expanded Content" = Table.ExpandTableColumn(#"Removed Other Columns", "Content", {"Content", "Name"}, {"Content", "Report"}),
+		    #"Expanded Content1" = Table.ExpandTableColumn(#"Expanded Content", "Content", {"Content", "Name"}, {"Content", "User Key"}),
+		    #"Expanded Content.1" = Table.ExpandTableColumn(#"Expanded Content1", "Content", {"Content", "Date modified"}, {"Content", "Date modified"}),
+		    #"Inserted Merged Column" = Table.AddColumn(#"Expanded Content.1", "Report Key", each Text.Lower(Text.Combine({Text.Trim([Project]), Text.Trim([Report])}, "---")), type text),
+		    #"Added Custom" = Table.AddColumn(#"Inserted Merged Column", "Exclude subfolders", each if [Content] is table then 0 else 1),
+		    #"Filtered Rows" = Table.SelectRows(#"Added Custom", each ([Exclude subfolders] = 1)),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows",{"Exclude subfolders"}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns",{{"Date modified", type datetime}})
 		in
 		    #"Changed Type"
+		```
 	lineageTag: 2d5bbba3-a0b3-4d79-a17c-77669c7bfd72
 	queryGroup: 'Base queries'
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 expression 'Inventory - Base 0' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" &  "/" & #"License Key" & "/inventory/")),
+		
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" &  ADLSPathDelimiter & #"License Key" & "/inventory/")),
 		    #"Filtered Rows" = Table.SelectRows(#"Filtered Rows1", each ([Extension] = ".json" and Text.StartsWith([Name], "inventory_"))),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
 		    #"Split Column by Delimiter1" = Table.SplitColumn(#"Filtered Hidden Files1", "Folder Path", Splitter.SplitTextByEachDelimiter({"/inventory/"}, QuoteStyle.Csv, false), {"Folder Path.1", "Project"}),
+		    #"Split Column by Delimiter" = Table.SplitColumn(#"Split Column by Delimiter1", "Project", Splitter.SplitTextByEachDelimiter({"/"}, QuoteStyle.Csv, false), {"Project", "Type"}),
 		    
 		    FnDecodeString = (encodedString)=>
 		    let
@@ -397,15 +391,12 @@ expression 'Inventory - Base 0' = ```
 		    in
 		        decodedString,
 		    
-		    #"Trim and Decode Project" = Table.TransformColumns(#"Split Column by Delimiter1",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
-		    #"Removed Other Columns" = Table.SelectColumns(#"Trim and Decode Project",{"Content", "Name", "Date modified", "Project"}),
+		    #"Trim and Decode Project" = Table.TransformColumns(#"Split Column by Delimiter",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Trim and Decode Project",{"Content", "Name", "Date modified", "Project", "Type"}),
 		    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "FnLoadInventory", each FnLoadInventory([Content])),
 		    #"Expanded FnLoadInventory" = Table.ExpandTableColumn(#"Invoked Custom Function", "FnLoadInventory", {"reports", "capacities", "deploymentPipelines"}, {"reports", "capacities", "deploymentPipelines"}),
-		    #"Replaced Value" = Table.ReplaceValue(#"Expanded FnLoadInventory","inventory_","",Replacer.ReplaceText,{"Name"}),
-		    #"Replaced Value1" = Table.ReplaceValue(#"Replaced Value","_",":",Replacer.ReplaceText,{"Name"}),
-		    #"Split Column by Delimiter" = Table.SplitColumn(#"Replaced Value1", "Name", Splitter.SplitTextByAnyDelimiter({".json"}, QuoteStyle.Csv, false), {"Since"}),
-		    #"Removed Columns1" = Table.RemoveColumns(#"Split Column by Delimiter",{"Date modified"}),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Removed Columns1",{{"Since", type datetime}})
+		    #"Renamed Columns" = Table.RenameColumns(#"Expanded FnLoadInventory",{{"Date modified", "Since"}}),
+		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Since", type datetime}})
 		in
 		    #"Changed Type"
 		```
@@ -507,7 +498,8 @@ expression FnPrepareSCD =
 expression 'Inventory - Reports - Base 1' =
 		let
 		    Source = #"Inventory - Base 0",
-		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Since", "Project", "reports"}),
+		    #"Filtered Rows1" = Table.SelectRows(Source, each ([Type] = "Reports/")),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows1",{"Since", "Project", "reports"}),
 		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [reports] <> null),
 		    #"Expanded reports" = Table.ExpandListColumn(#"Filtered Rows", "reports"),
 		    #"Expanded reports1" = Table.ExpandRecordColumn(#"Expanded reports", "reports", {"project_name", "report_id", "report_name", "pages", "bookmarks_count", "external_semantic_model_name", "external_semantic_model_workspace", "workspace"}, {"Folder As Project", "Report ID", "Report Name", "Pages", "Bookmarks Count", "External Semantic Model", "External Semantic Model Workspace", "Workspace"}),
@@ -613,8 +605,10 @@ expression Workspace-Unknown = ```
 
 expression 'Performance by Day - Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/" & #"License Key" & "/log_analytics/perf_by_hour") or (#"Is Demo" and  Text.StartsWith([Folder Path], #"Data Lake URL" & "/" & #"License Key" & "/performance/"))),
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/log_analytics/perf_by_hour") or (#"Is Demo" and  Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/performance/"))),
 		    #"Filtered Rows" = Table.SelectRows(#"Filtered Rows1", each [Extension] = ".json" or (#"Is Demo" and Text.StartsWith([Name], "PerfByDay"))),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
 		    #"Filter Last N Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
@@ -667,8 +661,11 @@ expression 'Performance by Day - Base' = ```
 
 expression 'Performance Queries - Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/" & #"License Key" & "/log_analytics/queries")),
+		
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/log_analytics/queries")),
 		    #"Filtered Rows" = Table.SelectRows(#"Filtered Rows1", each ([Extension] = ".json")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
 		    #"Filter Last N Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
@@ -703,8 +700,10 @@ expression 'Performance Queries - Base' = ```
 
 expression 'Internal Users - Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" &  "/" & #"License Key" & "/inventory/")),
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" &  ADLSPathDelimiter & #"License Key" & "/inventory/")),
 		    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each ([Name] = "Internal_BI_Pixie_Hierarchy.csv")),
 		    row_count = Table.RowCount(#"Filtered Rows2"),
 		
@@ -895,10 +894,13 @@ expression 'Feedback - Base' =
 
 	annotation PBI_ResultType = Table
 
-expression 'Activity Logs - Base' =
+expression 'Activity Logs - Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/pbi_activity_logs/")),
+		
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "/pbi_activity_logs/")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    Custom1 = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days")),
 		    #"Invoke Custom Function1" = Table.AddColumn(Custom1, "Transform File", each FnLoadActivityLogs([Content])),
@@ -913,6 +915,7 @@ expression 'Activity Logs - Base' =
 		    #"Added Conditional Column" = Table.AddColumn(#"Removed Columns", "User Key", each if #"Are Users Anonymous" then [ClientIP] else [UserId])
 		in
 		    #"Added Conditional Column"
+		```
 	lineageTag: 21cbe78f-9ee5-482f-a487-fa27e7c72679
 	queryGroup: 'Power BI Activities'
 
@@ -985,7 +988,7 @@ expression 'Demo Data' =
 
 	annotation PBI_ResultType = Table
 
-expression 'Is Demo' = true meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=false]
+expression 'Is Demo' = false meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=false]
 	lineageTag: ef25b452-9f35-4e54-8bd6-e260a2256396
 	queryGroup: Parameters
 
@@ -1043,11 +1046,13 @@ expression 'Instrumentation Activities' =
 
 expression PBIScanSampleFile = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/pbi_scans/latest/")),
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "/pbi_scans/latest/")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Hidden Files1",{"Content", "Name", "Date modified"}),
-		    Navigation1 = #"Removed Other Columns"{0}[Content]
+		    Navigation1 = try #"Removed Other Columns"{0}[Content] otherwise null
 		in 
 		    Navigation1
 		```
@@ -1056,7 +1061,7 @@ expression PBIScanSampleFile = ```
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Binary
+	annotation PBI_ResultType = Null
 
 expression PBIScanContent = PBIScanSampleFile
 	lineageTag: 7af90063-a8d4-414b-a99f-5583c51c1ba1
@@ -1097,10 +1102,13 @@ expression 'Transform PBI Scan Sample File' =
 
 	annotation PBI_ResultType = Exception
 
-expression 'PBI Workspaces Scans - Base' =
+expression 'PBI Workspaces Scans - Base' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/pbi_scans/latest")),
+		
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "/pbi_scans/latest")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Hidden Files1",{"Content", "Name", "Date modified"}),
 		    #"Filtered Hidden Files2" = Table.SelectRows(#"Removed Other Columns", each [Attributes]?[Hidden]? <> true),
@@ -1114,6 +1122,7 @@ expression 'PBI Workspaces Scans - Base' =
 		    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Workspace ID"})
 		in
 		    #"Removed Duplicates"
+		```
 	lineageTag: b95f2fd2-dfea-4fd9-b060-8959aab7c5f3
 	queryGroup: 'Power BI Scan'
 
@@ -1229,22 +1238,25 @@ expression FnGetMatchingLogsAnalyticsEvent =
 
 	annotation PBI_ResultType = Function
 
-expression 'Sample Log Analytics File' =
+expression 'Sample Log Analytics File' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/log_analytics/queries")),
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "/log_analytics/queries")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Hidden Files1",{"Content", "Name", "Date modified"}),
 		    #"Filtered Hidden Files2" = Table.SelectRows(#"Removed Other Columns", each ([Name] = "2025-05-16T15:04:06.json")),
 		    Navigation1 = #"Filtered Hidden Files2"{0}[Content]
 		in
 		    Navigation1
+		```
 	lineageTag: 87c315d8-96b9-4140-847a-32abd4881eb4
 	queryGroup: 'Log Analytics\Transform File from Log Analytics - Queries - Base\Helper Queries'
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Binary
+	annotation PBI_ResultType = Exception
 
 expression 'Sample Log Analytics Content' = #"Sample Log Analytics File"
 	lineageTag: 3f5ab718-0ccb-4360-8a32-80e6d5843b80
@@ -1464,10 +1476,12 @@ expression 'Last N Days Log Analytics' = -1 meta [IsParameterQuery=true, Type="N
 
 	annotation PBI_ResultType = Number
 
-expression 'Data Visual Events All' =
+expression 'Data Visual Events All' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/log_analytics/queries")),
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter  & #"License Key" & "/log_analytics/queries")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    #"Filter N Last Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
 		    #"Removed Other Columns" = Table.SelectColumns(#"Filter N Last Days",{"Content", "Name", "Date modified"}),
@@ -1477,6 +1491,7 @@ expression 'Data Visual Events All' =
 		    #"Changed Type" = Table.TransformColumnTypes(#"Expanded FnGetLogAnalyticsVisualEvent",{{"Name", type text}, {"Date modified", type datetime}, {"TimeGenerated", type datetimezone}, {"DAXQuery", type text}, {"User", type text}, {"DatasetId", type text}, {"ReportId", type text}, {"VisualId", type text}, {"TableColumns", type text}, {"QueryResultRows", Int64.Type}})
 		in
 		    #"Changed Type"
+		```
 	lineageTag: d66141b7-177b-4d05-a6b5-4a28b9f3b734
 	queryGroup: 'Log Analytics'
 
@@ -1486,8 +1501,10 @@ expression 'Data Visual Events All' =
 
 expression 'Data Exports Unmatched All' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/log_analytics/queries")),
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/log_analytics/queries")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    #"Filter N Last Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
 		    #"Removed Other Columns" = Table.SelectColumns(#"Filter N Last Days",{"Content", "Name", "Date modified"}),
@@ -1525,12 +1542,15 @@ expression 'Data Exports Unmatched All' = ```
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 expression 'Data Exports Unmatched' = ```
 		let
-		    Source = AzureStorage.DataLake(#"Data Lake URL"),
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & "/"  & #"License Key" & "/log_analytics/queries")),
+		
+		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		   
+		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/log_analytics/queries")),
 		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows1", each [Attributes]?[Hidden]? <> true),
 		    #"Filter N Last Days" = Table.SelectRows(#"Filtered Hidden Files1", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
 		    #"Removed Other Columns" = Table.SelectColumns(#"Filter N Last Days",{"Content", "Name", "Date modified"}),
@@ -1666,31 +1686,6 @@ expression FnSessionizeRLSEvents =
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Function
-
-expression 'RLS Grouping Test' =
-		let
-		    Source = #"Data Selections",
-		    #"Replaced Value" = Table.ReplaceValue(Source,null,0,Replacer.ReplaceValue,{"RLS Expected Rows"}),
-		    #"Filtered Rows" = Table.SelectRows(#"Replaced Value", each ([Event Type] = "RLS")),
-		    #"Replaced Value1" = Table.ReplaceValue(#"Filtered Rows",null,0,Replacer.ReplaceValue,{"RLS Actual Rows"}),
-		    #"Inserted Merged Column" = Table.AddColumn(#"Replaced Value1", "Timestamp", each Text.Combine({Text.From([Date], "en-US"), Text.From([Time], "en-US")}, " "), type text),
-		    #"Removed Columns" = Table.RemoveColumns(#"Inserted Merged Column",{"Timestamp"}),
-		    #"Grouped Rows" = Table.Group(#"Removed Columns", {"User Key", "Report Page Key"}, {{"data", each _, type table [Created On=nullable datetime, Event Type=text, Filtered Table=text, Filtered Column=text, Filtered Values=nullable text, Filtered Distinct Count=nullable number, User Key=text, Report Page Key=text, Date=date, Time=time, RLS Expected Rows=nullable number, RLS Actual Rows=nullable number, RLS Role=text]}}),
-		    Group = #"Grouped Rows"{[#"User Key"="gil@bipixie.com",#"Report Page Key"="bi pixie demo---adventureworks sales---page 1"]}[data],
-		    #"Added Index" = Table.AddIndexColumn(Group, "Index", 0, 1, Int64.Type),
-		    #"Added Custom" = Table.AddColumn(#"Added Index", "Previous Timestamp", each try Group[Created On]{[Index]-1} otherwise [Created On]),
-		    #"Added Custom1" = Table.AddColumn(#"Added Custom", "Seconds Since Last", each Duration.TotalSeconds([Created On] - [Previous Timestamp]), Double.Type),
-		    #"Added Conditional Column" = Table.AddColumn(#"Added Custom1", "Session Index", each if [Seconds Since Last] < 4 then (if [Index] = 0 then 0 else null) else [Index]),
-		    #"Filled Down" = Table.FillDown(#"Added Conditional Column",{"Session Index"}),
-		    #"Changed Type" = Table.TransformColumnTypes(#"Filled Down",{{"Session Index", type text}})
-		in
-		    #"Changed Type"
-	lineageTag: 1ed18be7-d00c-418a-9ee3-4eb409a8549c
-	queryGroup: RLS
-
-	annotation PBI_NavigationStepName = Navigation
-
-	annotation PBI_ResultType = Exception
 
 expression 'RLS Events Demo' =
 		let
@@ -1990,4 +1985,12 @@ expression 'Events - Base' =
 	annotation PBI_NavigationStepName = Navigation
 
 	annotation PBI_ResultType = Table
+
+expression 'Is SaaS' = true meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=false]
+	lineageTag: 718a7e0b-1fe0-4625-9841-6e5cda7a841f
+	queryGroup: Parameters
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Logical
 

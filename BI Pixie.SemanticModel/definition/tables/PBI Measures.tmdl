@@ -36,21 +36,6 @@ table 'PBI Measures'
 		formatString: #,0
 		lineageTag: 3ced326a-66ed-4406-bb0b-8a1902f70fbd
 
-	measure 'Measure Expression Len Norm' =
-			
-			VAR _min = MINX(ALL(Reports), [Measure Expression Length])
-			VAR _max = MAXX(ALL(Reports), [Measure Expression Length])
-			VAR _current = [Measure Expression Length]
-			RETURN
-			IF (
-			    ISBLANK(_current) || _current = _min || _max = _min,
-			    1,
-			    DIVIDE ( _current - _min, _max - _min )
-			)
-		lineageTag: a28cc980-a55c-482c-956c-6babb3e592d5
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
-
 	column 'Measure Name'
 		dataType: string
 		lineageTag: b0fe0bc5-4895-4090-95c8-fb6443fe5f14
@@ -117,5 +102,5 @@ table 'PBI Measures'
 
 	annotation PBI_NavigationStepName = Navigation
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 

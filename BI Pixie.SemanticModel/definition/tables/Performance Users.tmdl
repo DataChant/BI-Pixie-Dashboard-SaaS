@@ -163,9 +163,12 @@ table 'Performance Users'
 		mode: import
 		queryGroup: Performance
 		source = ```
-				let     
-				    Source = AzureStorage.DataLake(#"Data Lake URL"),
-				    #"Filtered Rows1" = Table.SelectRows(Source, each (Text.StartsWith([Folder Path], #"Data Lake URL" & "/" & #"License Key" & "/log_analytics/perf_by_user/") or (#"Is Demo" and Text.StartsWith([Folder Path], #"Data Lake URL" & "/" & #"License Key" & "/performance/")))),
+				let
+				    
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+				    
+				    #"Filtered Rows1" = Table.SelectRows(Source, each (Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/log_analytics/perf_by_user/") or (#"Is Demo" and Text.StartsWith([Folder Path], #"Data Lake URL" & "/" & #"License Key" & "/performance/")))),
 				    #"Filtered Rows" = if not #"Is Demo" then #"Filtered Rows1" else Table.SelectRows(#"Filtered Rows1", each not Text.StartsWith([Name], "PerfBy") or Text.StartsWith([Name], "PerfByUser")),
 				    #"Filter Last N Days" = Table.SelectRows(#"Filtered Rows", each if #"Last N Days Log Analytics" < 0 then true else [Date modified] > Date.AddDays(DateTime.FixedLocalNow(),-#"Last N Days Log Analytics")),
 				    #"Removed Other Columns" = Table.SelectColumns(#"Filter Last N Days",{"Content", "Date modified"}),

@@ -76,7 +76,7 @@ table 'Report Sessions'
 			
 			COUNTX (
 			    VALUES (  'Reports'[Report Key] ),
-			    [Report Sessions] + [View Report PBI Activity Logs]
+			    [Report Sessions]
 			)
 			
 			```
@@ -93,14 +93,12 @@ table 'Report Sessions'
 		formatString: #,0
 		lineageTag: 86fae837-bb51-4b1a-8d27-2c5efad680c9
 
-	measure 'Interactive Reports' = ```
+	measure 'Interactive Reports' =
 			
-			VAR _res = COUNTX (
+			COUNTX (
 			    VALUES ( 'Reports'[Report Key] ),
-			    [Report Interactions] + [Active Usage in PBI Activity Logs]
+			    [Report Interactions]
 			)
-			RETURN IF( ISBLANK ( _res ), 0, _res) 
-			```
 		formatString: #,0
 		lineageTag: 4fcbb08d-0cca-42f2-b180-57f86dea5c9b
 
@@ -150,11 +148,6 @@ table 'Report Sessions'
 			IF(ISBLANK(_pct), BLANK(), 1 - _pct)
 		formatString: 0.0%;-0.0%;0.0%
 		lineageTag: 6dd4a904-790d-4266-b926-5d803500357a
-
-	measure 'Reports with Unknown Use' = [All Reports] - [Scanned Reports]
-		lineageTag: 6015d4e2-409c-4857-b40b-db0fa6805358
-
-		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
 	measure 'Distribution of Interaction by Session' = ```
 			

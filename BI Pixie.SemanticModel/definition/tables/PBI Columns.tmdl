@@ -26,20 +26,6 @@ table 'PBI Columns'
 		formatString: #,0
 		lineageTag: b2fbbf87-544a-431c-ad41-32563a23815b
 
-	measure 'Column Expression Len Norm' =
-			
-			VAR _min = MINX(ALL(Reports), [Column Expression Length])
-			VAR _max = MAXX(ALL(Reports), [Column Expression Length])
-			VAR _current = [Column Expression Length]
-			RETURN
-			IF (
-			    ISBLANK(_current) || _current = _min || _max = _min,
-			    1,
-			    DIVIDE ( _current - _min, _max - _min )
-			)
-		formatString: 0.00
-		lineageTag: 656579f1-6ba5-4477-ba66-9267d1cef6af
-
 	measure 'Column Expression Length' =
 			
 			SUMX (

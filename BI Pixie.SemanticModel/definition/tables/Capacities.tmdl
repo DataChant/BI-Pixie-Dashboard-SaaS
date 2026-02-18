@@ -49,12 +49,21 @@ table Capacities
 
 		annotation SummarizationSetBy = Automatic
 
+	column Name
+		dataType: string
+		lineageTag: d516d228-8ac0-417a-8ffd-9108db92037c
+		summarizeBy: none
+		sourceColumn: Name
+
+		annotation SummarizationSetBy = Automatic
+
 	partition Capacities = m
 		mode: import
 		source = ```
 				let
 				    Source = #"Inventory - Base 0",
-				    #"Removed Columns" = Table.RemoveColumns(Source,{"Content", "reports", "deploymentPipelines", "Project"}),
+				    #"Filtered Rows2" = Table.SelectRows(Source, each ([Type] = "Capacities/")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows2",{"Content", "reports", "deploymentPipelines", "Project", "Type"}),
 				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each [capacities] <> null),
 				    #"Expanded capacities" = Table.ExpandListColumn(#"Filtered Rows", "capacities"),
 				    #"Expanded capacities1" = Table.ExpandRecordColumn(#"Expanded capacities", "capacities", {"id", "displayName", "sku", "region", "state"}, {"Capacity ID", "Capacity Name", "SKU", "Region", "State"}),

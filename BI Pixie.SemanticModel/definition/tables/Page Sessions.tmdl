@@ -7,29 +7,22 @@ table 'Page Sessions'
 
 	measure 'Interactive Pages' =
 			
-			VAR _res =
 			COUNTROWS(FILTER(VALUES('Pages'[Report Page Key]), [Total Interactions Within Page] > 0))
-			RETURN
-			IF ( ISBLANK ( _res ), 0, _res )
 		formatString: #,0
 		lineageTag: d787d22e-b16b-42a3-9819-81f17b1b066f
 
 	measure 'Passive Pages' =
 			
-			VAR _res =
 			COUNTROWS(FILTER(VALUES('Pages'[Report Page Key]), [Total Interactions Within Page] = 0))
-			RETURN
-			IF ( ISBLANK ( _res ), 0, _res )
 		lineageTag: 0f1e2187-1a1d-41e6-afb9-554ebca4aad7
 
 		annotation PBI_FormatHint = {"isGeneralNumber":true}
 
-	measure 'Opened Pages' =
+	measure 'Opened Pages' = ```
 			
-			VAR _res =
 			DISTINCTCOUNT ( 'Page Sessions'[Report Page Key] )
-			RETURN
-			IF ( ISBLANK ( _res ), 0, _res )
+			
+			```
 		formatString: #,0
 		lineageTag: b0863aeb-0859-4abb-a006-eca3ba2bd3d5
 

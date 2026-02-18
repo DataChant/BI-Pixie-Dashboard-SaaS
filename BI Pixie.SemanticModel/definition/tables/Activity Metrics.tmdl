@@ -47,12 +47,7 @@ table 'Activity Metrics'
 				    ("Bookmark Clicks", NAMEOF('Events'[Bookmark Clicks]), 5),
 				    ("Tooltip Views", NAMEOF('Page Sessions'[Tooltip Opens]), 6),
 				    ("Drillthroughs", NAMEOF('Events'[Drillthroughs]), 7),
-				    ("Link Clicks", NAMEOF('Events'[Link Clicks]), 8),
-				    ("Scroll Down in Visuals", NAMEOF('Data Exports'[Scroll Down in Visuals]), 9),
-				    ("Data Exports", NAMEOF('Consumers Activity'[Data Exports]), 10),
-				    ("PDF Exports", NAMEOF('Consumers Activity'[PDF Exports]), 11),
-				    ("PPTX Exports", NAMEOF('Consumers Activity'[PPTX Exports]), 12),
-				    ("Live Analysis in Excel", NAMEOF('Consumers Activity'[Analysis in Excel]), 13)
+				    ("Link Clicks", NAMEOF('Events'[Link Clicks]), 8)
 				}
 
 	annotation PBI_Id = 0ace6f73806b4cb5a82bf92342ecc9e9
