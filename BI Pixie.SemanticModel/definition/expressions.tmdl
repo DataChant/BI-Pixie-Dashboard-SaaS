@@ -19,7 +19,7 @@ expression FnGetSessions =
 
 	annotation PBI_ResultType = Function
 
-expression 'Session timeout (min)' = 2 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+expression 'Session timeout (min)' = 5 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=false]
 	lineageTag: 787ebda1-6cad-4315-b2a8-ca341580e18e
 	queryGroup: Parameters
 
@@ -27,7 +27,7 @@ expression 'Session timeout (min)' = 2 meta [IsParameterQuery=true, Type="Number
 
 	annotation PBI_NavigationStepName = Navigation
 
-expression 'Data Lake URL' = "https://bipixiestorageprod.dfs.core.windows.net/bipixielake" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression 'Data Lake URL' = "https://bipixiestorageprod.dfs.core.windows.net/bipixielake" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
 	lineageTag: 6006c6fc-b790-4f5a-b34c-3852e5074b7f
 	queryGroup: Parameters
 
@@ -98,7 +98,7 @@ expression FnGetPageSessions =
 
 	annotation PBI_ResultType = Function
 
-expression 'License Key' = "128d806f-ee21-468b-9148-66190259c759" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+expression 'License Key' = "128d806f-ee21-468b-9148-66190259c759" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
 	lineageTag: 0bc3ac14-9af1-4783-993b-96ffd76d8e3c
 	queryGroup: Parameters
 
@@ -321,7 +321,7 @@ expression 'Events - Datalake Hierarchy - Base' =
 
 	annotation PBI_ResultType = Table
 
-expression 'Are Users Anonymous' = false meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=true]
+expression 'Are Users Anonymous' = false meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=false]
 	lineageTag: 4375b361-01f8-4b2a-a74a-f46b68237b9b
 	queryGroup: Parameters
 
@@ -330,7 +330,7 @@ expression 'Are Users Anonymous' = false meta [IsParameterQuery=true, Type="Logi
 	annotation PBI_ResultType = Logical
 
 /// 365
-expression 'Last N Days' = -1 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=true]
+expression 'Last N Days' = -1 meta [IsParameterQuery=true, Type="Number", IsParameterQueryRequired=false]
 	lineageTag: da789868-7dde-4f27-84d9-99c0e5ff29eb
 	queryGroup: Parameters
 
@@ -367,15 +367,16 @@ expression 'Projects and Reports - Base' = ```
 
 expression 'Inventory - Base 0' = ```
 		let
-		
 		    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
-		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+		    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key", [HierarchicalNavigation=true]),
+		    #"Drill down to inventory" = Source{[Name="inventory"]}[Content],
+		    #"Filtered Rows1" = Table.SelectRows(#"Drill down to inventory", each ([Name] <> "config.json")),
+		    #"Removed Other Columns1" = Table.SelectColumns(#"Filtered Rows1",{"Content", "Name"}),
+		    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns1",{{"Name", "Project"}}),
+		    #"Expanded Content" = Table.ExpandTableColumn(#"Renamed Columns1", "Content", {"Content", "Name"}, {"Content", "Name"}),
+		    #"Filtered Reports" = Table.SelectRows(#"Expanded Content", each ([Name] = "Reports")),
+		    #"Removed Columns" = Table.RemoveColumns(#"Filtered Reports",{"Name"}),
 		    
-		    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" &  ADLSPathDelimiter & #"License Key" & "/inventory/")),
-		    #"Filtered Rows" = Table.SelectRows(#"Filtered Rows1", each ([Extension] = ".json" and Text.StartsWith([Name], "inventory_"))),
-		    #"Filtered Hidden Files1" = Table.SelectRows(#"Filtered Rows", each [Attributes]?[Hidden]? <> true),
-		    #"Split Column by Delimiter1" = Table.SplitColumn(#"Filtered Hidden Files1", "Folder Path", Splitter.SplitTextByEachDelimiter({"/inventory/"}, QuoteStyle.Csv, false), {"Folder Path.1", "Project"}),
-		    #"Split Column by Delimiter" = Table.SplitColumn(#"Split Column by Delimiter1", "Project", Splitter.SplitTextByEachDelimiter({"/"}, QuoteStyle.Csv, false), {"Project", "Type"}),
 		    
 		    FnDecodeString = (encodedString)=>
 		    let
@@ -383,10 +384,12 @@ expression 'Inventory - Base 0' = ```
 		    in
 		        decodedString,
 		    
-		    #"Trim and Decode Project" = Table.TransformColumns(#"Split Column by Delimiter",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
-		    #"Removed Other Columns" = Table.SelectColumns(#"Trim and Decode Project",{"Content", "Name", "Date modified", "Project", "Type"}),
-		    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "FnLoadInventory", each FnLoadInventory([Content])),
-		    #"Expanded FnLoadInventory" = Table.ExpandTableColumn(#"Invoked Custom Function", "FnLoadInventory", {"reports", "capacities", "deploymentPipelines"}, {"reports", "capacities", "deploymentPipelines"}),
+		    #"Trim and Decode Project" = Table.TransformColumns(#"Removed Columns",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
+		    #"Expanded Content1" = Table.ExpandTableColumn(#"Trim and Decode Project", "Content", {"Content", "Extension", "Date modified"}, {"Content", "Extension", "Date modified"}),
+		    #"Filtered Rows" = Table.SelectRows(#"Expanded Content1", each ([Extension] = ".json")),
+		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Content", "Date modified", "Project"}),
+		    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "reports", each FnLoadInventory([Content])),
+		    #"Expanded FnLoadInventory" = Table.ExpandTableColumn(#"Invoked Custom Function", "reports", {"reports"}, {"reports"}),
 		    #"Renamed Columns" = Table.RenameColumns(#"Expanded FnLoadInventory",{{"Date modified", "Since"}}),
 		    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Since", type datetime}})
 		in
@@ -490,8 +493,7 @@ expression FnPrepareSCD =
 expression 'Inventory - Reports - Base 1' =
 		let
 		    Source = #"Inventory - Base 0",
-		    #"Filtered Rows1" = Table.SelectRows(Source, each ([Type] = "Reports/")),
-		    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows1",{"Since", "Project", "reports"}),
+		    #"Removed Other Columns" = Table.SelectColumns(Source,{"Since", "Project", "reports"}),
 		    #"Filtered Rows" = Table.SelectRows(#"Removed Other Columns", each [reports] <> null),
 		    #"Expanded reports" = Table.ExpandListColumn(#"Filtered Rows", "reports"),
 		    #"Expanded reports1" = Table.ExpandRecordColumn(#"Expanded reports", "reports", {"project_name", "report_id", "report_name", "pages", "bookmarks_count", "external_semantic_model_name", "external_semantic_model_workspace", "workspace"}, {"Folder As Project", "Report ID", "Report Name", "Pages", "Bookmarks Count", "External Semantic Model", "External Semantic Model Workspace", "Workspace"}),
@@ -791,7 +793,7 @@ expression 'Feedback - Base' =
 
 	annotation PBI_ResultType = Table
 
-expression 'Is Demo' = true meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=false]
+expression 'Is Demo' = false
 	lineageTag: ef25b452-9f35-4e54-8bd6-e260a2256396
 	queryGroup: Parameters
 
@@ -1077,7 +1079,7 @@ expression 'Events - Base' =
 
 	annotation PBI_ResultType = Table
 
-expression 'Is SaaS' = true meta [IsParameterQuery=true, Type="Logical", IsParameterQueryRequired=false]
+expression 'Is SaaS' = true
 	lineageTag: 718a7e0b-1fe0-4625-9841-6e5cda7a841f
 	queryGroup: Parameters
 

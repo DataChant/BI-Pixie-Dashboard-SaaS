@@ -349,7 +349,7 @@ table 'Report Sessions'
 				in
 				    #"Removed Columns1"
 
-	annotation PBI_ResultType = Exception
+	annotation PBI_ResultType = Table
 
 	annotation PBI_NavigationStepName = Navigation
 

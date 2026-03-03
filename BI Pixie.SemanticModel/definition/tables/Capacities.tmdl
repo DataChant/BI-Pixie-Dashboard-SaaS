@@ -49,11 +49,19 @@ table Capacities
 
 		annotation SummarizationSetBy = Automatic
 
-	column Name
+	column Project
 		dataType: string
 		lineageTag: d516d228-8ac0-417a-8ffd-9108db92037c
 		summarizeBy: none
-		sourceColumn: Name
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = Automatic
+
+	column Content
+		dataType: string
+		lineageTag: 427c96d6-7a76-4866-822f-c23e19e42917
+		summarizeBy: none
+		sourceColumn: Content
 
 		annotation SummarizationSetBy = Automatic
 
@@ -61,17 +69,40 @@ table Capacities
 		mode: import
 		source = ```
 				let
-				    Source = #"Inventory - Base 0",
-				    #"Filtered Rows2" = Table.SelectRows(Source, each ([Type] = "Capacities/")),
-				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Rows2",{"Content", "reports", "deploymentPipelines", "Project", "Type"}),
-				    #"Filtered Rows" = Table.SelectRows(#"Removed Columns", each [capacities] <> null),
-				    #"Expanded capacities" = Table.ExpandListColumn(#"Filtered Rows", "capacities"),
+				    
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key", [HierarchicalNavigation=true]),
+				    #"Drill down to inventory" = Source{[Name="inventory"]}[Content],
+				    #"Filtered Rows3" = Table.SelectRows(#"Drill down to inventory", each ([Extension] = "")),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Filtered Rows3",{"Content", "Name"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns1",{{"Name", "Project"}}),
+				    #"Expanded Content" = Table.ExpandTableColumn(#"Renamed Columns1", "Content", {"Content", "Name"}, {"Content", "Name"}),
+				    #"Filtered Reports" = Table.SelectRows(#"Expanded Content", each ([Name] = "Capacities")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Reports",{"Name"}),
+				    
+				    
+				    FnDecodeString = (encodedString)=>
+				    let
+				        decodedString = Uri.Parts("http://dummy?a=" & encodedString)[Query][a]
+				    in
+				        decodedString,
+				    
+				    #"Trim and Decode Project" = Table.TransformColumns(#"Removed Columns",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
+				    #"Expanded Content1" = Table.ExpandTableColumn(#"Trim and Decode Project", "Content", {"Content", "Extension", "Date modified"}, {"Content", "Extension", "Date modified"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded Content1", each ([Extension] = ".json")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Content", "Date modified", "Project"}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "reports", each FnLoadInventory([Content])),
+				    #"Expanded FnLoadInventory" = Table.ExpandTableColumn(#"Invoked Custom Function", "reports", {"capacities"}, {"capacities"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Expanded FnLoadInventory", each [capacities] <> null),
+				    #"Expanded capacities" = Table.ExpandListColumn(#"Filtered Rows2", "capacities"),
 				    #"Expanded capacities1" = Table.ExpandRecordColumn(#"Expanded capacities", "capacities", {"id", "displayName", "sku", "region", "state"}, {"Capacity ID", "Capacity Name", "SKU", "Region", "State"}),
 				    #"Filtered Rows1" = Table.SelectRows(#"Expanded capacities1", each [Capacity ID] <> null and [Capacity ID] <> ""),
-				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Filtered Rows1",{{"Since", Order.Descending}})),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows1",{{"Date modified", "Since"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Since", type datetime}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Changed Type",{{"Since", Order.Descending}})),
 				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Capacity ID"}),
-				    #"Removed Columns1" = Table.RemoveColumns(#"Removed Duplicates",{"Since"}),
-				    #"Appended Query" = Table.Combine({#"Removed Columns1", #"Capacity-Unknown"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Removed Duplicates",{"Since"}),
+				    #"Appended Query" = Table.Combine({#"Removed Columns2", #"Capacity-Unknown"}),
 				    #"Added Custom" = Table.AddColumn(#"Appended Query", "SKU and Capacity Name", each "(" & [SKU] & ") " & [Capacity Name]),
 				    #"Replaced Value" = Table.ReplaceValue(#"Added Custom","(Unknown) ","",Replacer.ReplaceText,{"SKU and Capacity Name"}),
 				    LastNonDemo = Table.ReplaceValue(#"Replaced Value","(Power BI Pro) ","",Replacer.ReplaceText,{"SKU and Capacity Name"}),
