@@ -1,0 +1,174 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "201eb1fb84e099b87375",
+  "displayName": "RLS Auditing",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "13dc68664c6110997601",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "7bf6f318e0376a760562",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Page Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "88aca3a2996348da3d2b",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "User Key"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "6f251f09900d4e000900",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "da930f03bde9a9c69969",
+        "boundFilter": "13dc68664c6110997601",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        }
+      },
+      {
+        "name": "12ae94acec105eec2c5c",
+        "boundFilter": "7bf6f318e0376a760562",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Page Name"
+          }
+        }
+      },
+      {
+        "name": "d2e7e8fa058057247680",
+        "boundFilter": "88aca3a2996348da3d2b",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "User Key"
+          }
+        }
+      }
+    ],
+    "acceptsFilterContext": "None"
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#281649'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "4a4c26fe9768b6404ac1",
+      "target": "243d078b783c236031b3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dffdeaa9659613072ec7",
+      "target": "243d078b783c236031b3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "8da82e836a81aba4c37d",
+      "target": "243d078b783c236031b3",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4a4c26fe9768b6404ac1",
+      "target": "69786f21a0477d006a95",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1f510979a47a202aa520",
+      "target": "69786f21a0477d006a95",
+      "type": "DataFilter"
+    },
+    {
+      "source": "dffdeaa9659613072ec7",
+      "target": "69786f21a0477d006a95",
+      "type": "DataFilter"
+    },
+    {
+      "source": "8da82e836a81aba4c37d",
+      "target": "69786f21a0477d006a95",
+      "type": "DataFilter"
+    },
+    {
+      "source": "243d078b783c236031b3",
+      "target": "69786f21a0477d006a95",
+      "type": "DataFilter"
+    }
+  ]
+}

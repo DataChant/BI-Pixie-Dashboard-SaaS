@@ -1,0 +1,79 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "75ce5e304b98bc58b2e7",
+  "displayName": "Daily Adoption",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "6ed8d11400e7960046c0",
+        "displayName": "Report",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true,
+        "objects": {
+          "general": [
+            {
+              "properties": {}
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "objects": {
+    "displayArea": [
+      {
+        "properties": {
+          "verticalAlignment": {
+            "expr": {
+              "Literal": {
+                "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "febe038249361492721e",
+      "target": "4951f1f0b940f366685f",
+      "type": "DataFilter"
+    },
+    {
+      "source": "3158bc522562c4f94ee4",
+      "target": "4951f1f0b940f366685f",
+      "type": "DataFilter"
+    },
+    {
+      "source": "09e9e14e8143d654c08e",
+      "target": "4951f1f0b940f366685f",
+      "type": "DataFilter"
+    },
+    {
+      "source": "09e9e14e8143d654c08e",
+      "target": "febe038249361492721e",
+      "type": "DataFilter"
+    },
+    {
+      "source": "09e9e14e8143d654c08e",
+      "target": "3158bc522562c4f94ee4",
+      "type": "DataFilter"
+    }
+  ]
+}

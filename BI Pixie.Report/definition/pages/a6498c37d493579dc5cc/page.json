@@ -1,0 +1,178 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "a6498c37d493579dc5cc",
+  "displayName": "Design Impact",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "092f5eaf3c0c166d0302",
+        "displayName": "Capacity",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Capacities"
+              }
+            },
+            "Property": "SKU and Capacity Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "398ed7aa6a762c51765a",
+        "displayName": "Workspace",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Workspaces"
+              }
+            },
+            "Property": "Workspace Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "97893466be8827a04534",
+        "displayName": "Report",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "9845c935570b50c4c30c",
+        "displayName": "Report",
+        "ordinal": 3,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "r",
+              "Entity": "Reports",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "r"
+                              }
+                            },
+                            "Property": "Report Name"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true,
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "filterSortOrder": "Custom"
+  },
+  "pageBinding": {
+    "name": "7c5854b02e8595595087",
+    "type": "Default",
+    "parameters": []
+  },
+  "visualInteractions": [
+    {
+      "source": "29ea486b9682eb795461",
+      "target": "ad98a8777dc9da117b32",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ad98a8777dc9da117b32",
+      "target": "29ea486b9682eb795461",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ad98a8777dc9da117b32",
+      "target": "8d066c70464c00b41015",
+      "type": "NoFilter"
+    },
+    {
+      "source": "29ea486b9682eb795461",
+      "target": "7b4e05fe9951bd278475",
+      "type": "NoFilter"
+    },
+    {
+      "source": "29ea486b9682eb795461",
+      "target": "d23186af1210706763d7",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ad98a8777dc9da117b32",
+      "target": "d23186af1210706763d7",
+      "type": "NoFilter"
+    }
+  ]
+}

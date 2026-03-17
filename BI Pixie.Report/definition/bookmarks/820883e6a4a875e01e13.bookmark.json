@@ -1,0 +1,1588 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.0.0/schema.json",
+  "displayName": "Duration",
+  "name": "820883e6a4a875e01e13",
+  "options": {
+    "targetVisualNames": []
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "b86501a70c4eb2941d95",
+    "filters": {
+      "byName": {
+        "11efa346c622e6d07d82": {
+          "name": "11efa346c622e6d07d82",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Reports"
+                }
+              },
+              "Property": "Report Name"
+            }
+          },
+          "howCreated": 1
+        },
+        "56df0dd53dad148e0c80": {
+          "name": "56df0dd53dad148e0c80",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Pages"
+                }
+              },
+              "Property": "Is Tooltip Col"
+            }
+          },
+          "howCreated": 1
+        }
+      },
+      "byExpr": [
+        {
+          "name": "1622a9478ac6b0d8b040",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Capacities"
+                }
+              },
+              "Property": "SKU and Capacity Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "8e390b7c74c098910933",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Workspaces"
+                }
+              },
+              "Property": "Workspace Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "1d52a907111a8e4944de",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Reports"
+                }
+              },
+              "Property": "Project"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "c2b42ebb39d4018bef5a",
+          "type": "Advanced",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Reports"
+                }
+              },
+              "Property": "Report Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filterf9a3bede192242768260",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Pages"
+                }
+              },
+              "Property": "Page Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filterbf437d1b6a753b866db7",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Platforms"
+                }
+              },
+              "Property": "Platform"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filter71e32a804e2de1b428fa",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Users"
+                }
+              },
+              "Property": "User Key"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "6c9398e08c3bcb309591",
+          "type": "RelativeDate",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Calendar"
+                }
+              },
+              "Property": "Date"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filterd988db85dd2c2e45212b",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Calendar"
+                }
+              },
+              "Property": "Date"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "d949cc5469a2ec76ccb0",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Visuals"
+                }
+              },
+              "Property": "Visual ID"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filter2cc793d5b6cab97a40af",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "User and IP Addresses"
+                }
+              },
+              "Property": "Username"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filter80b1aef7906dd7e0d326",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "User and IP Addresses"
+                }
+              },
+              "Property": "Client IP"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "b86501a70c4eb2941d95": {
+        "visualContainers": {
+          "0ea9133ac8b2852ca1dd": {
+            "singleVisual": {
+              "visualType": "bookmarkNavigator",
+              "objects": {}
+            }
+          },
+          "1013da68e1b26c5dca3c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "73cce8252c07c5042901",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "r2",
+                        "Entity": "Reports",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "Comparison": {
+                                "ComparisonKind": 0,
+                                "Left": {
+                                  "Column": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "r2"
+                                      }
+                                    },
+                                    "Property": "Report Name"
+                                  }
+                                },
+                                "Right": {
+                                  "Literal": {
+                                    "Value": "null"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Reports"
+                        }
+                      },
+                      "Property": "Report Name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "0e1c3a7257ad8b5b2da7",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "p",
+                        "Entity": "Page Sessions",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Comparison": {
+                            "ComparisonKind": 3,
+                            "Left": {
+                              "Measure": {
+                                "Expression": {
+                                  "SourceRef": {
+                                    "Source": "p"
+                                  }
+                                },
+                                "Property": "% Unused Pages"
+                              }
+                            },
+                            "Right": {
+                              "Literal": {
+                                "Value": "1L"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "% Unused Pages"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6d7de15c66e5318a4dab",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Avg Interactions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "60414b44b64099047501",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Passive Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "96621870d44a93b58067",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "% Interactive Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4585b74757978648d52b",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "20dd0061ab0e0a628420",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Interactions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4b3df4ff63771d021130",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Avg Session Duration (sec)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8a74b452133db76c6008",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Reports"
+                        }
+                      },
+                      "Property": "Report URL"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Sessions"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "3344de6e3ab09860b584": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "da6d2066d9a8e5675cce",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "5fd18ab0067a4c60039e",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Passive Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e4a94ef59d70dca923d7",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Avg Interactions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "7cc5ffb6904ddb93c09d",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Interactions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "eae9807bb1eb59b00402",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Interactive Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6a770ae70c0046980615",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Avg Session Duration (sec)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "80457f8f25410a214bce",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Total Hours"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "multiRowCard",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Sessions"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "490ba98b1ba60ce362c7": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "d6cb722cc7c06ea5d136",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Page Sessions"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "7c026be0314bb7ee8b8a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Sessions"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "82343ce83b788a0eb030",
+                  "type": "Advanced",
+                  "expression": {
+                    "Arithmetic": {
+                      "Left": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Report Sessions"
+                            }
+                          },
+                          "Property": "Distribution of Duration by Session"
+                        }
+                      },
+                      "Right": {
+                        "ScopedEval": {
+                          "Expression": {
+                            "Measure": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Report Sessions"
+                                }
+                              },
+                              "Property": "Distribution of Duration by Session"
+                            }
+                          },
+                          "Scope": []
+                        }
+                      },
+                      "Operator": 3
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "88c6083b840230edc060",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Distribution of Interaction by Session"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "af3fdfc82905ed158088",
+                  "type": "Advanced",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Interactions X"
+                        }
+                      },
+                      "Property": "Interactions"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Distribution of Interaction by Session"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Interactions X"
+                        }
+                      },
+                      "Property": "Interactions"
+                    }
+                  }
+                ]
+              },
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "97d0e61612605ad5740c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "115261111400e9e00688",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Page Sessions"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "d368bf0372bde00184bc",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Report Sessions"
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "93a5a43118de6c60bbc3",
+                  "type": "Advanced",
+                  "expression": {
+                    "Arithmetic": {
+                      "Left": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Report Sessions"
+                            }
+                          },
+                          "Property": "Distribution of Duration by Session"
+                        }
+                      },
+                      "Right": {
+                        "ScopedEval": {
+                          "Expression": {
+                            "Measure": {
+                              "Expression": {
+                                "SourceRef": {
+                                  "Entity": "Report Sessions"
+                                }
+                              },
+                              "Property": "Distribution of Duration by Session"
+                            }
+                          },
+                          "Scope": []
+                        }
+                      },
+                      "Operator": 3
+                    }
+                  },
+                  "howCreated": 1
+                },
+                {
+                  "name": "38b3d31fe2611201ac74",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Durations X"
+                        }
+                      },
+                      "Property": "Duration Set"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "06d05bea8c39c388aa74",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Distribution of Duration by Session"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Durations X"
+                        }
+                      },
+                      "Property": "Duration Set"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Category": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Durations X"
+                        }
+                      },
+                      "Property": "Duration Set"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "9bad7dc17bcbe34501ae": {
+            "filters": {
+              "byName": {
+                "Filter588f7fe081024487cae1": {
+                  "name": "Filter588f7fe081024487cae1",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Time Calcs"
+                        }
+                      },
+                      "Property": "Calc"
+                    }
+                  },
+                  "howCreated": 1
+                }
+              },
+              "byExpr": [
+                {
+                  "name": "d48a07928e10aa2a6876",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Interactive Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "d59bcceede8a30bebe8a",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Report Sessions"
+                        }
+                      },
+                      "Property": "Passive Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "4f801cd01696093337c3",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Calendar"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9b8342f6ea0243718003",
+                  "type": "Categorical",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Calendar"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e5de1e8bea42535947d0",
+                  "type": "Advanced",
+                  "expression": {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Calendar"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Day"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "columnChart",
+              "objects": {},
+              "activeProjections": {
+                "Category": [
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Calendar"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Year"
+                    }
+                  },
+                  {
+                    "HierarchyLevel": {
+                      "Expression": {
+                        "Hierarchy": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Entity": "Calendar"
+                            }
+                          },
+                          "Hierarchy": "Date Hierarchy"
+                        }
+                      },
+                      "Level": "Month"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "8714b188008651cdcd2a": {
+            "singleVisual": {
+              "visualType": "image",
+              "objects": {}
+            }
+          },
+          "b7654640c8c7c6e8a792": {
+            "singleVisual": {
+              "visualType": "textbox",
+              "objects": {}
+            }
+          },
+          "c3dd72d5234e910e8a4d": {
+            "singleVisual": {
+              "visualType": "pageNavigator",
+              "objects": {}
+            }
+          },
+          "57f6d00731ac33ca699c": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "5bf7df703729c886a4bd",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Capacities"
+                        }
+                      },
+                      "Property": "SKU and Capacity Name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Capacities"
+                        }
+                      },
+                      "Property": "SKU and Capacity Name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ab7b45de87e78bec61e2": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "cfd7b1614610705accd0",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Workspaces"
+                        }
+                      },
+                      "Property": "Workspace Name"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "data": [
+                    {
+                      "properties": {
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Dropdown'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Workspaces"
+                        }
+                      },
+                      "Property": "Workspace Name"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "d5bb789db08759256977": {
+            "filters": {
+              "byExpr": [
+                {
+                  "name": "1b34ca0230c5a4c901c1",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Calendar"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "slicer",
+              "objects": {
+                "merge": {
+                  "general": [
+                    {
+                      "properties": {
+                        "filter": {
+                          "filter": {
+                            "Version": 2,
+                            "From": [
+                              {
+                                "Name": "c",
+                                "Entity": "Calendar",
+                                "Type": 0
+                              }
+                            ],
+                            "Where": [
+                              {
+                                "Condition": {
+                                  "Between": {
+                                    "Expression": {
+                                      "Column": {
+                                        "Expression": {
+                                          "SourceRef": {
+                                            "Source": "c"
+                                          }
+                                        },
+                                        "Property": "Date"
+                                      }
+                                    },
+                                    "LowerBound": {
+                                      "DateSpan": {
+                                        "Expression": {
+                                          "DateAdd": {
+                                            "Expression": {
+                                              "DateAdd": {
+                                                "Expression": {
+                                                  "Now": {}
+                                                },
+                                                "Amount": 1,
+                                                "TimeUnit": 0
+                                              }
+                                            },
+                                            "Amount": -1,
+                                            "TimeUnit": 3
+                                          }
+                                        },
+                                        "TimeUnit": 0
+                                      }
+                                    },
+                                    "UpperBound": {
+                                      "DateSpan": {
+                                        "Expression": {
+                                          "Now": {}
+                                        },
+                                        "TimeUnit": 0
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "data": [
+                    {
+                      "properties": {
+                        "relativeRange": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Last'"
+                            }
+                          }
+                        },
+                        "relativePeriod": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Years'"
+                            }
+                          }
+                        },
+                        "relativeDuration": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "1D"
+                            }
+                          }
+                        },
+                        "mode": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "'Relative'"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "selection": [
+                    {
+                      "properties": {
+                        "strictSingleSelect": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "false"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ],
+                  "dateRange": [
+                    {
+                      "properties": {
+                        "includeToday": {
+                          "expr": {
+                            "Literal": {
+                              "Value": "true"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "orderBy": [
+                {
+                  "Direction": 1,
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Calendar"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                }
+              ],
+              "activeProjections": {
+                "Values": [
+                  {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Calendar"
+                        }
+                      },
+                      "Property": "Date"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "f679d7248a3211aaed51": {
+            "filters": {
+              "byName": {
+                "ff4e7189500cba72c032": {
+                  "name": "ff4e7189500cba72c032",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Pages"
+                        }
+                      },
+                      "Property": "Is Tooltip Col"
+                    }
+                  },
+                  "howCreated": 1
+                }
+              },
+              "byExpr": [
+                {
+                  "name": "9d68df7f7dcdba76b74d",
+                  "type": "Categorical",
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Pages"
+                        }
+                      },
+                      "Property": "Page URL"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "9b74f2e08c66091e3b03",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "% Interactive Page Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "e0e98998c00316421379",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Avg Duration in Page (Sec)"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "cef15900c69968790105",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Avg Interactions per Session"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "8e5f5767d921ab9bc0b2",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "r2",
+                        "Entity": "Pages",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "Comparison": {
+                                "ComparisonKind": 0,
+                                "Left": {
+                                  "Column": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "r2"
+                                      }
+                                    },
+                                    "Property": "Page Name"
+                                  }
+                                },
+                                "Right": {
+                                  "Literal": {
+                                    "Value": "null"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Pages"
+                        }
+                      },
+                      "Property": "Page Name"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "ff6aaff53cb2c474dee1",
+                  "type": "Advanced",
+                  "filter": {
+                    "Version": 2,
+                    "From": [
+                      {
+                        "Name": "p",
+                        "Entity": "Page Sessions",
+                        "Type": 0
+                      }
+                    ],
+                    "Where": [
+                      {
+                        "Condition": {
+                          "Not": {
+                            "Expression": {
+                              "Comparison": {
+                                "ComparisonKind": 0,
+                                "Left": {
+                                  "Measure": {
+                                    "Expression": {
+                                      "SourceRef": {
+                                        "Source": "p"
+                                      }
+                                    },
+                                    "Property": "Page Sessions"
+                                  }
+                                },
+                                "Right": {
+                                  "Literal": {
+                                    "Value": "null"
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Page Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "81cd622885ac708331e9",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Passive Page Sessions"
+                    }
+                  },
+                  "howCreated": 0
+                },
+                {
+                  "name": "6de5d90e71703e7b0907",
+                  "type": "Advanced",
+                  "expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Total Interactions Within Page"
+                    }
+                  },
+                  "howCreated": 0
+                }
+              ]
+            },
+            "singleVisual": {
+              "visualType": "tableEx",
+              "objects": {},
+              "orderBy": [
+                {
+                  "Direction": 2,
+                  "Expression": {
+                    "Measure": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "Page Sessions"
+                        }
+                      },
+                      "Property": "Page Sessions"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

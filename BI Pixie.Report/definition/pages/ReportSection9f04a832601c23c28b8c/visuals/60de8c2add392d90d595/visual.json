@@ -1,0 +1,1610 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "60de8c2add392d90d595",
+  "position": {
+    "x": 270.26701355607287,
+    "y": 195.60180747637958,
+    "z": 4000,
+    "height": 507.9337258660824,
+    "width": 989.57688621114607,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reports"
+                    }
+                  },
+                  "Property": "Project"
+                }
+              },
+              "queryRef": "Report Keys.Project",
+              "nativeQueryRef": "Project"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Capacities"
+                    }
+                  },
+                  "Property": "SKU and Capacity Name"
+                }
+              },
+              "queryRef": "Capacities.SKU and Capacity Name",
+              "nativeQueryRef": "SKU and Capacity Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Workspaces"
+                    }
+                  },
+                  "Property": "Workspace Name"
+                }
+              },
+              "queryRef": "Workspaces.Workspace Name",
+              "nativeQueryRef": "Workspace Name"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Reports"
+                    }
+                  },
+                  "Property": "Report Name"
+                }
+              },
+              "queryRef": "Report Keys.Report",
+              "nativeQueryRef": "Report1"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Feedback"
+                    }
+                  },
+                  "Property": "CSAT (Last Response)"
+                }
+              },
+              "queryRef": "Feedback.CSAT (last response)",
+              "nativeQueryRef": "CSAT1",
+              "displayName": "CSAT"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Feedback"
+                    }
+                  },
+                  "Property": "CSAT (Multiple Responses)"
+                }
+              },
+              "queryRef": "Feedback.CSAT",
+              "nativeQueryRef": "CSAT"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Survey Latest"
+                    }
+                  },
+                  "Property": "NPS Latest"
+                }
+              },
+              "queryRef": "Survey Latest.NPS Latest",
+              "nativeQueryRef": "NPS",
+              "displayName": "NPS"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Survey"
+                    }
+                  },
+                  "Property": "NPS Multiple"
+                }
+              },
+              "queryRef": "Survey.NPS Multiple",
+              "nativeQueryRef": "NPS (Multiple Responses)",
+              "displayName": "NPS (Multiple Responses)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "Users"
+                }
+              },
+              "queryRef": "Users.Users",
+              "nativeQueryRef": "Total Users",
+              "displayName": "Total Users"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "Engaged Users"
+                }
+              },
+              "queryRef": "Users.Engaged users",
+              "nativeQueryRef": "Engaged Users",
+              "displayName": "Engaged Users"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "Passive Users"
+                }
+              },
+              "queryRef": "Users.Passive users",
+              "nativeQueryRef": "Passive Users",
+              "displayName": "Passive Users"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "% Active Users"
+                }
+              },
+              "queryRef": "Users.% Active users",
+              "nativeQueryRef": "% Active Users",
+              "displayName": "% Active Users"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "% Passive Users"
+                }
+              },
+              "queryRef": "Users.% Passive users",
+              "nativeQueryRef": "% Passive Users",
+              "displayName": "% Passive Users"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "DAU"
+                }
+              },
+              "queryRef": "Users.DAU",
+              "nativeQueryRef": "DAU1",
+              "displayName": "DAU"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "MAU"
+                }
+              },
+              "queryRef": "Users.MAU",
+              "nativeQueryRef": "MAU1",
+              "displayName": "MAU"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "DAU / MAU"
+                }
+              },
+              "queryRef": "Users.DAU / MAU",
+              "nativeQueryRef": "DAU / MAU1",
+              "displayName": "DAU / MAU"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "DAU (Excluding Passive)"
+                }
+              },
+              "queryRef": "Users.DAU excluding passive",
+              "nativeQueryRef": "DAU (Excluding Passive)",
+              "displayName": "DAU (Excluding Passive)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "MAU (Excluding Passive)"
+                }
+              },
+              "queryRef": "Users.MAU excluding passive",
+              "nativeQueryRef": "MAU (Excluding Passive)",
+              "displayName": "MAU (Excluding Passive)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "DAU / MAU (Excluding Passive)"
+                }
+              },
+              "queryRef": "Users.DAU / MAU excluding passive",
+              "nativeQueryRef": "DAU / MAU (Excluding Passive)",
+              "displayName": "DAU / MAU (Excluding Passive)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "WAU"
+                }
+              },
+              "queryRef": "Users.WAU",
+              "nativeQueryRef": "WAU1",
+              "displayName": "WAU"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "WAU (Excluding Passive)"
+                }
+              },
+              "queryRef": "Users.WAU excluding passive",
+              "nativeQueryRef": "WAU (Excluding Passive)",
+              "displayName": "WAU (Excluding Passive)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "WAU / MAU"
+                }
+              },
+              "queryRef": "Users.WAU / MAU",
+              "nativeQueryRef": "WAU / MAU1",
+              "displayName": "WAU / MAU"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Users"
+                    }
+                  },
+                  "Property": "WAU / MAU (Excluding Passive)"
+                }
+              },
+              "queryRef": "Users.WAU / MAU excluding passive",
+              "nativeQueryRef": "WAU / MAU (Excluding Passive)",
+              "displayName": "WAU / MAU (Excluding Passive)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Avg Session Duration (sec)"
+                }
+              },
+              "queryRef": "Report Sessions.Avg Session Duration (sec)",
+              "nativeQueryRef": "Avg Session Duration (Sec)",
+              "displayName": "Avg Session Duration (Sec)"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Report Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.Report sessions",
+              "nativeQueryRef": "Report Sessions",
+              "displayName": "Report Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Interactive Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.Interactive sessions",
+              "nativeQueryRef": "Interactive Sessions",
+              "displayName": "Interactive Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Passive Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.Passive sessions",
+              "nativeQueryRef": "Passive Sessions",
+              "displayName": "Passive Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "% Interactive Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.% Interactive sessions",
+              "nativeQueryRef": "% Interactive Sessions",
+              "displayName": "% Interactive Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Report Interactions"
+                }
+              },
+              "queryRef": "Report Sessions.Report interactions",
+              "nativeQueryRef": "Report Interactions",
+              "displayName": "Report Interactions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Total Hours"
+                }
+              },
+              "queryRef": "Report Sessions.Total hours",
+              "nativeQueryRef": "Total Hours",
+              "displayName": "Total Hours"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Avg Duration Interactive Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.Avg duration of interactive sessions",
+              "nativeQueryRef": "Avg Duration of Interactive Sessions",
+              "displayName": "Avg Duration of Interactive Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Avg Duration Passive Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.Avg duration of passive sessions",
+              "nativeQueryRef": "Avg Duration of Passive Sessions",
+              "displayName": "Avg Duration of Passive Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Sessions"
+                    }
+                  },
+                  "Property": "Report Sessions"
+                }
+              },
+              "queryRef": "Report Sessions.Report sessions",
+              "nativeQueryRef": "Report Sessions",
+              "displayName": "Report Sessions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Page Sessions"
+                    }
+                  },
+                  "Property": "Page Sessions"
+                }
+              },
+              "queryRef": "Page Sessions.Page Sessions",
+              "nativeQueryRef": "Page Views",
+              "displayName": "Page Views"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Page Sessions"
+                    }
+                  },
+                  "Property": "Visual Interactions"
+                }
+              },
+              "queryRef": "Page Sessions.Visual Interactions",
+              "nativeQueryRef": "Visual Interactions",
+              "displayName": "Visual Interactions"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Page Sessions"
+                    }
+                  },
+                  "Property": "Slicer Clicks"
+                }
+              },
+              "queryRef": "Page Sessions.Slicer Clicks",
+              "nativeQueryRef": "Slicer Clicks",
+              "displayName": "Slicer Clicks"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "Bookmark Clicks"
+                }
+              },
+              "queryRef": "Events.Bookmark Clicks",
+              "nativeQueryRef": "Bookmark Clicks",
+              "displayName": "Bookmark Clicks"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Page Sessions"
+                    }
+                  },
+                  "Property": "Tooltip Opens"
+                }
+              },
+              "queryRef": "Page Sessions.Tooltip Opens",
+              "nativeQueryRef": "Tooltip Views",
+              "displayName": "Tooltip Views"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "Drillthroughs"
+                }
+              },
+              "queryRef": "Events.Drillthroughs",
+              "nativeQueryRef": "Drillthroughs",
+              "displayName": "Drillthroughs"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Events"
+                    }
+                  },
+                  "Property": "Link Clicks"
+                }
+              },
+              "queryRef": "Events.Link Clicks",
+              "nativeQueryRef": "Link Clicks",
+              "displayName": "Link Clicks"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "User Adoption Metrics"
+                    }
+                  },
+                  "Property": "User adoption metrics"
+                }
+              },
+              "index": 8,
+              "length": 15
+            },
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Report Session Metrics"
+                    }
+                  },
+                  "Property": "Report session metrics"
+                }
+              },
+              "index": 9,
+              "length": 9
+            },
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Activity Metrics"
+                    }
+                  },
+                  "Property": "Activity metrics"
+                }
+              },
+              "index": 10,
+              "length": 8
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "77.39175422352321D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Created On"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "91.89690660894217D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Report"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "104.95397071247406D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Page"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "63.979381362945226D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Event Type"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "117.16285916986055D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Link"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "115.54751853089832D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Filtered Column"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "43.19587705202034D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Page Index"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "131.4845373979282D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Events.Filtered Values"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "64.41219388261206D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Feedback.CSAT (last response)"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "64.20331212826926D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Feedback.CSAT"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "155.40061119602825D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Capacities.SKU and Capacity Name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "84.37681130275263D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Report Keys.Report"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "89.10590943975441D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Workspaces.Workspace Name"
+          }
+        },
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "75.21239435229434D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "Survey.NPS Multiple"
+          }
+        }
+      ],
+      "grid": [
+        {
+          "properties": {
+            "outlineColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#281649'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridVertical": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridVerticalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F8CF70'"
+                    }
+                  }
+                }
+              }
+            },
+            "gridHorizontal": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "gridHorizontalColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F8CF70'"
+                    }
+                  }
+                }
+              }
+            },
+            "rowPadding": {
+              "expr": {
+                "Literal": {
+                  "Value": "3D"
+                }
+              }
+            },
+            "textSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "9D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "outlineStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "fontColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F8CF70'"
+                    }
+                  }
+                }
+              }
+            },
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "backColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#281649'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            },
+            "wordWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "transparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#281649'"
+                    }
+                  }
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#b3b3b3'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylePreset": [
+        {
+          "properties": {
+            "name": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Minimal'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "Filter7f96ead89c35e28d7ab9",
+        "ordinal": 0,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "% Active Users"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter0a26adb9e2ed8cb9ee53",
+        "ordinal": 1,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "% Interactive Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterc04c962831ae1c596d7b",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Time Calcs"
+              }
+            },
+            "Property": "Calc"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter64c97ca94c6353624bd8",
+        "ordinal": 3,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "% Passive Users"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter7728f01a360bd028c752",
+        "ordinal": 4,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Avg Duration Interactive Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter5ef79549c46c804d80de",
+        "ordinal": 5,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Avg Duration Passive Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterd83e0234562c9ad04c5e",
+        "ordinal": 6,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Avg Session Duration (sec)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterb67b2172b06768979080",
+        "ordinal": 7,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Events"
+              }
+            },
+            "Property": "Bookmark Clicks"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterac06b64b68324a08a53d",
+        "ordinal": 8,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "DAU"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter4600068f6655c285e283",
+        "ordinal": 9,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "DAU / MAU"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter9d419bd1d2d0452011d1",
+        "ordinal": 10,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "DAU / MAU (Excluding Passive)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterdc35aef1306e005a5150",
+        "ordinal": 11,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "DAU (Excluding Passive)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter3e25a1147b0609b995ec",
+        "ordinal": 12,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Data Selection Events"
+              }
+            },
+            "Property": "Drillthroughs"
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      },
+      {
+        "name": "Filter0ac8d29a38ecd866604a",
+        "ordinal": 13,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "Engaged Users"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter70864ad7290004a88173",
+        "ordinal": 14,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Interactive Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterfd7c2125b4abb58a6575",
+        "ordinal": 15,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Events"
+              }
+            },
+            "Property": "Link Clicks"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterd071ee95cda026ae1806",
+        "ordinal": 16,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "MAU"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter2660f6806e6038654d90",
+        "ordinal": 17,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "MAU (Excluding Passive)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterc87c2fb7224be726c450",
+        "ordinal": 18,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Page Sessions"
+              }
+            },
+            "Property": "Page Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter17784418b48e0d07a012",
+        "ordinal": 19,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Passive Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter6499dadece2602238b96",
+        "ordinal": 20,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "Passive Users"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterb78f0e422825e4e098ae",
+        "ordinal": 21,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "Filter34ffb39b6025a0138d99",
+        "ordinal": 22,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Report Interactions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter8a560a764a64ac52d21c",
+        "ordinal": 23,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Report Sessions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterdd3d28e336193935c858",
+        "ordinal": 24,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Page Sessions"
+              }
+            },
+            "Property": "Slicer Clicks"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter120f3001ec4a7dc1151e",
+        "ordinal": 25,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Page Sessions"
+              }
+            },
+            "Property": "Tooltip Opens"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterdffb347926006d6b218d",
+        "ordinal": 26,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Report Sessions"
+              }
+            },
+            "Property": "Total Hours"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterd489c88ee0a189a0031d",
+        "ordinal": 27,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "Users"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filtera3f3308fa43eba8bda01",
+        "ordinal": 28,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Page Sessions"
+              }
+            },
+            "Property": "Visual Interactions"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter3a94278d384baabd07e8",
+        "ordinal": 29,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "WAU"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filterc1ed9c0d997d0a30a699",
+        "ordinal": 30,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "WAU / MAU"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter0d5012fad2d86015d2ac",
+        "ordinal": 31,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "WAU / MAU (Excluding Passive)"
+          }
+        },
+        "type": "Advanced"
+      },
+      {
+        "name": "Filter5ac6064278c00ad4e715",
+        "ordinal": 32,
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "WAU (Excluding Passive)"
+          }
+        },
+        "type": "Advanced"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

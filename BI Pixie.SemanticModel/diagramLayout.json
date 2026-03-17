@@ -335,19 +335,6 @@
         },
         {
           "location": {
-            "x": 3233.0814443739637,
-            "y": 2052.6518017318222
-          },
-          "nodeIndex": "Workspaces Scans",
-          "nodeLineageTag": "814d76fa-766f-4376-99b7-a26799b64fee",
-          "size": {
-            "height": 224,
-            "width": 234
-          },
-          "zIndex": 57
-        },
-        {
-          "location": {
             "x": 2525.2514030598477,
             "y": 0
           },
@@ -449,19 +436,6 @@
         },
         {
           "location": {
-            "x": 2838.1029047129077,
-            "y": 1078.2660695397503
-          },
-          "nodeIndex": "Visual Types",
-          "nodeLineageTag": "00de06ab-6d6c-43f8-8b7c-ab49e3c6cd0d",
-          "size": {
-            "height": 104,
-            "width": 234
-          },
-          "zIndex": 50
-        },
-        {
-          "location": {
             "x": 8819.1689744480482,
             "y": 3215.386735148702
           },
@@ -472,94 +446,6 @@
             "width": 234
           },
           "zIndex": 51
-        },
-        {
-          "location": {
-            "x": 3653.342966643957,
-            "y": 1441.9969543605694
-          },
-          "nodeIndex": "Visuals with Performance",
-          "nodeLineageTag": "edf8c25a-e07b-4ae8-9c98-859c1cc55a1a",
-          "size": {
-            "height": 104,
-            "width": 234
-          },
-          "zIndex": 1
-        },
-        {
-          "location": {
-            "x": 1240.32051804814,
-            "y": 1038.1224437907215
-          },
-          "nodeIndex": "Performance Data",
-          "nodeLineageTag": "46846e3d-50b6-4f67-a30b-3c344d1445cd",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 2
-        },
-        {
-          "location": {
-            "x": 3248.2728837568748,
-            "y": 1581.5817188447397
-          },
-          "nodeIndex": "Performance Users",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 3
-        },
-        {
-          "location": {
-            "x": 3214.6362482782315,
-            "y": 659.19598665266767
-          },
-          "nodeIndex": "Performance Queries",
-          "size": {
-            "height": 248,
-            "width": 234
-          },
-          "zIndex": 4
-        },
-        {
-          "location": {
-            "x": 2377.7661630131643,
-            "y": 351.039005566533
-          },
-          "nodeIndex": "Performance Fields",
-          "size": {
-            "height": 248,
-            "width": 234
-          },
-          "zIndex": 5
-        },
-        {
-          "location": {
-            "x": 3699.7407256047572,
-            "y": 2838.0223836185482
-          },
-          "nodeIndex": "Performance Metrics",
-          "nodeLineageTag": "60a59e26-983a-4189-b3e2-4d214eb0ec15",
-          "size": {
-            "height": 224,
-            "width": 234
-          },
-          "zIndex": 6
-        },
-        {
-          "location": {
-            "x": 3574.0197858527908,
-            "y": 1817.2645000570349
-          },
-          "nodeIndex": "Performance Stats",
-          "nodeLineageTag": "2a58e05a-1eb9-46ce-a24b-946c78bca98b",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 7
         },
         {
           "location": {
@@ -737,195 +623,6 @@
         },
         {
           "location": {
-            "x": 1981.6705396669249,
-            "y": 2955.8295034757093
-          },
-          "nodeIndex": "Fabric Operations",
-          "nodeLineageTag": "7c2703f8-3db6-4e2d-9d6f-9f758d092358",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 21
-        },
-        {
-          "location": {
-            "x": 2130.4709911229156,
-            "y": 2013.6893377015444
-          },
-          "nodeIndex": "Producers Activity",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 22
-        },
-        {
-          "location": {
-            "x": 2091.6388623151897,
-            "y": 2484.7594205886271
-          },
-          "nodeIndex": "Consumers Activity",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 23
-        },
-        {
-          "location": {
-            "x": 2535.5410740099978,
-            "y": 2023.5312048077662
-          },
-          "nodeIndex": "Sharing Activity",
-          "nodeLineageTag": "621c5a13-3940-4dd8-853e-e0145b8e89d8",
-          "size": {
-            "height": 296,
-            "width": 234
-          },
-          "zIndex": 24
-        },
-        {
-          "location": {
-            "x": 8421.8943792272439,
-            "y": 3203.386735148702
-          },
-          "nodeIndex": "PBI Columns",
-          "nodeLineageTag": "b9f4219a-d2c9-4898-b4bc-6a2da23d3786",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 25
-        },
-        {
-          "location": {
-            "x": 13983.738712318504,
-            "y": 3239.386735148702
-          },
-          "nodeIndex": "PBI Datasets Datasources",
-          "nodeLineageTag": "adb1cf8b-86e8-4dc4-8213-a6d1a4747bb3",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 26
-        },
-        {
-          "location": {
-            "x": 405.07008288708221,
-            "y": 1492.1505655975802
-          },
-          "nodeIndex": "PBI Datasources",
-          "nodeLineageTag": "4797e35c-021a-42f6-a190-9067ebee6226",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 27
-        },
-        {
-          "location": {
-            "x": 0,
-            "y": 1444.2122337835415
-          },
-          "nodeIndex": "PBI Measures",
-          "nodeLineageTag": "cd0c1e4a-75ff-4b69-a217-b6dcb6abb115",
-          "size": {
-            "height": 272,
-            "width": 234
-          },
-          "zIndex": 28
-        },
-        {
-          "location": {
-            "x": 917.89718604182917,
-            "y": 992.46322247888111
-          },
-          "nodeIndex": "PBI Tables",
-          "nodeLineageTag": "dd1a1257-a120-4723-8019-ceaabbe50f1b",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 29
-        },
-        {
-          "location": {
-            "x": 747.95398523074437,
-            "y": 1937.2425382630436
-          },
-          "nodeIndex": "PBI Datasets",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 30
-        },
-        {
-          "location": {
-            "x": 1125.7112540374264,
-            "y": 2193.8906061119997
-          },
-          "nodeIndex": "PBI Reports",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 31
-        },
-        {
-          "location": {
-            "x": 3294.670642717675,
-            "y": 2415.779251379131
-          },
-          "nodeIndex": "Data Exports",
-          "nodeLineageTag": "ec1a8c6a-9269-4900-b17f-4560b726a10d",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 32
-        },
-        {
-          "location": {
-            "x": 4449.1484270191968,
-            "y": 3207.5894836324505
-          },
-          "nodeIndex": "PBI Datasets Dataflows",
-          "nodeLineageTag": "22c5a2d5-aab1-4ce1-9acd-3ef38666bd84",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 33
-        },
-        {
-          "location": {
-            "x": 3923.0089413702535,
-            "y": 2904.7940348572338
-          },
-          "nodeIndex": "PBI Dataflows Upstream",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 34
-        },
-        {
-          "location": {
-            "x": 956.61331291918077,
-            "y": 1376.0538724110004
-          },
-          "nodeIndex": "Dataset Endorsement Types",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 35
-        },
-        {
-          "location": {
             "x": 1645.3906009352227,
             "y": 1438.5205323464174
           },
@@ -952,19 +649,6 @@
         },
         {
           "location": {
-            "x": 3638.1515272610459,
-            "y": 2230.0697724317929
-          },
-          "nodeIndex": "Export Max Allowed",
-          "nodeLineageTag": "9b4b27ec-b7d3-497c-b491-6447db2030ab",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 38
-        },
-        {
-          "location": {
             "x": 11600.091140993678,
             "y": 3227.386735148702
           },
@@ -975,84 +659,6 @@
             "width": 234
           },
           "zIndex": 39
-        },
-        {
-          "location": {
-            "x": 3304.4289094581682,
-            "y": 2886.8493342662136
-          },
-          "nodeIndex": "Export Types",
-          "nodeLineageTag": "0ffba027-8265-4dc7-9890-83e44a3db2d0",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 40
-        },
-        {
-          "location": {
-            "x": 815.06220620140812,
-            "y": 2323.2600928130287
-          },
-          "nodeIndex": "PBI App Reports",
-          "nodeLineageTag": "40920361-1430-47fd-8a51-94359b17d9b0",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 41
-        },
-        {
-          "location": {
-            "x": 4075.389235492742,
-            "y": 3196.5532263836881
-          },
-          "nodeIndex": "PBI Dataflows",
-          "nodeLineageTag": "1969ea5a-6866-4a98-8a83-d216367b1638",
-          "size": {
-            "height": 176,
-            "width": 234
-          },
-          "zIndex": 42
-        },
-        {
-          "location": {
-            "x": 396.10625305664371,
-            "y": 1948.4006711092898
-          },
-          "nodeIndex": "PBI Dataflows Datasources",
-          "nodeLineageTag": "985f7ea3-4d36-4396-8be7-7efe0dd49559",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 43
-        },
-        {
-          "location": {
-            "x": 810.14016577416442,
-            "y": 1638.1724553759609
-          },
-          "nodeIndex": "PBI Datasets Datasources Lineage",
-          "nodeLineageTag": "9abf5d2c-e643-4e50-9c46-b77e05586052",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 44
-        },
-        {
-          "location": {
-            "x": 1479.3476454825236,
-            "y": 3019.058332485969
-          },
-          "nodeIndex": "Report Endorsement Types",
-          "nodeLineageTag": "70f5c37a-d3d2-402d-932f-baffa3722585",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 45
         },
         {
           "location": {
@@ -1089,6 +695,32 @@
           "nodeLineageTag": "d83e32ac-3af3-4e7e-8d35-a8e32df24441",
           "size": {
             "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 12717.440048979872,
+            "y": 0
+          },
+          "nodeIndex": "Deployment Pipelines",
+          "nodeLineageTag": "434263ca-2200-4abe-a511-59270a9b1135",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 13123.513238503721,
+            "y": 50
+          },
+          "nodeIndex": "Visual Trust Levels",
+          "nodeLineageTag": "918841e9-537d-4977-9fa7-9a05e90f3d0f",
+          "size": {
+            "height": 200,
             "width": 234
           },
           "zIndex": 0
@@ -1175,19 +807,6 @@
         },
         {
           "location": {
-            "x": 0,
-            "y": 316.96941323345817
-          },
-          "nodeIndex": "Workspaces Scans",
-          "nodeLineageTag": "814d76fa-766f-4376-99b7-a26799b64fee",
-          "size": {
-            "height": 232.88888888888894,
-            "width": 234
-          },
-          "zIndex": 8
-        },
-        {
-          "location": {
             "x": 451.07677902621725,
             "y": 53.146067415730357
           },
@@ -1266,19 +885,6 @@
         },
         {
           "location": {
-            "x": 504.66666666666674,
-            "y": 1210.4166666666667
-          },
-          "nodeIndex": "Visuals with Performance",
-          "nodeLineageTag": "edf8c25a-e07b-4ae8-9c98-859c1cc55a1a",
-          "size": {
-            "height": 104,
-            "width": 234
-          },
-          "zIndex": 17
-        },
-        {
-          "location": {
             "x": 1800.9464656249438,
             "y": 13.68671323859826
           },
@@ -1289,84 +895,6 @@
             "width": 234
           },
           "zIndex": 2
-        },
-        {
-          "location": {
-            "x": 702.2462074053102,
-            "y": 1554.0157121780005
-          },
-          "nodeIndex": "Performance Users",
-          "nodeLineageTag": "f22561c9-fdd6-4de7-a3b7-2cbabbb56ede",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 20
-        },
-        {
-          "location": {
-            "x": 411.574664545471,
-            "y": 1554.1829206439086
-          },
-          "nodeIndex": "Performance Queries",
-          "nodeLineageTag": "758fc20a-960a-48ac-ab61-b52b70f1a8fc",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 21
-        },
-        {
-          "location": {
-            "x": 0,
-            "y": 1495
-          },
-          "nodeIndex": "Performance Data",
-          "nodeLineageTag": "46846e3d-50b6-4f67-a30b-3c344d1445cd",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 19
-        },
-        {
-          "location": {
-            "x": 292.5,
-            "y": 1351.25
-          },
-          "nodeIndex": "Performance Stats",
-          "nodeLineageTag": "2a58e05a-1eb9-46ce-a24b-946c78bca98b",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 18
-        },
-        {
-          "location": {
-            "x": 0,
-            "y": 1273.75
-          },
-          "nodeIndex": "Performance Metrics",
-          "nodeLineageTag": "60a59e26-983a-4189-b3e2-4d214eb0ec15",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 3
-        },
-        {
-          "location": {
-            "x": 954.17785670186652,
-            "y": 1367.9385892629675
-          },
-          "nodeIndex": "Performance Fields",
-          "nodeLineageTag": "43a569c2-7c66-4776-a8ac-a5d2a56a0e66",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 1
         },
         {
           "location": {
@@ -1690,19 +1218,6 @@
         },
         {
           "location": {
-            "x": 440,
-            "y": 406
-          },
-          "nodeIndex": "Data Exports",
-          "nodeLineageTag": "ec1a8c6a-9269-4900-b17f-4560b726a10d",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
             "x": 1099,
             "y": 16
           },
@@ -1711,19 +1226,6 @@
           "size": {
             "height": 300,
             "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 1168,
-            "y": 392
-          },
-          "nodeIndex": "Visuals with Performance",
-          "nodeLineageTag": "edf8c25a-e07b-4ae8-9c98-859c1cc55a1a",
-          "size": {
-            "height": 145,
-            "width": 246
           },
           "zIndex": 0
         },
@@ -1889,84 +1391,6 @@
       "nodes": [
         {
           "location": {
-            "x": 448.08333206176758,
-            "y": 409
-          },
-          "nodeIndex": "Performance Data",
-          "nodeLineageTag": "46846e3d-50b6-4f67-a30b-3c344d1445cd",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 3
-        },
-        {
-          "location": {
-            "x": 320.33333206176758,
-            "y": 2
-          },
-          "nodeIndex": "Performance Fields",
-          "nodeLineageTag": "43a569c2-7c66-4776-a8ac-a5d2a56a0e66",
-          "size": {
-            "height": 172,
-            "width": 234
-          },
-          "zIndex": 4
-        },
-        {
-          "location": {
-            "x": 2129.7345505617977,
-            "y": 224.55056179775283
-          },
-          "nodeIndex": "Performance Metrics",
-          "nodeLineageTag": "60a59e26-983a-4189-b3e2-4d214eb0ec15",
-          "size": {
-            "height": 224,
-            "width": 234
-          },
-          "zIndex": 5
-        },
-        {
-          "location": {
-            "x": 0,
-            "y": 0
-          },
-          "nodeIndex": "Performance Queries",
-          "nodeLineageTag": "758fc20a-960a-48ac-ab61-b52b70f1a8fc",
-          "size": {
-            "height": 176,
-            "width": 234
-          },
-          "zIndex": 6
-        },
-        {
-          "location": {
-            "x": 982.33333206176746,
-            "y": 0
-          },
-          "nodeIndex": "Performance Stats",
-          "nodeLineageTag": "2a58e05a-1eb9-46ce-a24b-946c78bca98b",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 7
-        },
-        {
-          "location": {
-            "x": 694.78838824154275,
-            "y": 865.86376404494388
-          },
-          "nodeIndex": "Performance Users",
-          "nodeLineageTag": "f22561c9-fdd6-4de7-a3b7-2cbabbb56ede",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 9
-        },
-        {
-          "location": {
             "x": 1530.3333320617678,
             "y": 0
           },
@@ -1977,19 +1401,6 @@
             "width": 234
           },
           "zIndex": 8
-        },
-        {
-          "location": {
-            "x": 0,
-            "y": 406.25
-          },
-          "nodeIndex": "Data Exports",
-          "nodeLineageTag": "ec1a8c6a-9269-4900-b17f-4560b726a10d",
-          "size": {
-            "height": 442.5,
-            "width": 234
-          },
-          "zIndex": 11
         },
         {
           "location": {
@@ -2019,19 +1430,6 @@
         },
         {
           "location": {
-            "x": 1905.0014044943821,
-            "y": 0
-          },
-          "nodeIndex": "Visuals with Performance",
-          "nodeLineageTag": "edf8c25a-e07b-4ae8-9c98-859c1cc55a1a",
-          "size": {
-            "height": 145,
-            "width": 234
-          },
-          "zIndex": 12
-        },
-        {
-          "location": {
             "x": 1666.3356741573034,
             "y": 548.70084269662914
           },
@@ -2042,32 +1440,6 @@
             "width": 234
           },
           "zIndex": 2
-        },
-        {
-          "location": {
-            "x": 253.08827978305607,
-            "y": 880.29494382022483
-          },
-          "nodeIndex": "Export Max Allowed",
-          "nodeLineageTag": "9b4b27ec-b7d3-497c-b491-6447db2030ab",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 0,
-            "y": 883.623595505618
-          },
-          "nodeIndex": "Export Types",
-          "nodeLineageTag": "0ffba027-8265-4dc7-9890-83e44a3db2d0",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 0
         },
         {
           "location": {
@@ -2177,32 +1549,6 @@
         },
         {
           "location": {
-            "x": 108.44444317287869,
-            "y": 560.00000000000011
-          },
-          "nodeIndex": "Producers Activity",
-          "nodeLineageTag": "0d882761-8300-4064-ac1e-a2088a22fa26",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 13
-        },
-        {
-          "location": {
-            "x": 661.88888761732312,
-            "y": 566.77777777777783
-          },
-          "nodeIndex": "Consumers Activity",
-          "nodeLineageTag": "70ec35ce-0826-4364-8bac-08bc88356395",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 9
-        },
-        {
-          "location": {
             "x": 1306.6666666666663,
             "y": 1.8095232645670758
           },
@@ -2213,45 +1559,6 @@
             "width": 234
           },
           "zIndex": 4
-        },
-        {
-          "location": {
-            "x": 975.33333206176746,
-            "y": 478
-          },
-          "nodeIndex": "Sharing Activity",
-          "nodeLineageTag": "621c5a13-3940-4dd8-853e-e0145b8e89d8",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 10
-        },
-        {
-          "location": {
-            "x": 26.555554283989864,
-            "y": 279.22222222222223
-          },
-          "nodeIndex": "Fabric Operations",
-          "nodeLineageTag": "7c2703f8-3db6-4e2d-9d6f-9f758d092358",
-          "size": {
-            "height": 152,
-            "width": 234
-          },
-          "zIndex": 11
-        },
-        {
-          "location": {
-            "x": 1259.1111111111111,
-            "y": 641.66666666666663
-          },
-          "nodeIndex": "Data Exports",
-          "nodeLineageTag": "ec1a8c6a-9269-4900-b17f-4560b726a10d",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 1
         },
         {
           "location": {
@@ -2296,32 +1603,6 @@
       "nodes": [
         {
           "location": {
-            "x": 0,
-            "y": 399.63492063492055
-          },
-          "nodeIndex": "PBI Reports",
-          "nodeLineageTag": "8acd27c1-a3be-4534-bcfc-72303f26059e",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 15
-        },
-        {
-          "location": {
-            "x": 623.57142857142844,
-            "y": 583.07936507936506
-          },
-          "nodeIndex": "PBI Datasets",
-          "nodeLineageTag": "c2906e76-3415-4ade-8ea8-743bea8719c9",
-          "size": {
-            "height": 296,
-            "width": 234
-          },
-          "zIndex": 14
-        },
-        {
-          "location": {
             "x": 273.42857142857144,
             "y": 107.14285714285715
           },
@@ -2332,84 +1613,6 @@
             "width": 234
           },
           "zIndex": 13
-        },
-        {
-          "location": {
-            "x": 1162.2380952380954,
-            "y": 200.00000000000003
-          },
-          "nodeIndex": "PBI Datasources",
-          "nodeLineageTag": "4797e35c-021a-42f6-a190-9067ebee6226",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 6
-        },
-        {
-          "location": {
-            "x": 1752.2857142857144,
-            "y": 1085
-          },
-          "nodeIndex": "PBI Datasets Datasources Lineage",
-          "nodeLineageTag": "9abf5d2c-e643-4e50-9c46-b77e05586052",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 8
-        },
-        {
-          "location": {
-            "x": 1403.0793729509628,
-            "y": 568.33333091130328
-          },
-          "nodeIndex": "PBI Dataflows Datasources",
-          "nodeLineageTag": "985f7ea3-4d36-4396-8be7-7efe0dd49559",
-          "size": {
-            "height": 145,
-            "width": 356.85714285714289
-          },
-          "zIndex": 7
-        },
-        {
-          "location": {
-            "x": 533.71428571428578,
-            "y": 1030.7142857142858
-          },
-          "nodeIndex": "Dataset Endorsement Types",
-          "nodeLineageTag": "7862d70f-dd70-4977-b329-df99b8f635ab",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 11
-        },
-        {
-          "location": {
-            "x": 193.71428571428572,
-            "y": 1193.5714285714287
-          },
-          "nodeIndex": "Report Endorsement Types",
-          "nodeLineageTag": "70f5c37a-d3d2-402d-932f-baffa3722585",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 10
-        },
-        {
-          "location": {
-            "x": 14.857139587402342,
-            "y": 785
-          },
-          "nodeIndex": "PBI App Reports",
-          "nodeLineageTag": "40920361-1430-47fd-8a51-94359b17d9b0",
-          "size": {
-            "height": 300,
-            "width": 234
-          },
-          "zIndex": 9
         },
         {
           "location": {
@@ -2439,32 +1642,6 @@
         },
         {
           "location": {
-            "x": 1078.0000000000005,
-            "y": 725.00000000000011
-          },
-          "nodeIndex": "PBI Tables",
-          "nodeLineageTag": "dd1a1257-a120-4723-8019-ceaabbe50f1b",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 12
-        },
-        {
-          "location": {
-            "x": 982.28571428571445,
-            "y": 1003.5714285714286
-          },
-          "nodeIndex": "PBI Measures",
-          "nodeLineageTag": "cd0c1e4a-75ff-4b69-a217-b6dcb6abb115",
-          "size": {
-            "height": 312,
-            "width": 234
-          },
-          "zIndex": 3
-        },
-        {
-          "location": {
             "x": 0,
             "y": 0
           },
@@ -2475,58 +1652,6 @@
             "width": 234
           },
           "zIndex": 2
-        },
-        {
-          "location": {
-            "x": 1298,
-            "y": 999.28571428571445
-          },
-          "nodeIndex": "PBI Columns",
-          "nodeLineageTag": "b9f4219a-d2c9-4898-b4bc-6a2da23d3786",
-          "size": {
-            "height": 271.42857142857156,
-            "width": 234
-          },
-          "zIndex": 1
-        },
-        {
-          "location": {
-            "x": 730.85714285714289,
-            "y": 282.85714285714283
-          },
-          "nodeIndex": "Developers",
-          "nodeLineageTag": "71428128-28e7-4305-955d-a54dc33915dd",
-          "size": {
-            "height": 200,
-            "width": 234
-          },
-          "zIndex": 16
-        },
-        {
-          "location": {
-            "x": 432.28571428571428,
-            "y": 426.4285714285715
-          },
-          "nodeIndex": "Report Types",
-          "nodeLineageTag": "42812009-adca-4435-b43f-0c8e8067d5db",
-          "size": {
-            "height": 104,
-            "width": 234
-          },
-          "zIndex": 0
-        },
-        {
-          "location": {
-            "x": 1843.7142857142858,
-            "y": 285.00000000000006
-          },
-          "nodeIndex": "PBI Datasets Datasources",
-          "nodeLineageTag": "adb1cf8b-86e8-4dc4-8213-a6d1a4747bb3",
-          "size": {
-            "height": 128,
-            "width": 234
-          },
-          "zIndex": 0
         }
       ],
       "name": "PBI Scans",
@@ -2835,13 +1960,13 @@
         }
       ],
       "name": "Distribution",
-      "zoomValue": 100,
+      "zoomValue": 79.553182037699813,
       "pinKeyFieldsToTop": false,
       "showExtraHeaderInfo": false,
       "hideKeyFieldsWhenCollapsed": true,
       "tablesLocked": false
     }
   ],
-  "selectedDiagram": "Feedback",
+  "selectedDiagram": "Distribution",
   "defaultDiagram": "All tables"
 }

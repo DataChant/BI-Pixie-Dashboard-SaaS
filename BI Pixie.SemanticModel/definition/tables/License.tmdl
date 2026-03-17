@@ -108,6 +108,14 @@ table License
 
 		annotation SummarizationSetBy = Automatic
 
+	column max_refreshes_per_day
+		dataType: string
+		lineageTag: b11786b6-8808-4b38-ae3d-31ca44702753
+		summarizeBy: none
+		sourceColumn: max_refreshes_per_day
+
+		annotation SummarizationSetBy = Automatic
+
 	partition License = m
 		mode: import
 		source =

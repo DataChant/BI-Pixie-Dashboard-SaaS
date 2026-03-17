@@ -1,0 +1,65 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "ReportSection81ca2a7ef99ec108bdf8",
+  "displayName": "User Engagement Analysis",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "visualInteractions": [
+    {
+      "source": "4d562a9ea679eb7a13a6",
+      "target": "75f25a2edfd16d9322b8",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4d562a9ea679eb7a13a6",
+      "target": "7335f09d1d00d03b107a",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c2848a1fc654047a394b",
+      "target": "7335f09d1d00d03b107a",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c2848a1fc654047a394b",
+      "target": "4d562a9ea679eb7a13a6",
+      "type": "NoFilter"
+    },
+    {
+      "source": "c2848a1fc654047a394b",
+      "target": "2fe3d9912bb041084dd2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4d562a9ea679eb7a13a6",
+      "target": "2fe3d9912bb041084dd2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "7335f09d1d00d03b107a",
+      "target": "1a24f58207c728260a39",
+      "type": "DataFilter"
+    },
+    {
+      "source": "7335f09d1d00d03b107a",
+      "target": "2fe3d9912bb041084dd2",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4d562a9ea679eb7a13a6",
+      "target": "9878183fc598c348c33d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "c2848a1fc654047a394b",
+      "target": "9878183fc598c348c33d",
+      "type": "DataFilter"
+    },
+    {
+      "source": "7335f09d1d00d03b107a",
+      "target": "9878183fc598c348c33d",
+      "type": "DataFilter"
+    }
+  ]
+}

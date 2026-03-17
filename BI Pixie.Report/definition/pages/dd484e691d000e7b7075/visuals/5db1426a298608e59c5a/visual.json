@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "5db1426a298608e59c5a",
+  "position": {
+    "x": 649.14973664409331,
+    "y": 512.385252069225,
+    "z": 5000,
+    "height": 192.6260346124906,
+    "width": 615.44018058690745,
+    "tabOrder": 0
+  },
+  "visualGroup": {
+    "displayName": "Financial Gains Group",
+    "groupMode": "ScaleMode"
+  }
+}

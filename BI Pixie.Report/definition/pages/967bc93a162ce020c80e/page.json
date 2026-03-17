@@ -1,0 +1,243 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "967bc93a162ce020c80e",
+  "displayName": "Custom Visuals Heatmap",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c6931f0682f2dcc955dc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Project"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "6a8be4ea206ff0d0adfb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "03590260eeabd8427659",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Page Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "996460b695b20a7afbd4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "User Key"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "1f58ff64b09cb08705c4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Is Tooltip Col"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true
+      },
+      {
+        "name": "666910160ec2407067b6",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Visual Attributes Options"
+              }
+            },
+            "Property": "Visual position method"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "v",
+              "Entity": "Visual Attributes Options",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "v"
+                          }
+                        },
+                        "Property": "Visual position method"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Last scan'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "d32c35f01ce0e8d00cae",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "979a87a7a28fca2974ed",
+        "boundFilter": "c6931f0682f2dcc955dc",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Project"
+          }
+        }
+      },
+      {
+        "name": "7109750befd0acb26f8b",
+        "boundFilter": "6a8be4ea206ff0d0adfb",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        }
+      },
+      {
+        "name": "dc71b93a143dd14475ae",
+        "boundFilter": "03590260eeabd8427659",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Page Name"
+          }
+        }
+      },
+      {
+        "name": "dc9cc2905ccde4f136d2",
+        "boundFilter": "996460b695b20a7afbd4",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "User Key"
+          }
+        }
+      }
+    ],
+    "acceptsFilterContext": "None"
+  },
+  "visualInteractions": [
+    {
+      "source": "5fede3e14b90da61ab6b",
+      "target": "eeb06449059248ec79cc",
+      "type": "DataFilter"
+    },
+    {
+      "source": "eb307c7a017a8519a86a",
+      "target": "5fede3e14b90da61ab6b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "3769a314243706e51c3e",
+      "target": "5fede3e14b90da61ab6b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "eb307c7a017a8519a86a",
+      "target": "42b5a42f7628b46b2ba0",
+      "type": "NoFilter"
+    },
+    {
+      "source": "69e5f629c006d5a59b3d",
+      "target": "5fede3e14b90da61ab6b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "69e5f629c006d5a59b3d",
+      "target": "42b5a42f7628b46b2ba0",
+      "type": "DataFilter"
+    },
+    {
+      "source": "69e5f629c006d5a59b3d",
+      "target": "eb307c7a017a8519a86a",
+      "type": "DataFilter"
+    }
+  ]
+}

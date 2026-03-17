@@ -1,0 +1,254 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "fc4848863dc042c009d7",
+  "displayName": "Heatmap",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "c6931f0682f2dcc955dc",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Project"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "6a8be4ea206ff0d0adfb",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "03590260eeabd8427659",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Page Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "996460b695b20a7afbd4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "User Key"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "1f58ff64b09cb08705c4",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Is Tooltip Col"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "04cf28bb3207b900dcaf",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "979a87a7a28fca2974ed",
+        "boundFilter": "c6931f0682f2dcc955dc",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Project"
+          }
+        }
+      },
+      {
+        "name": "7109750befd0acb26f8b",
+        "boundFilter": "6a8be4ea206ff0d0adfb",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        }
+      },
+      {
+        "name": "dc71b93a143dd14475ae",
+        "boundFilter": "03590260eeabd8427659",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Pages"
+              }
+            },
+            "Property": "Page Name"
+          }
+        }
+      },
+      {
+        "name": "dc9cc2905ccde4f136d2",
+        "boundFilter": "996460b695b20a7afbd4",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Users"
+              }
+            },
+            "Property": "User Key"
+          }
+        }
+      }
+    ],
+    "acceptsFilterContext": "None"
+  },
+  "visualInteractions": [
+    {
+      "source": "6d5fe63f378a2a512dab",
+      "target": "e3496bbcf833ae053e19",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6d5fe63f378a2a512dab",
+      "target": "4bcab65c6d208cbcfaf8",
+      "type": "DataFilter"
+    },
+    {
+      "source": "6d5fe63f378a2a512dab",
+      "target": "4de1de3760933fbd0025",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4bcab65c6d208cbcfaf8",
+      "target": "0572de48331ccf5ea0a8",
+      "type": "DataFilter"
+    },
+    {
+      "source": "eb075b7e5dce503076ac",
+      "target": "0572de48331ccf5ea0a8",
+      "type": "DataFilter"
+    },
+    {
+      "source": "caca0c1366c3ecec0da9",
+      "target": "0572de48331ccf5ea0a8",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4de1de3760933fbd0025",
+      "target": "054dcbb830795675475b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "054dcbb830795675475b",
+      "target": "4de1de3760933fbd0025",
+      "type": "DataFilter"
+    },
+    {
+      "source": "7f5c46743b9288f8ea15",
+      "target": "4de1de3760933fbd0025",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7f5c46743b9288f8ea15",
+      "target": "054dcbb830795675475b",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7f5c46743b9288f8ea15",
+      "target": "6d5fe63f378a2a512dab",
+      "type": "NoFilter"
+    },
+    {
+      "source": "3a6f1f8ae352fe8a3b4c",
+      "target": "054dcbb830795675475b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4de1de3760933fbd0025",
+      "target": "6d5fe63f378a2a512dab",
+      "type": "NoFilter"
+    },
+    {
+      "source": "054dcbb830795675475b",
+      "target": "6d5fe63f378a2a512dab",
+      "type": "NoFilter"
+    },
+    {
+      "source": "3a6f1f8ae352fe8a3b4c",
+      "target": "6d5fe63f378a2a512dab",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4935943dfda9bce9da02",
+      "target": "6d5fe63f378a2a512dab",
+      "type": "NoFilter"
+    },
+    {
+      "source": "7f5c46743b9288f8ea15",
+      "target": "3a6f1f8ae352fe8a3b4c",
+      "type": "NoFilter"
+    },
+    {
+      "source": "6d5fe63f378a2a512dab",
+      "target": "054dcbb830795675475b",
+      "type": "DataFilter"
+    },
+    {
+      "source": "4935943dfda9bce9da02",
+      "target": "4de1de3760933fbd0025",
+      "type": "NoFilter"
+    },
+    {
+      "source": "4935943dfda9bce9da02",
+      "target": "054dcbb830795675475b",
+      "type": "NoFilter"
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.0.0/schema.json",
+  "displayName": "Activities",
+  "name": "e64b3d6d2666b493e157",
+  "options": {
+    "targetVisualNames": [],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.3",
+    "activeSection": "fb8f365eea46088c47cf",
+    "filters": {
+      "byName": {
+        "56df0dd53dad148e0c80": {
+          "name": "56df0dd53dad148e0c80",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Pages"
+                }
+              },
+              "Property": "Is Tooltip Col"
+            }
+          },
+          "howCreated": 1
+        }
+      },
+      "byExpr": [
+        {
+          "name": "1622a9478ac6b0d8b040",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Capacities"
+                }
+              },
+              "Property": "SKU and Capacity Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "8e390b7c74c098910933",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Workspaces"
+                }
+              },
+              "Property": "Workspace Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "1d52a907111a8e4944de",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Reports"
+                }
+              },
+              "Property": "Project"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "c2b42ebb39d4018bef5a",
+          "type": "Advanced",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Reports"
+                }
+              },
+              "Property": "Report Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filterf9a3bede192242768260",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Pages"
+                }
+              },
+              "Property": "Page Name"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filterbf437d1b6a753b866db7",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Platforms"
+                }
+              },
+              "Property": "Platform"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filter71e32a804e2de1b428fa",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Users"
+                }
+              },
+              "Property": "User Key"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "6c9398e08c3bcb309591",
+          "type": "RelativeDate",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Calendar"
+                }
+              },
+              "Property": "Date"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filterd988db85dd2c2e45212b",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Calendar"
+                }
+              },
+              "Property": "Date"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "d949cc5469a2ec76ccb0",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "Visuals"
+                }
+              },
+              "Property": "Visual ID"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filter2cc793d5b6cab97a40af",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "User and IP Addresses"
+                }
+              },
+              "Property": "Username"
+            }
+          },
+          "howCreated": 1
+        },
+        {
+          "name": "Filter80b1aef7906dd7e0d326",
+          "type": "Categorical",
+          "expression": {
+            "Column": {
+              "Expression": {
+                "SourceRef": {
+                  "Entity": "User and IP Addresses"
+                }
+              },
+              "Property": "Client IP"
+            }
+          },
+          "howCreated": 1
+        }
+      ]
+    },
+    "sections": {
+      "fb8f365eea46088c47cf": {
+        "visualContainers": {}
+      }
+    },
+    "objects": {
+      "merge": {
+        "outspacePane": [
+          {
+            "properties": {
+              "expanded": {
+                "expr": {
+                  "Literal": {
+                    "Value": "false"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}

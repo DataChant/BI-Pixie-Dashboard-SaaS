@@ -10,10 +10,6 @@ relationship AutoDetected_d06fe012-e531-42b8-836f-fa87e7519fa6
 	fromColumn: Events.'Report Page Key'
 	toColumn: Pages.'Report Page Key'
 
-relationship f7f4456f-fce6-4aaf-b481-3e380139a59b
-	fromColumn: 'Report Sessions'.'Session Index'
-	toColumn: 'Session Indices'.'Session Index'
-
 relationship AutoDetected_c8e748f3-7b56-4866-8fff-c9a25f5c298f
 	fromColumn: 'Report Sessions'.Platform
 	toColumn: Platforms.Platform
@@ -73,10 +69,6 @@ relationship ed01e9d5-b763-c104-42e1-3b28ecdc8a59
 relationship 69378908-0d8c-e5ec-6ff3-010a381b6adc
 	fromColumn: 'Clicks by Visual'.'Visual Key'
 	toColumn: Visuals.'Visual Key'
-
-relationship 26c2f337-b585-57af-d104-4fd2f0fa7f2c
-	fromColumn: 'Page Sessions'.'Page Session Index'
-	toColumn: 'Session Indices'.'Session Index'
 
 relationship bb4d5e0b-a7a7-4b97-b5e5-298b336c2628
 	fromColumn: 'Page Sessions'.'Session Start Date'
@@ -274,4 +266,12 @@ relationship 3582b674-879f-16b8-046d-60a124540e5c
 relationship 22dd0961-09dd-f1db-99de-2a146495d0db
 	fromColumn: 'Page Sessions'.'User Key'
 	toColumn: Users.'User Key'
+
+relationship f7f4456f-fce6-4aaf-b481-3e380139a59b
+	fromColumn: 'Report Sessions'.'Session Index'
+	toColumn: 'Session Indices'.'Session Index'
+
+relationship 26c2f337-b585-57af-d104-4fd2f0fa7f2c
+	fromColumn: 'Page Sessions'.'Page Session Index'
+	toColumn: 'Session Indices'.'Session Index'
 

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmarksMetadata/1.0.0/schema.json",
+  "items": [
+    {
+      "name": "973dfe6401c07e9be071"
+    },
+    {
+      "name": "799719df4d4e349c1390",
+      "displayName": "Attrition",
+      "children": [
+        "Bookmarkd5d08f8fd122e888ec59",
+        "Bookmark97877a9ab7d3ba3af468"
+      ]
+    },
+    {
+      "name": "4dff79ef1d63ec0cdea1",
+      "displayName": "User Engagement",
+      "children": [
+        "434068a820d5c96646d8",
+        "1ad319a35ae21b53e470"
+      ]
+    },
+    {
+      "name": "c8a2e92315d207812632",
+      "displayName": "Session Analysis",
+      "children": [
+        "c3fa405e05c623e09d9e",
+        "820883e6a4a875e01e13"
+      ]
+    },
+    {
+      "name": "09fd2c1f62a2feb98cda",
+      "displayName": "Users / Activities",
+      "children": [
+        "5d946eaeb7faaee19452",
+        "e64b3d6d2666b493e157"
+      ]
+    },
+    {
+      "name": "67ea3f6bb3363d985246",
+      "displayName": "Developer Leaderboard",
+      "children": [
+        "28b29ff90684d4d35a33",
+        "a93518fc61a8d95dd21b"
+      ]
+    }
+  ]
+}

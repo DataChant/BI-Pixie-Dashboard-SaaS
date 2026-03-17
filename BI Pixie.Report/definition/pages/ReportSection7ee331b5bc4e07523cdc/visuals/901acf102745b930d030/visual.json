@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "901acf102745b930d030",
+  "position": {
+    "x": 21.903469958940693,
+    "y": 48.750604893042613,
+    "z": 11001,
+    "height": 77.2901547309325,
+    "width": 128.73068484014237,
+    "tabOrder": 1000
+  },
+  "visualGroup": {
+    "displayName": "CSAT guage",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "76e2f557abcd7959c263"
+}

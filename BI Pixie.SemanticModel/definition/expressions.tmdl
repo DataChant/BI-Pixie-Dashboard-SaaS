@@ -27,7 +27,7 @@ expression 'Session timeout (min)' = 5 meta [IsParameterQuery=true, Type="Number
 
 	annotation PBI_NavigationStepName = Navigation
 
-expression 'Data Lake URL' = "https://bipixiestorageprod.dfs.core.windows.net/bipixielake" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
+expression 'Data Lake URL' = "https://stpixieintdevwestus2.dfs.core.windows.net/bipixielake" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
 	lineageTag: 6006c6fc-b790-4f5a-b34c-3852e5074b7f
 	queryGroup: Parameters
 
@@ -98,7 +98,7 @@ expression FnGetPageSessions =
 
 	annotation PBI_ResultType = Function
 
-expression 'License Key' = "128d806f-ee21-468b-9148-66190259c759" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
+expression 'License Key' = "64d97d37-ed4b-4c37-a1d7-006941b1aa23" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=false]
 	lineageTag: 0bc3ac14-9af1-4783-993b-96ffd76d8e3c
 	queryGroup: Parameters
 
@@ -168,7 +168,7 @@ expression FnLoadReportSessionFromDataLakeFile = ```
 		    ),
 		    #"Renamed Zip Fields" = Table.RenameColumns(#"Changed Type",RenamedFields),
 		    
-		    #"Added User Key" = Table.AddColumn(#"Renamed Zip Fields", "User Key", each if #"Are Users Anonymous" then [Client IP] else if #"Is Demo" then userKey else [Username]),
+		    #"Added User Key" = Table.AddColumn(#"Renamed Zip Fields", "User Key", each if #"Are Users Anonymous" then [Client IP] else if #"Is Demo" then userKey else if ([Username] = "" or [Username] = null) then [Client IP] else [Username]),
 		    #"Added Platform" = Table.AddColumn(#"Added User Key", "Platform", each if [User Key] <> null and not Text.Contains([User Key], "@") then "Desktop" else if [#"User-Agent"] <> null and Text.Contains([#"User-Agent"], "PBIMobile") then "Mobile App" else if [#"User-Agent"] <> null and Text.Contains([#"User-Agent"], "Mobile") then "Mobile" else "Web"),
 		    #"Added Report Page Key" =
 		        if #"Is Demo" then
@@ -276,7 +276,8 @@ expression FnLoadPageSessionFromDataLakeFile = ```
 		    ),
 		    #"Renamed Zip Fields" = Table.RenameColumns(#"Changed Type",RenamedFields),
 		    
-		    #"Added User Key" = Table.AddColumn(#"Renamed Zip Fields", "User Key", each if #"Are Users Anonymous" then [Client IP] else if #"Is Demo" then userKey else [Username]),
+		    #"Added User Key" = Table.AddColumn(#"Renamed Zip Fields", "User Key", each if #"Are Users Anonymous" then [Client IP] else if #"Is Demo" then userKey else if ([Username] = "" or [Username] = null) then [Client IP] else [Username]),
+		
 		    #"Added Platform" = Table.AddColumn(#"Added User Key", "Platform", each if [User Key] <> null and not Text.Contains([User Key], "@") then "Desktop" else if [#"User-Agent"] <> null and Text.Contains([#"User-Agent"], "PBIMobile") then "Mobile App" else if [#"User-Agent"] <> null and Text.Contains([#"User-Agent"], "Mobile") then "Mobile" else "Web"),
 		    #"Added Report Page Key" =
 		        if #"Is Demo" then

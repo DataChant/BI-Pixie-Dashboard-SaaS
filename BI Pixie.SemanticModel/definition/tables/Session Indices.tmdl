@@ -11,7 +11,7 @@ table 'Session Indices'
 
 	partition 'Session Indices' = calculated
 		mode: import
-		source = DISTINCT('Report Sessions'[Session Index])
+		source = CALCULATETABLE(DISTINCT('Report Sessions'[Session Index]), NOT(ISBLANK('Report Sessions'[Session Index])))
 
 	annotation PBI_Id = 02935d09b41344edae0a3f68698b0fb8
 

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "77ace9606e0d88aed99b",
+  "position": {
+    "x": 17.419977966587691,
+    "y": 110.01011122345803,
+    "z": 6000,
+    "height": 259.70149253731341,
+    "width": 215.82089552238804,
+    "tabOrder": 7000
+  },
+  "visualGroup": {
+    "displayName": "User satisfaction gauge",
+    "groupMode": "ScaleMode"
+  }
+}

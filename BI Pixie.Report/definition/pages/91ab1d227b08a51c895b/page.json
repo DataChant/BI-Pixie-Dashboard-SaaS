@@ -1,0 +1,210 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "91ab1d227b08a51c895b",
+  "displayName": "Responses Over Time",
+  "displayOption": "FitToPage",
+  "height": 720,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "52a4c7169064a27a8936",
+        "displayName": "Capacity",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Capacities"
+              }
+            },
+            "Property": "SKU and Capacity Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "6fce6504d89d5379a80d",
+        "displayName": "Report",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "2f83f13dae8dbd1d2a53",
+        "displayName": "Workspace",
+        "ordinal": 2,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Workspaces"
+              }
+            },
+            "Property": "Workspace Name"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "9d43280b4160a0688466",
+        "displayName": "Report",
+        "ordinal": 3,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Reports"
+              }
+            },
+            "Property": "Report Name"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "r",
+              "Entity": "Reports",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "In": {
+                      "Expressions": [
+                        {
+                          "Column": {
+                            "Expression": {
+                              "SourceRef": {
+                                "Source": "r"
+                              }
+                            },
+                            "Property": "Report Name"
+                          }
+                        }
+                      ],
+                      "Values": [
+                        [
+                          {
+                            "Literal": {
+                              "Value": "null"
+                            }
+                          }
+                        ]
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "User",
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true,
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "filterSortOrder": "Custom"
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#281649'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "visualInteractions": [
+    {
+      "source": "53b2ce8d73424aa5ce70",
+      "target": "d86c720b91ad7b5b5bb2",
+      "type": "NoFilter"
+    },
+    {
+      "source": "d86c720b91ad7b5b5bb2",
+      "target": "ce22e93c78b1b15c9243",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e4bb8d02453396b6a884",
+      "target": "ce22e93c78b1b15c9243",
+      "type": "NoFilter"
+    },
+    {
+      "source": "ce22e93c78b1b15c9243",
+      "target": "e4bb8d02453396b6a884",
+      "type": "DataFilter"
+    },
+    {
+      "source": "05cae60e15837095ebc5",
+      "target": "e4bb8d02453396b6a884",
+      "type": "DataFilter"
+    },
+    {
+      "source": "d86c720b91ad7b5b5bb2",
+      "target": "0814cef5a15033984bba",
+      "type": "NoFilter"
+    },
+    {
+      "source": "53b2ce8d73424aa5ce70",
+      "target": "0814cef5a15033984bba",
+      "type": "NoFilter"
+    },
+    {
+      "source": "e4bb8d02453396b6a884",
+      "target": "0814cef5a15033984bba",
+      "type": "NoFilter"
+    }
+  ]
+}

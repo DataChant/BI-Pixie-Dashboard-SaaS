@@ -1,0 +1,107 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "fb95b1c8a2b51154245b",
+  "displayName": "Heatmap Tooltip",
+  "displayOption": "ActualSize",
+  "height": 152,
+  "width": 270,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "5357d094a7efb0b108bb",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Y Dimension"
+              }
+            },
+            "Property": "Y"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      },
+      {
+        "name": "bd1775cb841ee9cb948f",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "X Dimension"
+              }
+            },
+            "Property": "X"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "Drillthrough"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  },
+  "pageBinding": {
+    "name": "6ff4ff6bb90f56bfc77e",
+    "type": "Tooltip",
+    "parameters": [
+      {
+        "name": "9ac2f8269b5d3fcffaf0",
+        "boundFilter": "bd1775cb841ee9cb948f",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "X Dimension"
+              }
+            },
+            "Property": "X"
+          }
+        }
+      },
+      {
+        "name": "de44b2ce4ca84bcb469f",
+        "boundFilter": "5357d094a7efb0b108bb",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Y Dimension"
+              }
+            },
+            "Property": "Y"
+          }
+        }
+      }
+    ]
+  },
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#281649'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visibility": "HiddenInViewMode",
+  "type": "Tooltip"
+}

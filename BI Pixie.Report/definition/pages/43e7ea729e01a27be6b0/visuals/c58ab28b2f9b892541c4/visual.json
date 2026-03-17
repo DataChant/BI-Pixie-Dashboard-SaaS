@@ -1,0 +1,149 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "c58ab28b2f9b892541c4",
+  "position": {
+    "x": 6.5640394088669956,
+    "y": 7.068965517241379,
+    "z": 0,
+    "height": 394.34729064039408,
+    "width": 417.57389162561577,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Complexity Score:",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#281649"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "An estimate of the report's complexity as was detected during the instrumentation by BI Pixie. Higher score means that the reports may have excessive number of visuals or objects that are expensive to maintain.",
+                    "textStyle": {
+                      "color": "#281649"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Usability Score:",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#281649"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "An estimate of the report's usability which is based on the detection of controls such as bookmarks, slicers, tooltips and drill-throughs as was detected during the instrumentation by BI Pixie. As the score gets higher, you are likely to get more user-friendly reports. But extreme scores may suggest excessive use of such controls and may lead to the reverse effect.",
+                    "textStyle": {
+                      "color": "#281649"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": ""
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Passivity Score:",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "color": "#281649"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "An estimate for the dominance of table and matrix visuals that lead to passive consumption and focus on Power BI as an export tool. A higher score means that the report leads to passivity and is more likely to serve as a data export tool rather than a modern and interactive dashboard.",
+                    "textStyle": {
+                      "color": "#281649"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "radius": {
+              "expr": {
+                "Literal": {
+                  "Value": "15D"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#281649'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -2810,16 +2810,6 @@ cultureInfo en-US
 			            },
 			            "Weight": 0.476
 			          }
-			        },
-			        {
-			          "Engagement: Interactive Sessions": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14014,16 +14004,6 @@ cultureInfo en-US
 			            "State": "Generated",
 			            "Weight": 0.97
 			          }
-			        },
-			        {
-			          "Adoption: DAU / MAU": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
 			        }
 			      ]
 			    },
@@ -14413,7 +14393,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "MAU (Exc. Passive)": {
+			          "MAU excuding Passive": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -14423,7 +14403,7 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "MAU excuding Passive": {
+			          "MAU (Exc. Passive)": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -14688,16 +14668,6 @@ cultureInfo en-US
 			              "Agent": "Thesaurus"
 			            },
 			            "Weight": 0.466
-			          }
-			        },
-			        {
-			          "All Users": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
 			          }
 			        },
 			        {
@@ -20161,16 +20131,6 @@ cultureInfo en-US
 			        },
 			        {
 			          "CSAT (only last feedback per user & report)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Feedback: CSAT": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -31717,19 +31677,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "SKU and Capacity Name"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "SKU & Capacity name": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "page_sessions.user_key": {
 			      "Definition": {
@@ -31915,16 +31863,6 @@ cultureInfo en-US
 			          }
 			        },
 			        {
-			          "Survey: Financial Gains": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
 			          "Total Gains": {
 			            "State": "Suggested",
 			            "Source": {
@@ -31968,16 +31906,6 @@ cultureInfo en-US
 			      "Terms": [
 			        {
 			          "Time Savings (Hours)": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        },
-			        {
-			          "Survey: Hours of Savings": {
 			            "State": "Suggested",
 			            "Source": {
 			              "Type": "External",
@@ -32804,19 +32732,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "NPS"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Survey: NPS": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "reports.instrumented_reports": {
 			      "Definition": {
@@ -32825,19 +32741,7 @@ cultureInfo en-US
 			          "ConceptualProperty": "Instrumented Reports"
 			        }
 			      },
-			      "State": "Generated",
-			      "Terms": [
-			        {
-			          "Reports": {
-			            "State": "Suggested",
-			            "Source": {
-			              "Type": "External",
-			              "Agent": "PowerBI.VisualColumnRename"
-			            },
-			            "Weight": 0.9
-			          }
-			        }
-			      ]
+			      "State": "Generated"
 			    },
 			    "users.dynamic_users_": {
 			      "Definition": {

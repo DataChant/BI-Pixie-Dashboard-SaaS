@@ -1,0 +1,17 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.6.0/schema.json",
+  "name": "29052b891b9769607807",
+  "position": {
+    "x": 14.712202858399497,
+    "y": 55.235940976548143,
+    "z": 11001,
+    "height": 119.55843781828709,
+    "width": 182.09418449591973,
+    "tabOrder": 2000
+  },
+  "visualGroup": {
+    "displayName": "Upper guage",
+    "groupMode": "ScaleMode"
+  },
+  "parentGroupName": "50efe2ab9d0e87164c93"
+}
