@@ -1,0 +1,56 @@
+table 'Visual Attributes Options'
+	lineageTag: 44f3a2a5-7eed-4256-90c1-b82d0c029084
+
+	measure 'Should use SCD for visuals' = (SELECTEDVALUE('Visual Attributes Options'[Type]) = "include scd")
+		lineageTag: b3c71686-6351-4a26-aecc-31c793d06ae2
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Visual position method'
+		dataType: string
+		lineageTag: 5d11f16f-e305-4c38-b3a5-fc19db0f3765
+		summarizeBy: none
+		sourceColumn: Visual position method
+		sortByColumn: Type
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		isHidden
+		lineageTag: e991c6a4-d8f1-4456-92e2-0d53aa9d1f46
+		summarizeBy: none
+		sourceColumn: Type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: d8681f44-b213-44e9-98e3-4e1d75b2573e
+		summarizeBy: sum
+		sourceColumn: Order
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Visual Attributes Options' = m
+		mode: import
+		source =
+				let
+				    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i45W8kksLlEoTk7MU9JRykFiGyrF6iDJKmTmKRSkFmXmpwDlMvOSc0pTUoESIJ6RUmwsAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Visuals = _t, Type = _t, Order = _t]),
+				    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Visuals", type text}, {"Type", type text}, {"Order", Int64.Type}}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Changed Type",{{"Visuals", "Visual position method"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

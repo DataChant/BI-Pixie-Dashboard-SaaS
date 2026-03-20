@@ -1,0 +1,134 @@
+table 'Deployment Pipelines'
+	lineageTag: 434263ca-2200-4abe-a511-59270a9b1135
+
+	column 'Pipeline ID'
+		dataType: string
+		lineageTag: 06c35d84-cd4d-4dd2-b3ea-9989d3481076
+		summarizeBy: none
+		sourceColumn: Pipeline ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Pipeline Name'
+		dataType: string
+		lineageTag: d4d79ffd-f429-4d95-b742-5ec0086a263a
+		summarizeBy: none
+		sourceColumn: Pipeline Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stage Workspace ID'
+		dataType: string
+		lineageTag: 502955bd-af61-41ab-8f19-1cba913f19c7
+		summarizeBy: none
+		sourceColumn: Stage Workspace ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Stage Workspace Name'
+		dataType: string
+		lineageTag: 95bd7110-6b56-4867-bddc-fa53cb454499
+		summarizeBy: none
+		sourceColumn: Stage Workspace Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod Workspace ID'
+		dataType: string
+		lineageTag: 39b45b41-ea1b-4090-948b-3806150c9c9a
+		summarizeBy: none
+		sourceColumn: Prod Workspace ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod Workspace Name'
+		dataType: string
+		lineageTag: 75f3e59b-c360-4be5-9a58-42c4f6512650
+		summarizeBy: none
+		sourceColumn: Prod Workspace Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod Report ID'
+		dataType: string
+		lineageTag: 21dd25fe-4246-43ad-9707-4ab897f9ed63
+		summarizeBy: none
+		sourceColumn: Prod Report ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod Report Name'
+		dataType: string
+		lineageTag: fb5718fd-21b3-4e67-a21e-9bba41caf813
+		summarizeBy: none
+		sourceColumn: Prod Report Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Prod Capacity ID'
+		dataType: string
+		lineageTag: b05d78a5-fe8e-4c57-8ca2-9dbe2bfa7837
+		summarizeBy: none
+		sourceColumn: Prod Capacity ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Project
+		dataType: string
+		lineageTag: 34e6e530-fbb8-44e7-a3f0-38a925b40a4b
+		summarizeBy: none
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Deployment Pipelines' = m
+		mode: import
+		source = ```
+				let
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key", [HierarchicalNavigation=true]),
+				    #"Drill down to inventory" = Source{[Name="inventory"]}[Content],
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Drill down to inventory",{"Content", "Name"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Removed Other Columns1", each ([Name] <> "config.json")),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Filtered Rows1",{{"Name", "Project"}}),
+				    #"Expanded Content" = Table.ExpandTableColumn(#"Renamed Columns1", "Content", {"Content", "Name"}, {"Content", "Name"}),
+				    #"Filtered Reports" = Table.SelectRows(#"Expanded Content", each ([Name] = "DeploymentPipelines")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Reports",{"Name"}),
+				    
+				    
+				    FnDecodeString = (encodedString)=>
+				    let
+				        decodedString = Uri.Parts("http://dummy?a=" & encodedString)[Query][a]
+				    in
+				        decodedString,
+				    
+				    #"Trim and Decode Project" = Table.TransformColumns(#"Removed Columns",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
+				    #"Expanded Content1" = Table.ExpandTableColumn(#"Trim and Decode Project", "Content", {"Content", "Extension", "Date modified"}, {"Content", "Extension", "Date modified"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded Content1", each ([Extension] = ".json")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Content", "Date modified", "Project"}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "reports", each FnLoadInventory([Content])),
+				    #"Expanded FnLoadInventory" = Table.ExpandTableColumn(#"Invoked Custom Function", "reports", {"deploymentPipelines"}, {"deploymentPipelines"}),
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded FnLoadInventory",{{"Date modified", "Since"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Since", type datetime}}),
+				
+				    #"Removed Other Columns2" = Table.SelectColumns(#"Changed Type",{"Since", "Project", "deploymentPipelines"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Removed Other Columns2", each [deploymentPipelines] <> null),
+				    #"Expanded deploymentPipelines" = Table.ExpandListColumn(#"Filtered Rows2", "deploymentPipelines"),
+				    #"Expanded deploymentPipelines1" = Table.ExpandRecordColumn(#"Expanded deploymentPipelines", "deploymentPipelines", {"id", "displayName", "stages", "production_workspace"}, {"id", "displayName", "stages", "production_workspace"}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Expanded deploymentPipelines1",{{"Since", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Project", "id"}),
+				    #"Expanded production_workspace" = Table.ExpandRecordColumn(#"Removed Duplicates", "production_workspace", {"workspaceId", "workspaceName", "reports", "capacityId"}, {"production_workspace.workspaceId", "production_workspace.workspaceName", "reports", "Prod Capacity ID"}),
+				    #"Expanded reports" = Table.ExpandListColumn(#"Expanded production_workspace", "reports"),
+				    #"Expanded reports1" = Table.ExpandRecordColumn(#"Expanded reports", "reports", {"id", "displayName"}, {"report id", "report name"}),
+				    #"Expanded stages" = Table.ExpandListColumn(#"Expanded reports1", "stages"),
+				    #"Expanded stages1" = Table.ExpandRecordColumn(#"Expanded stages", "stages", {"workspaceId", "workspaceName"}, {"workspaceId", "workspaceName"}),
+				    #"Removed Columns3" = Table.RemoveColumns(#"Expanded stages1",{"Since"}),
+				    #"Renamed Columns2" = Table.RenameColumns(#"Removed Columns3",{{"id", "Pipeline ID"}, {"displayName", "Pipeline Name"}, {"workspaceId", "Stage Workspace ID"}, {"workspaceName", "Stage Workspace Name"}, {"production_workspace.workspaceId", "Prod Workspace ID"}, {"production_workspace.workspaceName", "Prod Workspace Name"}, {"report id", "Prod Report ID"}, {"report name", "Prod Report Name"}})
+				in
+				    #"Renamed Columns2"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

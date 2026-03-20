@@ -1,0 +1,17 @@
+table 'Session Indices'
+	lineageTag: b55571b1-f60f-4762-88cc-847e8c519f8e
+
+	column 'Session Index'
+		lineageTag: 7788ab7a-2b86-4917-88c2-3e5e0314ddd5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Report Sessions[Session Index]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Session Indices' = calculated
+		mode: import
+		source = CALCULATETABLE(DISTINCT('Report Sessions'[Session Index]), NOT(ISBLANK('Report Sessions'[Session Index])))
+
+	annotation PBI_Id = 02935d09b41344edae0a3f68698b0fb8
+

@@ -1,0 +1,53 @@
+table 'Business Outcome Metrics'
+	lineageTag: de6ebff2-5f40-4098-9042-e84d31922927
+
+	column 'Business Outcome Metrics'
+		lineageTag: a3e2ca81-abe8-44f1-be43-d12c1e82f7e4
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Business Outcome Metrics Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Business Outcome Metrics Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Outcome Metrics Fields'
+		isHidden
+		lineageTag: 72dff39d-7ae1-47a8-918c-a4ab3f1a4692
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Business Outcome Metrics Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Business Outcome Metrics Order'
+		isHidden
+		formatString: 0
+		lineageTag: 948e51fd-0adf-4e47-899e-e0b5722ed1fe
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Business Outcome Metrics' = calculated
+		mode: import
+		source =
+				{
+				    ("Adoption: MAU", NAMEOF('Users'[MAU]), 1),
+				    ("Adoption: DAU / MAU", NAMEOF('Users'[DAU / MAU]), 2),
+				    ("Engagement: Interactive Sessions", NAMEOF('Report Sessions'[Interactive Sessions]), 3),
+				    ("Feedback: CSAT", NAMEOF('Feedback'[CSAT (Last Response)]), 4),
+				    ("Survey: NPS", NAMEOF('Survey'[NPS]), 5),
+				    ("Survey: Financial Gains", NAMEOF('Survey'[Survey Financial Gains]), 6),
+				    ("Survey: Hours of Savings", NAMEOF('Survey'[Survey Time Savings (Hours)]), 7)
+				}
+
+	annotation PBI_Id = fe01695b093d4bd1b9da1579667f6811
+

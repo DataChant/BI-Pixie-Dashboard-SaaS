@@ -1,0 +1,105 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+queryGroup 'Base queries'
+
+	annotation PBI_QueryGroupOrder = 1
+
+queryGroup Parameters
+
+	annotation PBI_QueryGroupOrder = 0
+
+queryGroup Users
+
+	annotation PBI_QueryGroupOrder = 6
+
+queryGroup Tests
+
+	annotation PBI_QueryGroupOrder = 3
+
+queryGroup 'Power BI Scan'
+
+	annotation PBI_QueryGroupOrder = 8
+
+queryGroup RLS
+
+	annotation PBI_QueryGroupOrder = 9
+
+queryGroup 'Visual Types'
+
+	annotation PBI_QueryGroupOrder = 10
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["FnLoadDatalakeFile","FnLoadInventory","FnGetReportRawSessions","FnCountSlicerEventsInner","FnCountSlicerEvents","FnGetPageSessions","FnGetSessions","All Visual Types","Capacities","Capacity-Unknown","Clicks by Visual","Data Selections","Deployment Pipelines","Event Types","Export Metrics","Events","Feedback","Feedback Icons","Feedback Type","Inventory Scans","License","Page Scans","Pages","Page Sessions","Platforms","Report Sessions","Page Sessions - Test","Report Scans","Survey","Survey Questions","Time","Visual Attributes Options","Visual Scans","Visual Trust Levels","Visuals","Workspaces","Visual Types","FnSessionizeRLSEvents","RLS Events Demo","RLS Events","Data Lake URL","License Key","FnLoadReportSessionFromDataLakeFile","FnLoadPageSessionFromDataLakeFile","Events - Datalake Base","Events - Base","Projects and Reports - Base","Events - Datalake Hierarchy - Base","Data Selection Events","Data Selections - Base","Report Sessions - Base","Inventory - Base 0","Inventory - Reports - Base 1","Inventory - Reports - Base 2","Inventory - Reports - Base 3","Workspace-Unknown","Workspaces - Base","Are Users Anonymous","Last N Days","Session timeout (min)","Inventory - Pages - Base 1","Inventory - Report IDs - Demo","FnPrepareSCD","Internal Users - Base","External Users","Managers","Internal Users","Internal Users - Empty","External Users - Empty","Feedback - Base","Is Demo","Instrumentation Activities","Built In Visuals","Custom Visuals","Unlisted Visuals","Unknown Visuals","Visual Type Fix","EmptyUnkownVisualTypes","UncertifiedDemo","Is SaaS","Reports"]
+
+annotation PBI_ProTooling = ["DevMode","CalcGroup","DaxQueryView_Desktop","TMDLView_Desktop","CopilotTooling"]
+
+annotation __TEdtr = 1
+
+ref table 'Data Selections'
+ref table 'Report Sessions'
+ref table Calendar
+ref table Pages
+ref table 'Page Indices'
+ref table 'Event Types'
+ref table 'Time Calcs'
+ref table 'Page Sessions'
+ref table 'Activity Metrics'
+ref table Events
+ref table 'Session Indices'
+ref table 'Report Session Metrics'
+ref table 'User Adoption Metrics'
+ref table Users
+ref table 'Page Session Metrics'
+ref table Months
+ref table Platforms
+ref table License
+ref table 'User and IP Addresses'
+ref table Feedback
+ref table Reports
+ref table 'Feedback Icons'
+ref table 'CSAT type'
+ref table 'Design Attributes'
+ref table Workspaces
+ref table Capacities
+ref table 'Visual Scans'
+ref table 'Clicks by Visual'
+ref table 'Page Scans'
+ref table 'Report Scans'
+ref table 'Scan Attributes'
+ref table Visuals
+ref table 'X Dimension'
+ref table 'Y Dimension'
+ref table 'Visual Attributes Options'
+ref table Managers
+ref table 'Internal Users'
+ref table 'External Users'
+ref table Time
+ref table 'X Dimension2'
+ref table 'Y Dimension2'
+ref table Survey
+ref table 'Survey Questions'
+ref table 'Survey Latest'
+ref table 'Feedback Type'
+ref table Answers
+ref table 'Interactions X'
+ref table 'Durations X'
+ref table 'Export Metrics'
+ref table 'Business Outcome Metrics'
+ref table 'All Reports'
+ref table 'RLS Events'
+ref table 'RLS Metric'
+ref table 'All Visual Types'
+ref table 'Visual Trust Levels'
+ref table 'Deployment Pipelines'
+
+ref cultureInfo en-US
+

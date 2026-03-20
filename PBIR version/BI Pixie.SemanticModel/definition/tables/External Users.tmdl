@@ -1,0 +1,197 @@
+table 'External Users'
+	lineageTag: 05795021-a84a-40aa-b184-6caaab6d4956
+
+	column 'User Key'
+		dataType: string
+		lineageTag: 3d936def-da7c-476f-b688-b44016d540b5
+		summarizeBy: none
+		sourceColumn: User Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 1'
+		dataType: string
+		isHidden
+		lineageTag: e91ffb84-81a7-4672-a381-19f64251ced8
+		summarizeBy: none
+		sourceColumn: Level 1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 2'
+		dataType: string
+		isHidden
+		lineageTag: 86263687-7429-4436-8919-ee384b9103ab
+		summarizeBy: none
+		sourceColumn: Level 2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 3'
+		dataType: string
+		isHidden
+		lineageTag: c1144f28-05d5-4c3c-b1f7-fff7099295fd
+		summarizeBy: none
+		sourceColumn: Level 3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 4'
+		dataType: string
+		isHidden
+		lineageTag: 7e87a277-8b0f-45d9-823c-b5105603dfaa
+		summarizeBy: none
+		sourceColumn: Level 4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 5'
+		dataType: string
+		isHidden
+		lineageTag: 1d57e9d4-a87f-44ab-83a5-e689ff5edb93
+		summarizeBy: none
+		sourceColumn: Level 5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 6'
+		dataType: string
+		isHidden
+		lineageTag: d9f54a46-640c-4d03-8dd4-f7b18e4ba58c
+		summarizeBy: none
+		sourceColumn: Level 6
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 7'
+		dataType: string
+		isHidden
+		lineageTag: 4a9275c4-c5d1-426b-95ad-eba9e1a3c6ee
+		summarizeBy: none
+		sourceColumn: Level 7
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 8'
+		dataType: string
+		isHidden
+		lineageTag: 1c088c92-c104-4770-97ac-4198a8470c42
+		summarizeBy: none
+		sourceColumn: Level 8
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 9'
+		dataType: string
+		isHidden
+		lineageTag: 790cc17c-7def-4e69-88cc-7f200ff3ad93
+		summarizeBy: none
+		sourceColumn: Level 9
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Level 10'
+		dataType: string
+		isHidden
+		lineageTag: 6db74015-a67c-4a46-992d-d9c4c5be5af1
+		summarizeBy: none
+		sourceColumn: Level 10
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy 'User Hierarchy'
+		lineageTag: 18a53a4c-d6b2-4a40-b0d3-b3e89ca5ae24
+
+		level 'Level 1'
+			lineageTag: fa83dff5-726b-4e9a-8745-2c34fffcd2f0
+			column: 'Level 1'
+
+		level 'Level 2'
+			lineageTag: fa59077f-f1de-4dcb-a127-b50bc3c16f02
+			column: 'Level 2'
+
+		level 'Level 3'
+			lineageTag: c45708e3-08c3-4b48-a58d-ba00b6c7e8c5
+			column: 'Level 3'
+
+		level 'Level 4'
+			lineageTag: 81887a2a-82b9-4e0b-8a57-f357d41e2ecd
+			column: 'Level 4'
+
+		level 'Level 5'
+			lineageTag: a73bda3e-9125-4117-b66a-b87fd630bee1
+			column: 'Level 5'
+
+		level 'Level 6'
+			lineageTag: 5f265073-a475-40b4-89fe-302dee8471c7
+			column: 'Level 6'
+
+		level 'Level 7'
+			lineageTag: 325e3e87-2b4e-478a-a995-19e4b659e2f6
+			column: 'Level 7'
+
+		level 'Level 8'
+			lineageTag: 0258236d-0d9c-4dd4-a516-3e59a66942a9
+			column: 'Level 8'
+
+		level 'Level 9'
+			lineageTag: cf39b982-fef5-4f0b-91a6-0f4ac94fe0d6
+			column: 'Level 9'
+
+		level 'Level 10'
+			lineageTag: 9caab501-ce96-487c-8dcc-40ba4deb4adc
+			column: 'Level 10'
+
+	partition 'External Users' = m
+		mode: import
+		queryGroup: Users
+		source = ```
+				let
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key"),
+				    
+				
+				    #"Filtered Rows1" = Table.SelectRows(Source, each Text.StartsWith([Folder Path], #"Data Lake URL" & ADLSPathDelimiter & #"License Key" & "/inventory/")),
+				    #"Filtered Rows2" = Table.SelectRows(#"Filtered Rows1", each ([Name] = "External_BI_Pixie_Hierarchy.csv")),
+				    row_count = Table.RowCount(#"Filtered Rows2"),
+				
+				    users =
+				        let
+				            csv = #"Filtered Rows2"{[Name="External_BI_Pixie_Hierarchy.csv"]}[Content],
+				            #"Imported CSV" = Csv.Document(csv, [Delimiter=",", Columns=11, Encoding=65001, QuoteStyle=QuoteStyle.None]),
+				            #"Promoted Headers" = Table.PromoteHeaders(#"Imported CSV", [PromoteAllScalars=true]),
+				            #"Filtered Rows" = Table.SelectRows(#"Promoted Headers", each [User Key] <> null and [User Key] <> "")
+				        in
+				            if row_count > 0 then #"Filtered Rows" else #"External Users - Empty",
+				    #"Trimmed Text" = Table.TransformColumns(users,{{"User Key", Text.Trim, type text}}),
+				    #"Lowercased Text" = Table.TransformColumns(#"Trimmed Text",{{"User Key", Text.Lower, type text}}),
+				    #"Removed Duplicates" = Table.Distinct(#"Lowercased Text", {"User Key"})
+				           
+				in
+				    #"Removed Duplicates"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

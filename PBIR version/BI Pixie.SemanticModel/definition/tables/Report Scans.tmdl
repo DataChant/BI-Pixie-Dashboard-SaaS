@@ -1,0 +1,119 @@
+table 'Report Scans'
+	lineageTag: 6d3b75d9-d8f8-4e58-8957-f9414f4807a8
+
+	measure Bookmarks =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Report Scans'[Since]),
+			        KEEPFILTERS(
+			            'Report Scans'[Date Since] <= _current_date &&
+			                ('Report Scans'[Date Until] = BLANK() || 'Report Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			RETURN
+			SUMX (
+			    VALUES ( Reports[Report Key] ),
+			    CALCULATE (
+			        SUM('Report Scans'[Bookmarks Count]),
+			        KEEPFILTERS (
+			            'Report Scans'[Since] = _max_timestamp_scan
+			        )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 6288b66f-caa2-4364-b753-fa8a7d7cd389
+
+	column 'Bookmarks Count'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7c969c78-268c-4884-953b-f1110eb26947
+		summarizeBy: sum
+		sourceColumn: Bookmarks Count
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Since
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 73acb8e7-1900-46a1-86c0-2fdcd9865f25
+		summarizeBy: none
+		sourceColumn: Since
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Until
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c611cf82-9f2c-44ad-a67e-765c68106483
+		summarizeBy: none
+		sourceColumn: Until
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Since'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 32c69280-bd87-49ae-ba8a-714436175a89
+		summarizeBy: none
+		sourceColumn: Date Since
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Until'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: b23fac16-7d88-47fa-bdcf-3cd92c6fc624
+		summarizeBy: none
+		sourceColumn: Date Until
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Report Key'
+		dataType: string
+		isHidden
+		lineageTag: 10be7b87-5290-4215-9208-cb0052422bad
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Report Scans' = m
+		mode: import
+		source =
+				let
+				    Source = #"Inventory - Reports - Base 3",
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Workspace", "Report ID", "Report Name", "Project", "Capacity ID", "External Semantic Model", "Workspace ID", "External Semantic Model Workspace"}),
+				    #"Grouped Rows" = Table.Group(#"Removed Columns", {"Report Key"}, {{"data", each _, type table [Since=nullable datetime, Bookmarks Count=nullable number, Report Key=nullable text]}}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Grouped Rows", "FnPrepareSCD", each FnPrepareSCD([data])),
+				    #"Removed Columns1" = Table.RemoveColumns(#"Invoked Custom Function",{"data"}),
+				    #"Expanded FnPrepareSCD" = Table.ExpandTableColumn(#"Removed Columns1", "FnPrepareSCD", {"Since", "Bookmarks Count", "Until", "Date Since", "Date Until"}, {"Since", "Bookmarks Count", "Until", "Date Since", "Date Until"}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Expanded FnPrepareSCD",{{"Bookmarks Count", Int64.Type}, {"Date Since", type date}, {"Date Until", type date}, {"Since", type datetime}, {"Until", type datetime}}),
+				    #"Reordered Columns" = Table.ReorderColumns(#"Changed Type",{"Report Key", "Bookmarks Count", "Since", "Until", "Date Since", "Date Until"})
+				in
+				    #"Reordered Columns"
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

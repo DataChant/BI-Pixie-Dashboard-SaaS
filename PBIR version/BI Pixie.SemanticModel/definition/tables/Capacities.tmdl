@@ -1,0 +1,121 @@
+table Capacities
+	lineageTag: d795d253-1d4c-462e-9a6d-1a8b93c495bc
+
+	column 'Capacity ID'
+		dataType: string
+		lineageTag: 65a7edae-217e-4557-b437-6e6507678220
+		summarizeBy: none
+		sourceColumn: Capacity ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column SKU
+		dataType: string
+		lineageTag: b8a5073f-1105-49d3-ab72-616c824cab50
+		summarizeBy: none
+		sourceColumn: SKU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: c142d6b5-2914-4012-952f-544ba720fcb6
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 2c9c2096-f483-46ac-b2d3-6536c7d5c4e4
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Capacity Name'
+		dataType: string
+		lineageTag: 30e07012-e8bc-4505-902f-c78d8b6fb92e
+		summarizeBy: none
+		sourceColumn: Capacity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'SKU and Capacity Name'
+		dataType: string
+		lineageTag: c1b49b0c-ef66-4870-aa9e-d3f563cacc4d
+		summarizeBy: none
+		sourceColumn: SKU and Capacity Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Project
+		dataType: string
+		lineageTag: d516d228-8ac0-417a-8ffd-9108db92037c
+		summarizeBy: none
+		sourceColumn: Project
+
+		annotation SummarizationSetBy = Automatic
+
+	column Content
+		dataType: string
+		lineageTag: 427c96d6-7a76-4866-822f-c23e19e42917
+		summarizeBy: none
+		sourceColumn: Content
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Capacities = m
+		mode: import
+		source = ```
+				let
+				    
+				    ADLSPathDelimiter = if #"Is SaaS" then "-" else "/",
+				    Source = AzureStorage.DataLake(#"Data Lake URL" & ADLSPathDelimiter & #"License Key", [HierarchicalNavigation=true]),
+				    #"Drill down to inventory" = Source{[Name="inventory"]}[Content],
+				    #"Filtered Rows3" = Table.SelectRows(#"Drill down to inventory", each ([Extension] = "")),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Filtered Rows3",{"Content", "Name"}),
+				    #"Renamed Columns1" = Table.RenameColumns(#"Removed Other Columns1",{{"Name", "Project"}}),
+				    #"Expanded Content" = Table.ExpandTableColumn(#"Renamed Columns1", "Content", {"Content", "Name"}, {"Content", "Name"}),
+				    #"Filtered Reports" = Table.SelectRows(#"Expanded Content", each ([Name] = "Capacities")),
+				    #"Removed Columns" = Table.RemoveColumns(#"Filtered Reports",{"Name"}),
+				    
+				    
+				    FnDecodeString = (encodedString)=>
+				    let
+				        decodedString = Uri.Parts("http://dummy?a=" & encodedString)[Query][a]
+				    in
+				        decodedString,
+				    
+				    #"Trim and Decode Project" = Table.TransformColumns(#"Removed Columns",{{"Project", each FnDecodeString(Text.Trim(_, "/")), type text}}),
+				    #"Expanded Content1" = Table.ExpandTableColumn(#"Trim and Decode Project", "Content", {"Content", "Extension", "Date modified"}, {"Content", "Extension", "Date modified"}),
+				    #"Filtered Rows" = Table.SelectRows(#"Expanded Content1", each ([Extension] = ".json")),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Filtered Rows",{"Content", "Date modified", "Project"}),
+				    #"Invoked Custom Function" = Table.AddColumn(#"Removed Other Columns", "reports", each FnLoadInventory([Content])),
+				    #"Expanded FnLoadInventory" = Table.ExpandTableColumn(#"Invoked Custom Function", "reports", {"capacities"}, {"capacities"}),
+				    #"Filtered Rows2" = Table.SelectRows(#"Expanded FnLoadInventory", each [capacities] <> null),
+				    #"Expanded capacities" = Table.ExpandListColumn(#"Filtered Rows2", "capacities"),
+				    #"Expanded capacities1" = Table.ExpandRecordColumn(#"Expanded capacities", "capacities", {"id", "displayName", "sku", "region", "state"}, {"Capacity ID", "Capacity Name", "SKU", "Region", "State"}),
+				    #"Filtered Rows1" = Table.SelectRows(#"Expanded capacities1", each [Capacity ID] <> null and [Capacity ID] <> ""),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows1",{{"Date modified", "Since"}}),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Renamed Columns",{{"Since", type datetime}}),
+				    #"Sorted Rows" = Table.Buffer(Table.Sort(#"Changed Type",{{"Since", Order.Descending}})),
+				    #"Removed Duplicates" = Table.Distinct(#"Sorted Rows", {"Capacity ID"}),
+				    #"Removed Columns2" = Table.RemoveColumns(#"Removed Duplicates",{"Since"}),
+				    #"Appended Query" = Table.Combine({#"Removed Columns2", #"Capacity-Unknown"}),
+				    #"Added Custom" = Table.AddColumn(#"Appended Query", "SKU and Capacity Name", each "(" & [SKU] & ") " & [Capacity Name]),
+				    #"Replaced Value" = Table.ReplaceValue(#"Added Custom","(Unknown) ","",Replacer.ReplaceText,{"SKU and Capacity Name"}),
+				    LastNonDemo = Table.ReplaceValue(#"Replaced Value","(Power BI Pro) ","",Replacer.ReplaceText,{"SKU and Capacity Name"}),
+				    
+				    #"Replaced Value2" = Table.ReplaceValue(LastNonDemo,"(FT1) Trial-20231210T183548Z-eEDgkCJMPEaeAeUSYzQdig","(F128) f128fabric",Replacer.ReplaceText,{"SKU and Capacity Name"}),
+				    #"Replaced Value3" = Table.ReplaceValue(#"Replaced Value2","FT1","F128",Replacer.ReplaceText,{"SKU"}),
+				    LastDemo = Table.ReplaceValue(#"Replaced Value3","Trial-20231210T183548Z-eEDgkCJMPEaeAeUSYzQdig","f128fabric",Replacer.ReplaceText,{"Capacity Name"}),
+				    Final = if not #"Is Demo" then LastNonDemo else LastDemo
+				in
+				    Final
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

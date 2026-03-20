@@ -1,0 +1,464 @@
+table 'Page Scans'
+	lineageTag: c83e9501-127a-4e94-83ec-a6a02e2d2d21
+
+	measure Slicers =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX('Page Scans'[Slicers Count Col]),
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0
+		lineageTag: d9ab1825-2629-4291-83d7-ac4bab459cfa
+
+	measure 'Page Width' = CALCULATE(MAX('Page Scans'[Width]), KEEPFILTERS('Scan Attributes'[Calc] = "Page Attribute"))
+		formatString: #,0
+		lineageTag: e960c8bd-06c0-4c7e-8ca8-3297c1e8d2f7
+
+	measure 'Page Height' = CALCULATE(MAX('Page Scans'[Height]), KEEPFILTERS('Scan Attributes'[Calc] = "Page Attribute"))
+		formatString: #,0
+		lineageTag: 4002158b-8d1e-4b9c-93ba-df6eb8afe7fb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Visual Scan Rows' = COUNTROWS('Visual Scans')
+		formatString: #,0
+		lineageTag: cfda8e80-7cc6-4f84-aa20-7b2f9648e8f6
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Columns in Table Visuals' =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS(
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX ( 'Page Scans'[Columns in Tables Count Col] ) ,
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 8c6ef97b-0d4a-4170-99fe-4ceba39aa57a
+
+	measure Visuals/Page =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			AVERAGEX(
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX ( 'Page Scans'[Visuals Count Col] ) ,
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0.00
+		lineageTag: 744402b4-836e-42a1-ac5f-de73281a0780
+
+	measure 'Table Visuals' = ```
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX ( 'Page Scans'[Tables Count Col] ) ,
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+			
+			```
+		formatString: #,0
+		lineageTag: fa035502-f829-4128-a738-3e5b38595785
+
+	measure Visuals =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX ( 'Page Scans'[Visuals Count Col] ) ,
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0
+		lineageTag: b8254e77-5e27-4d76-85a4-9661455b8d83
+
+	measure 'Drillthru Pages' =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS(
+			            'Page Scans'[Date Since] <= _current_date &&
+			            ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX('Page Scans'[Is Drillthrough Col]),
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0
+		lineageTag: 9f867abf-0c31-4378-bf19-b32ee003197c
+
+	measure 'Tooltip Pages' =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX('Page Scans'[Is Tooltip Col]),
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: 0
+		lineageTag: 91cf27ea-ae9b-42b7-bc1b-2c8cc0549ec9
+
+	measure 'Non-Analytic Objects' =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX('Page Scans'[Non-Analytic Objects Col]),
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0
+		lineageTag: b5ccec5c-d96e-4334-9040-16071457fe70
+
+	measure 'Source/Target Defined Interactions' =
+			
+			VAR _current_date = MAX('Calendar'[Date])
+			VAR _max_timestamp_scan =
+			    CALCULATE (
+			        MAX('Page Scans'[Since]),
+			        KEEPFILTERS (
+			            'Page Scans'[Date Since] <= _current_date &&
+			                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _current_date )
+			        )
+			    )
+			
+			RETURN
+			SUMX (
+			    VALUES('Pages'[Report Page Key]),
+			    CALCULATE (
+			        MAX('Page Scans'[Interactions Count Col]),
+			        KEEPFILTERS ( 'Page Scans'[Since] = _max_timestamp_scan )
+			    )
+			)
+		formatString: #,0
+		lineageTag: c399c8a5-2159-4ca7-800b-6fef36569a80
+
+	measure 'Columns in Visuals Complexity Norm' =
+			
+			VAR _min = MINX(ALL('Pages'), DIVIDE([Columns in Table Visuals], [Table Visuals]))
+			VAR _max = MAXX(ALL('Pages'), DIVIDE([Columns in Table Visuals], [Table Visuals]))
+			VAR _current = DIVIDE([Columns in Table Visuals], [Table Visuals])
+			RETURN
+			IF (
+			    ISBLANK(_current) || _current = _min || _max = _min,
+			    1,
+			    DIVIDE ( _current - _min, _max - _min )
+			)
+		formatString: #,0.00
+		lineageTag: 5db6e200-7436-47c7-9685-ada9e0f7df4f
+
+	column 'Page Index'
+		dataType: int64
+		formatString: 0
+		lineageTag: c5429937-93d2-46c0-b42a-b141eedca531
+		summarizeBy: none
+		sourceColumn: Page Index
+
+		annotation SummarizationSetBy = Automatic
+
+	column Since
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 955f81a2-3024-4968-8f56-23d179576090
+		summarizeBy: none
+		sourceColumn: Since
+
+		annotation SummarizationSetBy = Automatic
+
+	column Until
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 7352b883-9fa4-46bc-87c7-d5cc9f9e9862
+		summarizeBy: none
+		sourceColumn: Until
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Date Since'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2fc1cef5-db96-4a37-ba38-323f3d532883
+		summarizeBy: none
+		sourceColumn: Date Since
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Date Until'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 3caf9276-3725-429b-9933-62e35a8c8673
+		summarizeBy: none
+		sourceColumn: Date Until
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column 'Report Page Key'
+		dataType: string
+		isHidden
+		lineageTag: 150a60d9-c8f8-429b-9941-f07933b62f19
+		summarizeBy: none
+		sourceColumn: Report Page Key
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Height
+		dataType: double
+		isHidden
+		lineageTag: be38cfb1-fb10-49c5-897d-fdcefa300942
+		summarizeBy: sum
+		sourceColumn: Height
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Width
+		dataType: double
+		isHidden
+		lineageTag: b60ff1bb-8a35-4ffb-8e23-72fa80bea2fc
+		summarizeBy: sum
+		sourceColumn: Width
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Visuals Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 19738830-608b-4ead-9207-e4d648d1bb7d
+		summarizeBy: sum
+		sourceColumn: Visuals Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Slicers Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5ef0e8b6-6e6d-4588-9c0e-c609912f42e1
+		summarizeBy: sum
+		sourceColumn: Slicers Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tables Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2e24558a-94e6-4353-89fe-3e6d76b236ad
+		summarizeBy: sum
+		sourceColumn: Tables Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Columns in Tables Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4d04d95a-2af2-46e6-8243-48f006c7e7a0
+		summarizeBy: sum
+		sourceColumn: Columns in Tables Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Interactions Count Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2f6225dc-c2d8-4b56-9e75-a23cb803c167
+		summarizeBy: sum
+		sourceColumn: Interactions Count Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Tooltip Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0a0c2bad-ef1b-4120-9a58-a32ddfdb5af5
+		summarizeBy: sum
+		sourceColumn: Is Tooltip Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Is Drillthrough Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 59e95254-85e7-462d-8da6-88b8ab91fe39
+		summarizeBy: sum
+		sourceColumn: Is Drillthrough Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Non-Analytic Objects Col'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b5341a86-4ed4-427a-be6a-47ab0f2ee195
+		summarizeBy: sum
+		sourceColumn: Non-Analytic Objects Col
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Workspace ID'
+		dataType: string
+		isHidden
+		lineageTag: 9d33f661-4c92-4479-abb6-1c4c619d76b2
+		summarizeBy: none
+		sourceColumn: Workspace ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report ID'
+		dataType: string
+		lineageTag: 82d9a8df-5397-4167-ab44-0120e26a6c36
+		summarizeBy: none
+		sourceColumn: Report ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Report Key'
+		dataType: string
+		lineageTag: 96b514b8-5473-4e90-8c0a-778be48b7831
+		summarizeBy: none
+		sourceColumn: Report Key
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Page Scans' = m
+		mode: import
+		source =
+				let
+				    Source = #"Inventory Scans",
+				    #"Removed Columns" = Table.RemoveColumns(Source,{"Page", "Page ID"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Exception
+

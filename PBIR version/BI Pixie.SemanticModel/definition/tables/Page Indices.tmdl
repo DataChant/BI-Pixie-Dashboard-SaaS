@@ -1,0 +1,18 @@
+table 'Page Indices'
+	lineageTag: 08e8f928-b563-4ad7-b3c1-52f30f3a1d42
+
+	column 'Page Index'
+		formatString: 0
+		lineageTag: ab6c197d-2c6c-485e-9db5-33e4ee3d5d37
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: Page Scans[Page Index]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Page Indices' = calculated
+		mode: import
+		source = DISTINCT('Page Scans'[Page Index])
+
+	annotation PBI_Id = 3a89baa23c6841e2ac33311ad1fa94ad
+

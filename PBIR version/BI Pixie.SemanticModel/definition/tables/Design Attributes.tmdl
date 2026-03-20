@@ -1,0 +1,76 @@
+table 'Design Attributes'
+	lineageTag: fe10c308-15d3-42a7-9c59-a55696c4d7ab
+
+	measure 'Score Title' =
+			"The Impact of " &
+			MIN('Design Attributes'[Design Attributes]) & " on " & MIN('Report Session Metrics'[Report session metrics])
+		lineageTag: e8e6084a-ff21-488b-b670-3a13afd20af1
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Score Sub-Title' =
+			
+			SWITCH(
+			    MIN('Design Attributes'[Design Attributes]),
+			    "Complexity Score","Complexity score is an estimate of the report's complexity at the visualization level (Higher score = More complex)",
+			    "Usability Score","Usability score is an estimate of the report's usability based on the use of controls such as bookmarks, slicers, tooltips and drill-throughs. As the score is higher you get a more user-friendly experience (But extreme scores may lead to a reverse effect)",
+			    "Passivity Score","Passivity score is an estimate for the report's tendency act as passive export tool (Higher score = More passive data dumps)", "")
+		lineageTag: f435fea2-a4db-4222-91c3-c9d43dce3397
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Design Attributes'
+		lineageTag: 37d81b6e-5cf3-4ec6-977b-2a0ba6d70634
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Design Attributes Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Design Attributes Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Design Attributes Fields'
+		isHidden
+		lineageTag: 5fc26e9f-2c0f-4fdd-8dda-c5c98fe2d229
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Design Attributes Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Design Attributes Order'
+		isHidden
+		formatString: 0
+		lineageTag: 0fd4bfd5-cca4-4446-aa9b-4693b7e40d1f
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Design Attributes' = calculated
+		mode: import
+		source =
+				{
+				    ("Complexity Score", NAMEOF('Reports'[Complexity Score]), 0),
+				    ("Usability Score", NAMEOF('Reports'[Usability Score]), 1),
+				    ("Passivity Score", NAMEOF('Reports'[Passivity Score]), 2),
+				    ("Visuals per Page", NAMEOF('Page Scans'[Visuals/Page]), 7),
+				    ("# of Visuals", NAMEOF('Page Scans'[Visuals]), 8),
+				    ("# of Columns in Table Visuals", NAMEOF('Page Scans'[Columns in Table Visuals]), 9),
+				    ("# of Table Visuals", NAMEOF('Page Scans'[Table Visuals]), 10),
+				    ("# of Objects", NAMEOF('Page Scans'[Non-Analytic Objects]), 11),
+				    ("# of Bookmarks", NAMEOF('Report Scans'[Bookmarks]), 12),
+				    ("# of Slicers", NAMEOF('Page Scans'[Slicers]), 13),
+				    ("# of Tooltip Pages", NAMEOF('Page Scans'[Tooltip Pages]), 14),
+				    ("# of Drillthru Pages", NAMEOF('Page Scans'[Drillthru Pages]), 15)
+				}
+
+	annotation PBI_Id = 24f6efa0837d42ecbdc7989196da7a26
+

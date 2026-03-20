@@ -1,0 +1,55 @@
+table 'RLS Metric'
+	lineageTag: d83e32ac-3af3-4e7e-8d35-a8e32df24441
+
+	column 'RLS Metric'
+		lineageTag: f1104054-8de7-463e-b8ed-cf2bf5fda3cb
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'RLS Metric Order'
+
+		relatedColumnDetails
+			groupByColumn: 'RLS Metric Fields'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RLS Metric Fields'
+		isHidden
+		lineageTag: 1f0776e8-e8d0-49bb-b85a-70fe7373a261
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'RLS Metric Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'RLS Metric Order'
+		isHidden
+		formatString: 0
+		lineageTag: 4ff48f66-a405-4edb-a9eb-300174871aa7
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'RLS Metric' = calculated
+		mode: import
+		source =
+				{
+				    ("Users with Secured Rows", NAMEOF('RLS Events'[RLS Users]), 0),
+				    ("Users with Single Roles", NAMEOF('RLS Events'[RLS Users Single Role Applied]), 1),
+				    ("Users with Unmatched or Multiple Roles", NAMEOF('RLS Events'[RLS Users Unmatched Roles]), 2),
+				    ("Users with Suspicious Changes in RLS", NAMEOF('RLS Events'[RLS Users Suspicious Changes]), 3),
+				    ("Row-Level Secured Page Views", NAMEOF('RLS Events'[RLS Page Views]), 4),
+				    ("RLS Views with Single Roles", NAMEOF('RLS Events'[RLS Views Single Role Applied]), 5),
+				    ("RLS Views with Unmatched or Multiple Roles", NAMEOF('RLS Events'[RLS Views with Unmatched Roles]), 6),
+				    ("Suspicious Changes in RLS", NAMEOF('RLS Events'[RLS Changes]), 7),
+				    ("RLS Views with Over-Blocking", NAMEOF('RLS Events'[RLS Views with Over-Blocking]), 8)
+				}
+
+	annotation PBI_Id = 2bd539bffea84c569326a2bb0606d9a4
+

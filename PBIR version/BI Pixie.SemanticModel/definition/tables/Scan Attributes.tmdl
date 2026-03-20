@@ -1,0 +1,76 @@
+table 'Scan Attributes'
+	lineageTag: eba0b2be-82fb-4778-9037-3d398c31b3b3
+
+	calculationGroup
+		precedence: 1
+
+		calculationItem 'Page Attribute' =
+				
+				VAR _max_current_date = MAX('Calendar'[Date])
+				VAR _min_current_date = MIN('Calendar'[Date])
+				VAR _max_timestamp_scan =
+				    CALCULATE (
+				        MAX('Page Scans'[Since]),
+				        FILTER(
+				            'Page Scans',
+				            'Page Scans'[Date Since] <= _max_current_date &&
+				                ('Page Scans'[Date Until] = BLANK() || 'Page Scans'[Date Until] >= _min_current_date )
+				        )
+				    )
+				
+				RETURN
+				IF (
+				    ISBLANK ( [Visual Scan Rows] ),
+				    BLANK(),
+				    CALCULATE (
+				        SELECTEDMEASURE(),
+				        FILTER(
+				            'Page Scans',
+				            'Page Scans'[Since] = _max_timestamp_scan
+				        )
+				    )
+				)
+
+		calculationItem 'Visual Attribute' = ```
+				VAR _max_current_date = MAX('Calendar'[Date])
+				VAR _min_current_date = MIN('Calendar'[Date])
+				
+				VAR _max_timestamp_scan =
+				    CALCULATE (
+				        MAX('Visual Scans'[Since]),
+				        FILTER(
+				            'Visual Scans',
+				            ('Visual Scans'[Date Since] <= _max_current_date && 'Visual Scans'[Date Until] > _min_current_date) ||
+				                ('Visual Scans'[Date Until] = BLANK() && 'Visual Scans'[Date Since] <= _max_current_date)
+				        )
+				    )
+				RETURN
+				CALCULATE (
+				    SELECTEDMEASURE(),
+				    FILTER(
+				        'Visual Scans',
+				        'Visual Scans'[Since] = _max_timestamp_scan
+				    )
+				)
+				
+				
+				```
+
+	column Calc
+		dataType: string
+		lineageTag: bb5f0bac-60c7-4f2d-a8d2-561fb1c35230
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e3d6728-e8b5-497a-aa8a-fbe6eacfcedc
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

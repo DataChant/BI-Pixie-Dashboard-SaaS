@@ -1,0 +1,277 @@
+relationship AutoDetected_7af306bf-399e-4018-a55b-0fe9426d9c10
+	fromColumn: 'Page Sessions'.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship AutoDetected_71766033-8a90-4c67-9656-7d60cced79c4
+	fromColumn: Events.'Event Type'
+	toColumn: 'Event Types'.'Event Type'
+
+relationship AutoDetected_d06fe012-e531-42b8-836f-fa87e7519fa6
+	fromColumn: Events.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship AutoDetected_c8e748f3-7b56-4866-8fff-c9a25f5c298f
+	fromColumn: 'Report Sessions'.Platform
+	toColumn: Platforms.Platform
+
+relationship AutoDetected_3c8d7942-6503-4a48-aa9f-f36608b4f841
+	fromColumn: 'Page Sessions'.Platform
+	toColumn: Platforms.Platform
+
+relationship AutoDetected_1fcd96c7-1063-4171-b4d2-f5cb0274a4a6
+	fromColumn: Events.Platform
+	toColumn: Platforms.Platform
+
+relationship 172220f1-7287-ee11-4583-7ef30224053e
+	fromColumn: 'Report Sessions'.'Report Key'
+	toColumn: Reports.'Report Key'
+
+relationship 012c8803-c918-ddbe-f0fb-21e23b49b895
+	fromColumn: Feedback.Feedback
+	toColumn: 'Feedback Icons'.'Feedback Score'
+
+relationship AutoDetected_8bc30ef2-cc6d-425e-9228-7fd804291cbc
+	fromColumn: Reports.'Workspace ID'
+	toColumn: Workspaces.'Workspace ID'
+
+relationship 1b817fca-1a74-d567-2995-3eaa3fb9bfab
+	fromColumn: 'Page Scans'.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship 6f87ce9a-30a6-4da6-a519-3bc96d725b00
+	fromColumn: 'Page Sessions'.'Page Index'
+	toColumn: 'Page Indices'.'Page Index'
+
+relationship ffed21c8-d88c-4b74-983d-4eb26eb7f4d1
+	fromColumn: Events.'Page Index'
+	toColumn: 'Page Indices'.'Page Index'
+
+relationship 857379ad-a6d5-5fbc-08e5-691865c083b0
+	fromColumn: 'Report Scans'.'Report Key'
+	toColumn: Reports.'Report Key'
+
+relationship 1ba2adb3-f901-7060-c2d0-cc0c2cff09c1
+	fromColumn: Visuals.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship 00aea207-518a-bae6-f469-866cf85d42f3
+	fromColumn: Workspaces.'Last Capacity ID'
+	toColumn: Capacities.'Capacity ID'
+
+relationship f2ecbbfa-0756-cb3e-dd07-1fb70d8d0488
+	fromColumn: 'Page Scans'.'Page Index'
+	toColumn: 'Page Indices'.'Page Index'
+
+relationship ed01e9d5-b763-c104-42e1-3b28ecdc8a59
+	fromColumn: 'Visual Scans'.'Visual Key'
+	toColumn: Visuals.'Visual Key'
+
+relationship 69378908-0d8c-e5ec-6ff3-010a381b6adc
+	fromColumn: 'Clicks by Visual'.'Visual Key'
+	toColumn: Visuals.'Visual Key'
+
+relationship bb4d5e0b-a7a7-4b97-b5e5-298b336c2628
+	fromColumn: 'Page Sessions'.'Session Start Date'
+	toColumn: Calendar.Date
+
+relationship 539bfc17-06bf-4451-b024-25a69c3a24ed
+	fromColumn: Events.Date
+	toColumn: Calendar.Date
+
+relationship f193848b-2ed0-feb3-1127-3466011adad6
+	fromColumn: 'Report Sessions'.'Session Start Date'
+	toColumn: Calendar.Date
+
+relationship 8859b08a-27bd-ccc1-9e54-fdae33bbb01a
+	fromColumn: Feedback.Date
+	toColumn: Calendar.Date
+
+relationship 3a3b686f-4936-ac68-bc49-4bea704e5720
+	fromColumn: 'Clicks by Visual'.Date
+	toColumn: Calendar.Date
+
+relationship b337abf2-2667-3e57-5f82-40fe59b7d1af
+	fromColumn: 'Internal Users'.'Manager ID'
+	toColumn: Managers.'Employee ID'
+
+relationship 381ddf3e-f518-3930-de93-7abd6d0b1a3c
+	fromColumn: 'Data Selections'.Date
+	toColumn: Calendar.Date
+
+relationship 256bc867-e1ff-4e4f-2506-3211792d556b
+	fromColumn: 'Data Selections'.'Event Type'
+	toColumn: 'Event Types'.'Event Type'
+
+relationship 117eea94-318d-5b10-e293-33660bcecdf9
+	fromColumn: 'Data Selections'.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship cd93dfc4-545b-a39b-df1f-e95290006261
+	fromColumn: Events.Time
+	toColumn: Time.Time
+
+relationship 58a897a9-d801-90a1-c954-740201dfbb6b
+	fromColumn: Feedback.Time
+	toColumn: Time.Time
+
+relationship 17fdca7a-29d6-b888-27d0-1bea56519b22
+	fromColumn: 'Page Sessions'.'Session Start Time'
+	toColumn: Time.Time
+
+relationship fd149792-a5f2-aaeb-4181-739d8fb79ba2
+	fromColumn: 'Report Sessions'.'Session Start Time'
+	toColumn: Time.Time
+
+relationship bdeffd1a-9597-e0a9-2963-4c62ecefe174
+	fromColumn: 'Data Selections'.Time
+	toColumn: Time.Time
+
+relationship e962e9ea-c348-18c5-14b5-2ab14d96d508
+	fromColumn: 'Clicks by Visual'.Time
+	toColumn: Time.Time
+
+relationship d93af24d-f1d5-8e01-c7ed-32e1f1369473
+	fromColumn: 'Clicks by Visual'.'Event Type'
+	toColumn: 'Event Types'.'Event Type'
+
+relationship 292ef8fe-8f07-148f-912b-5a707ddde157
+	fromColumn: Survey.Date
+	toColumn: Calendar.Date
+
+relationship c3c720bd-c60f-a1b8-61c2-555ff40a40f8
+	fromColumn: Survey.'Report Key'
+	toColumn: Reports.'Report Key'
+
+relationship 279bf3a8-b6df-5a82-a656-3f57eb19b952
+	fromColumn: Feedback.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship a4484d8d-5f22-9270-190c-17a95f8e59ab
+	fromColumn: 'Survey Latest'.'Report Key'
+	toColumn: Reports.'Report Key'
+
+relationship 33f03e18-31f8-b4de-e1f0-262ef6fb6e90
+	fromColumn: 'Survey Latest'.Date
+	toColumn: Calendar.Date
+
+relationship a3a3361f-dd26-1a18-1408-4a40001883d3
+	fromColumn: Answers.'Question Key'
+	toColumn: 'Survey Questions'.'Question Key'
+
+relationship 9a9fdc4a-b80f-5220-7c8e-26a25ae6d400
+	toCardinality: many
+	fromColumn: 'Survey Latest'.Feedback
+	toColumn: Answers.Feedback
+
+relationship de49a675-0254-a0bc-6a00-13d695365df7
+	toCardinality: many
+	fromColumn: Survey.Feedback
+	toColumn: Answers.Feedback
+
+relationship 36e30241-fe69-d1b3-1de6-6ac1ecbf4a84
+	fromColumn: 'RLS Events'.Date
+	toColumn: Calendar.Date
+
+relationship 5f9c256e-0348-281d-3674-3dd540aae7be
+	fromColumn: 'RLS Events'.Time
+	toColumn: Time.Time
+
+relationship 3dbfd7b4-8c32-10a5-7c40-dda988c79f14
+	fromColumn: 'RLS Events'.'Report Page Key'
+	toColumn: Pages.'Report Page Key'
+
+relationship 1398e074-a5e8-bf27-006c-37e203cfb0b8
+	fromColumn: Visuals.'Visual Type'
+	toColumn: 'All Visual Types'.GUID
+
+relationship a1938040-733c-68a9-ac21-302845764e30
+	fromColumn: Events.'Visual Type'
+	toColumn: 'All Visual Types'.GUID
+
+relationship 513526d0-dc4f-60e4-e1e9-ed228ea4f6a9
+	fromColumn: 'All Visual Types'.'Visual State'
+	toColumn: 'Visual Trust Levels'.'Visual State'
+
+relationship 14d384d9-f7c0-e839-e751-e81fbced17e0
+	fromColumn: Pages.'Report Key'
+	toColumn: Reports.'Report Key'
+
+relationship f4e6eca5-41df-ee8c-92cf-5110945d6e9a
+	fromColumn: 'Page Sessions'.'Duration (Sec)'
+	toColumn: 'Durations X'.'Duration (Sec)'
+
+relationship d57616c9-7823-53e3-ced9-f546e93d7b70
+	fromColumn: 'Report Sessions'.'Duration (Sec)'
+	toColumn: 'Durations X'.'Duration (Sec)'
+
+relationship 9bac0782-c824-50dd-ae4a-58c996b52386
+	fromColumn: 'Page Sessions'.'Session Interactions'
+	toColumn: 'Interactions X'.Interactions
+
+relationship ef1fea71-be9a-81b3-ddab-eecf211e72c9
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Reports.'Report Key'
+	toColumn: 'All Reports'.'Report Key'
+
+relationship 0332e1c1-d6be-4db9-8e8b-34aaabbd6714
+	fromColumn: Events.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 449d1279-574a-4b0b-a6f0-23206cfadcb7
+	fromColumn: 'Report Sessions'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 870c6c07-134f-8887-62e3-94d0032ee1c0
+	crossFilteringBehavior: bothDirections
+	fromColumn: 'User and IP Addresses'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship c8c128d1-0f45-8e76-8525-0a286f932860
+	fromColumn: Feedback.'User Key'
+	toColumn: Users.'User Key'
+
+relationship b57da92e-ed26-dede-5517-264f28d24de7
+	fromColumn: 'Clicks by Visual'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 3942ae55-359d-224d-3679-bd1b27ebfd22
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Internal Users'.Email
+	toColumn: Users.'User Key'
+
+relationship 13753ffa-ea52-7d0c-689b-f57f0a036548
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'External Users'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 879d06d8-ede0-4353-f679-b578de5efc21
+	fromColumn: 'Data Selections'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 27461a1f-3c68-4cd1-dac9-4f4d47c29199
+	fromColumn: Survey.'User Key'
+	toColumn: Users.'User Key'
+
+relationship b7c33877-52dc-7dcb-e9c4-6802ff8848e8
+	fromColumn: 'Survey Latest'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 3582b674-879f-16b8-046d-60a124540e5c
+	fromColumn: 'RLS Events'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship 22dd0961-09dd-f1db-99de-2a146495d0db
+	fromColumn: 'Page Sessions'.'User Key'
+	toColumn: Users.'User Key'
+
+relationship f7f4456f-fce6-4aaf-b481-3e380139a59b
+	fromColumn: 'Report Sessions'.'Session Index'
+	toColumn: 'Session Indices'.'Session Index'
+
+relationship 26c2f337-b585-57af-d104-4fd2f0fa7f2c
+	fromColumn: 'Page Sessions'.'Page Session Index'
+	toColumn: 'Session Indices'.'Session Index'
+
